@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1F75F58B-BFA1-4081-8D01-06DEE8CE6821}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fanex.NAP.CTS.Criteria</RootNamespace>
+    <AssemblyName>Fanex.NAP.CTS.Criteria</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account\CustInfoByCustIdGetCriteria.cs" />
+    <Compile Include="Account\CustomerCategory\GetCTSCustomerClassificationForAPICriteria.cs" />
+    <Compile Include="Account\CustomerCategory\GetCustomerCategoryByCategoryIdsCriteria.cs" />
+    <Compile Include="Api\CtsAssociationAPI\DetectAssociationByTypeCriteria.cs" />
+    <Compile Include="Api\FPS\Account\GetAccountsPerDeviceDCSCenterCriteria.cs" />
+    <Compile Include="Api\FPS\Account\GetAssAccByDevSubscriberDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Account\GetAssAccountInfoByCustSubscriberDCSCenterCriteria.cs" />
+    <Compile Include="Api\FPS\Account\GetAssAccountInfoByCustSubscriberDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Account\GetAssAccountsByCustSubscriberDCSCenterCriteria.cs" />
+    <Compile Include="Api\FPS\Account\GetAssAccountsByCustSubscriberDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Account\GetAssMatrixAccountByCustSubscriberDCSCenterCriteria.cs" />
+    <Compile Include="Api\FPS\Account\GetAssMatrixAccountByCustSubscriberDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Device\GetDevicesPerAccountDCSCenterCriteria.cs" />
+    <Compile Include="Api\FPS\Device\GetAssDevByDevSubscriberDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Device\GetAssDeviceInfoByIDSubscriberDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Device\GetAssDevicesByCustSubscriberDCSCenterCriteria.cs" />
+    <Compile Include="Api\FPS\Device\GetAssDevicesByCustSubscriberDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Device\GetAssMatrixByDeviceSubsriberDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Search\GetAccountByNameSubscriberDCSCenterCriteria.cs" />
+    <Compile Include="Api\FPS\Search\GetAccountByNameSubscriberDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Search\GetListAccountByUserNameSubscriberDCSCenterCriteria.cs" />
+    <Compile Include="Api\FPS\Search\GetListAccountByUserNameSubscriberDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Search\GetListDeviceByCodeSubscriberDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Subscriber\GetSubscriberDcsExBySubscriberName.cs" />
+    <Compile Include="Api\FPS\Transaction\GetLastestTransactionDCSCenterCriteria.cs" />
+    <Compile Include="Api\FPS\Transaction\GetLastestTransactionDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Transaction\GetTransactionHistoryByCustSubscriberDCSCenterCriteria.cs" />
+    <Compile Include="Api\FPS\Transaction\GetTransactionHistoryByCustSubscriberDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Transaction\GetTransactionHistoryBySubscriberDCSCenterCriteria.cs" />
+    <Compile Include="Api\FPS\Transaction\GetTransactionHistoryBySubscriberDCSExtraCriteria.cs" />
+    <Compile Include="Api\FPS\Transaction\GetTransHistoryByDevSubDCSExtraCriteria.cs" />
+    <Compile Include="Api\TWSpecialLicSub\InsertTWSpecialLicSubCriteria.cs" />
+    <Compile Include="Api\TW\InsertTWInitialSmartCriteria.cs" />
+    <Compile Include="Category\GetCategoryCustomerClassByCustIDCriteria.cs" />
+    <Compile Include="Common\HealthCheckCriteria.cs" />
+    <Compile Include="CustomerClassification\BaseCustomerClassification\BySport\RemoveCustomerClassificationBySportCriteria.cs" />
+    <Compile Include="CustomerClassification\BaseCustomerClassification\GetRescanCustomerClassificationCriteria.cs" />
+    <Compile Include="CustomerClassification\BaseCustomerClassification\BySport\InsertCustomerClassificationBySportCriteria.cs" />
+    <Compile Include="CustomerClassification\BaseCustomerClassification\InsertCustomerClassificationCriteria.cs" />
+    <Compile Include="CustomerClassification\BaseCustomerClassification\RemoveCustomerClassificationCriteria.cs" />
+    <Compile Include="CustomerClassification\GetLastestCCDangerLevelCriteria.cs" />
+    <Compile Include="CustomerClassification\InputErrorLogInsertCriteria.cs" />
+    <Compile Include="CustomerClassification\ProblemAccount\CheckNewPAAssociationCustomerForRollbackCriteria.cs" />
+    <Compile Include="Account\CustomerInfo\GetCustomerInfoAssociatedAccountCriteria.cs" />
+    <Compile Include="Api\GetAssociationForExtAccCriteria.cs" />
+    <Compile Include="Api\GetSubscriberInfoBySubscriberName.cs" />
+    <Compile Include="Api\ProblemCaseMonitor\ProblemCaseCriteria.cs" />
+    <Compile Include="Api\GetFlaggedEvidenceByLevel2AssociationCriteria.cs" />
+    <Compile Include="Category\GetCategoryCustomerClassCriteria.cs" />
+    <Compile Include="CustomerClassification\DangerLevelUpdateCriteria.cs" />
+    <Compile Include="CustomerClassification\ProblemAccount\ProblemAccountLosingClassificationGetCriteria.cs" />
+    <Compile Include="CustomerClassification\BetLimitByEvidenceUpdateCriteria.cs" />
+    <Compile Include="CustomerClassification\BetLimitByEvidenceRemoveCriteria.cs" />
+    <Compile Include="CustomerClassification\PushDataToExternal\CustClassificationToMainDB\CustomerClassificationUpdateBySportCriteria.cs" />
+    <Compile Include="CustomerClassification\PushDataToExternal\CustClassificationToMainDB\GetCustomerClassificationBySportCriteria.cs" />
+    <Compile Include="CustomerClassification\RescanNormalClassificationBySport\PreprocessRescanNormalClassificationBySportCriteria.cs" />
+    <Compile Include="LogInputData\LogInputDataCriteria.cs" />
+    <Compile Include="CustomerClassification\GetRoleCustomerCriteria.cs" />
+    <Compile Include="CustomerClassification\NormalClassificationRescanCriteria.cs" />
+    <Compile Include="Api\GetFlaggedEvidenceByDirectAssociationCriteria.cs" />
+    <Compile Include="MonitorFunction\StatsAccessmentInsertCriteria.cs" />
+    <Compile Include="Account\CheckCustNotExistedByCustIdsCriteria.cs" />
+    <Compile Include="Api\FlaggedAccountDeleteCriteria.cs" />
+    <Compile Include="Api\MultiCustomerEvidencesInsertCriteria.cs" />
+    <Compile Include="Api\FlaggedAccountInsertCriteria.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SyncCustomerToMainDb\SyncCustomerClassToMainDbCriteria.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.CTS.Core\Fanex.NAP.CTS.Core.csproj">
+      <Project>{5f3abbf7-ea70-4c02-bd47-b427f1a9cc39}</Project>
+      <Name>Fanex.NAP.CTS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.CTS.Resource\Fanex.NAP.CTS.Resource.csproj">
+      <Project>{ae6c4b2a-8cd3-433a-8f42-d8272390cf61}</Project>
+      <Name>Fanex.NAP.CTS.Resource</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Fanex.Data.Repository">
+      <Version>4.2.2</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Api\UpdateCategoryWhenPAUpdated\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

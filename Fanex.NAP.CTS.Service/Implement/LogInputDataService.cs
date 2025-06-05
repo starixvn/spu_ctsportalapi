@@ -1,7 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Service
 {
-    using Fanex.Data.Repository;
-    using Fanex.Logging;
+    using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Core;
     using Fanex.NAP.CTS.Criteria.LogInputData;
     using Fanex.NAP.CTS.Model.CustomerClassification;
@@ -11,13 +10,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using static Fanex.NAP.CTS.Resource.Consts.Consts;
+    using Fanex.NAP.CTS.Core.Extentions;
 
     public class LogInputDataService : ILogInputDataService
     {
-        public LogInputDataService()
-        {
-        }
-
         public void LogInputData(LogInputViewModel content, FunctionId funcId)
         {
             try
@@ -32,14 +28,14 @@
 
                         if (!string.IsNullOrEmpty(result.ErrorMsg))
                         {
-                            LogService.Error($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(content)} - Exception {result.ErrorMsg} - Datetime: {DateTime.Now}");
+                            LogExtension.LogError($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(content)} - Exception {result.ErrorMsg} - Datetime: {DateTime.Now}");
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                LogService.Error($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(content)} - Exception {ex}- Datetime: {DateTime.Now}");
+                LogExtension.LogError($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(content)} - Exception {ex}- Datetime: {DateTime.Now}");
             }
         }
 
@@ -90,13 +86,13 @@
 
                     if (!string.IsNullOrEmpty(result.ErrorMsg))
                     {
-                        LogService.Error($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(data)} - Exception {result.ErrorMsg} - Datetime: {DateTime.Now}");
+                        LogExtension.LogError($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(data)} - Exception {result.ErrorMsg} - Datetime: {DateTime.Now}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                LogService.Error($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(data)} - Exception {ex}- Datetime: {DateTime.Now}");
+                LogExtension.LogError($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(data)} - Exception {ex}- Datetime: {DateTime.Now}");
             }
         }
 
@@ -104,7 +100,7 @@
 
         public DBResult LogInputDataAccessLayer(IEnumerable<LogInputDataModel> content, FunctionId funcId)
         {
-            var repository = new DynamicRepository();
+            var repository = new CriteriaService();
 
             var criteria = new LogInputDataCriteria
             {

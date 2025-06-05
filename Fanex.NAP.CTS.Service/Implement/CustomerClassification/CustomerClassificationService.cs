@@ -1,7 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Service
 {
-    using Fanex.Data.Repository;
-    using Fanex.Logging;
+    using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Core;
     using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Helpers.Xml;
@@ -18,13 +17,13 @@
 
     public class CustomerClassificationService : ICustomerClassificationService
     {
-        private readonly IDynamicRepository repository;
+        private readonly ICriteriaService _repository;
         private readonly IAntiFraudCenterService _antiFraudCenterService;
 
-        public CustomerClassificationService()
+        public CustomerClassificationService(ICriteriaService repository, IAntiFraudCenterService antiFraudCenterService)
         {
-            repository = new DynamicRepository();
-            _antiFraudCenterService = new AntiFraudCenterService();
+            _repository = repository;
+            _antiFraudCenterService = antiFraudCenterService;
         }
 
         public bool PushDataToExternalPackge(IEnumerable<long> custIds, PushDataToExternalModel paras, FromFlow fromFlow)
@@ -135,7 +134,7 @@
 
                     if (result.ErrorCode == 200)
                     {
-                        LogService.Error($"CTS - PushDataToExternalService - exception not existing CustIDs in mainDB, error msg: {result.ErrorMsg}");
+                        LogExtension.LogError($"CTS - PushDataToExternalService - exception not existing CustIDs in mainDB, error msg: {result.ErrorMsg}");
                     }
 
                     if (result.ErrorCode == 200 || result.ErrorCode == 0)
@@ -145,7 +144,7 @@
 
                     if (retryTime == 0)
                     {
-                        LogService.Error($"CTS - PushDataToExternalService - exception from MainDB with error code: {result.ErrorCode}, error msg: {result.ErrorMsg} with listCust: {JsonConvert.SerializeObject(customerClassifications)}");
+                        LogExtension.LogError($"CTS - PushDataToExternalService - exception from MainDB with error code: {result.ErrorCode}, error msg: {result.ErrorMsg} with listCust: {JsonConvert.SerializeObject(customerClassifications)}");
 
                         return false;
                     }
@@ -158,7 +157,7 @@
                     {
                         var jsonDataForLog = JsonConvert.SerializeObject(customerClassifications);
 
-                        LogService.Error($"PushDataToExternalService - PushCustomerClassificationToMain exception {ex.Message} with listCust: {jsonDataForLog}", ex);
+                        LogExtension.LogError($"PushDataToExternalService - PushCustomerClassificationToMain exception {ex.Message} with listCust: {jsonDataForLog}", ex);
 
                         return false;
                     }
@@ -185,7 +184,7 @@
 
                     if (result.ErrorCode != 0 && retryTime == 0)
                     {
-                        LogService.Error($"CTS - UpdateDangerLevelToMainDB throws exception {result.ErrorMsg} with listCust: {JsonConvert.SerializeObject(dangerLevels)}");
+                        LogExtension.LogError($"CTS - UpdateDangerLevelToMainDB throws exception {result.ErrorMsg} with listCust: {JsonConvert.SerializeObject(dangerLevels)}");
 
                         return false;
                     }
@@ -202,7 +201,7 @@
                 {
                     if (retryTime == 0)
                     {
-                        LogService.Error($"CTS - UpdateDangerLevelToMainDB throws exception {ex.Message} with listCust: {JsonConvert.SerializeObject(dangerLevels)}");
+                        LogExtension.LogError($"CTS - UpdateDangerLevelToMainDB throws exception {ex.Message} with listCust: {JsonConvert.SerializeObject(dangerLevels)}");
 
                         return false;
                     }
@@ -224,7 +223,7 @@
                 CustList = customerClassList.ToXmlString()
             };
 
-            repository.Execute(criteria);
+            _repository.Execute(criteria);
 
             return new DBResult { ErrorCode = criteria.ErrorCode, ErrorMsg = criteria.ErrorMessage };
         }
@@ -238,7 +237,7 @@
                     CustIds = string.Join(",", custIds)
                 };
 
-                return repository.Fetch<LatestCCDangerLevelModel>(criteria) ?? Enumerable.Empty<LatestCCDangerLevelModel>();
+                return _repository.Fetch<LatestCCDangerLevelModel>(criteria) ?? Enumerable.Empty<LatestCCDangerLevelModel>();
             }
 
             return new List<LatestCCDangerLevelModel>();
@@ -253,7 +252,7 @@
                     CustIds = custIds
                 };
 
-                return repository.Fetch<LatestCCDangerLevelModel>(criteria) ?? Enumerable.Empty<LatestCCDangerLevelModel>();
+                return _repository.Fetch<LatestCCDangerLevelModel>(criteria) ?? Enumerable.Empty<LatestCCDangerLevelModel>();
             }
 
             return new List<LatestCCDangerLevelModel>();
@@ -269,7 +268,7 @@
                     DangerType = dangerType
                 };
 
-                repository.Execute(criteria);
+                _repository.Execute(criteria);
 
                 return new DBResult { ErrorCode = criteria.ErrorCode, ErrorMsg = criteria.ErrorMessage };
             }

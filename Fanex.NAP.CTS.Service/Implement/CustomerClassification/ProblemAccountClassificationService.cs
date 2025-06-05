@@ -1,9 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Service.Implement
 {
-    using Fanex.Data.Repository;
-    using Fanex.Logging;
-    using Fanex.Logging.Extensions;
-    using Fanex.Logging.Extensions.Database;
+    using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Core;
     using Fanex.NAP.CTS.Core.Utilities;
     using Fanex.NAP.CTS.Criteria.CustomerClassification;
@@ -17,18 +14,20 @@
     using System.Collections.Generic;
     using System.Linq;
     using static Fanex.NAP.CTS.Resource.Consts.Consts;
+    using Fanex.NAP.CTS.Core.Extentions;
 
     public class ProblemAccountClassificationService : BaseCustomerClassificationService, IProblemAccountClassificationService
     {
-        private readonly IDynamicRepository _repository;
+        private readonly ICriteriaService _repository;
         private readonly ICustomerClassificationService _ccService;
-        private readonly IDataLogTrackingServices dataLogTrackingServices;
+        private readonly IDataLogTrackingServices _dataLogTrackingServices;
 
-        public ProblemAccountClassificationService()
+        public ProblemAccountClassificationService(ICriteriaService repository, ICustomerClassificationService ccService, IDataLogTrackingServices dataLogTrackingServices)
+            : base(repository)
         {
-            _repository = new DynamicRepository();
-            _ccService = new CustomerClassificationService();
-            dataLogTrackingServices = new DataLogTrackingServices();
+            _repository = repository;
+            _ccService = ccService;
+            _dataLogTrackingServices = dataLogTrackingServices;
         }
 
         public IEnumerable<long> RescanCustomerClassification(IEnumerable<RescanCustomerClassificationModel> custRescans, CCInputFlow ccInputFlow, bool isToQueue)
@@ -47,17 +46,17 @@
             try
             {
                 if (problemAccounts.Any())
-                {                  
+                {
                     var insertPaResult = InsertProblemAccounts(problemAccounts, ccInputFlow, FunctionId.InsertPAM, isToQueue);
 
                     if (insertPaResult.CustInfos != null && insertPaResult.CustInfos.Any())
                     {
-                        InsertPALogics(insertPaResult.CustInfos);                       
+                        InsertPALogics(insertPaResult.CustInfos);
 
                         _ccService.PushDataToExternalPackge(insertPaResult.CustInfos.Select(x => x.CustID), new PushDataToExternalModel
                         {
                             RoleGroup = RoleGroupType.Member,
-                            ExternalBatchSize = ConfigSettings.PushCCToExternalChunkSize,                          
+                            ExternalBatchSize = ConfigSettings.PushCCToExternalChunkSize,
                             IsUpdateDangerToMainDB = true,
                             IsSyncAFC = ConfigSettings.IsSyncAFCData
                         }, fromFlow);
@@ -66,20 +65,17 @@
             }
             catch (Exception ex)
             {
-                var logMessage = new LogMessage(ex.Message)
-                                  .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                                  .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error(logMessage);
+                ex.LogError();
 
-                dataLogTrackingServices.LogErrorData(ex, serviceName);
+                _dataLogTrackingServices.LogErrorData(ex, serviceName);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
             }
 
             return new DBResult { ErrorCode = 0, ErrorMsg = string.Empty };
         }
-    
+
         private ResultInsertCustomerClassificationModel InsertProblemAccounts(IEnumerable<InsertProblemAccountModel> problemAccounts, CCInputFlow ccInputFlow, FunctionId funcId, bool isToQueue)
         {
             var paClassification = CombinePAWithLosingPerformace(problemAccounts, funcId);
@@ -101,7 +97,7 @@
             var paLosing = GetProblemAccountLosingClassification(custIds, funcId);
 
             return MergeProblemAccountClassification(problemAccounts, paLosing);
-        }       
+        }
 
         public IEnumerable<ProblemAccountLosingClassificationModel> GetProblemAccountLosingClassification(IEnumerable<long> custIds, FunctionId funcId)
         {
@@ -117,7 +113,7 @@
             }
 
             return Enumerable.Empty<ProblemAccountLosingClassificationModel>();
-        }             
+        }
 
         public ResultRemoveCustomerClassificationModel UnmarkProblemAccount(IEnumerable<UnmarkProblemAccountModel> paUnmark, bool isFromQueue)
         {
@@ -175,7 +171,7 @@
                                                      CTSCustID = group.pa.CTSCustID,
                                                      RoleID = group.pa.RoleID,
                                                      SubscriberID = group.pa.SubscriberID,
-                                                     CategoryID = group.pa.CategoryID,                                                    
+                                                     CategoryID = group.pa.CategoryID,
                                                      IsLicensee = group.pa.IsLicensee,
                                                      CreatedBy = group.pa.CreatedBy,
                                                      LastModifiedDate = group.pa.LastModifiedDate,
@@ -188,7 +184,7 @@
                                                      IsFromTVS = group.pa.IsFromTVS,
                                                      RobotCounter = group.pa.RobotCounter,
                                                      TVSRequestID = group.pa.TVSRequestID,
-                                                     IsFromTW = group.pa.IsFromTW,                                                   
+                                                     IsFromTW = group.pa.IsFromTW,
                                                      TVSReasonID = group.pa.TVSReasonID,
                                                      IsParlay = group.pa.IsParlay,
                                                      SportType = group.pa.SportType,
@@ -204,7 +200,7 @@
             }
 
             return Enumerable.Empty<InsertProblemAccountModel>();
-        }      
+        }
 
         public void UpdateBetLimitOfFlaggedCustomer(IEnumerable<long> custId)
         {
@@ -241,7 +237,7 @@
 
             _repository.Execute(criteria);
         }
-      
+
         #endregion Private Methods
 
     }

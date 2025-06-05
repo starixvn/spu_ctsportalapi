@@ -1,7 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Service.Implement
 {
-    using Fanex.Data.Repository;
-    using Fanex.Logging;
+    using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.Category;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Model.Account;
@@ -14,14 +13,15 @@
     using System;
     using System.Collections.Generic;
     using static Fanex.NAP.CTS.Resource.Consts.Consts;
+    using Fanex.NAP.CTS.Core.Extentions;
 
     public class CustomerCategoryService : BaseCustomerClassificationService, ICustomerCategoryService
     {
-        private IDynamicRepository _repository;
+        private ICriteriaService _repository;
 
-        public CustomerCategoryService()
+        public CustomerCategoryService(ICriteriaService repository) : base(repository)
         {
-            _repository = new DynamicRepository();
+            _repository = repository;
         }
 
         public IEnumerable<CategoryCustomerClassModel> GetCustomerClassCategory()
@@ -33,7 +33,7 @@
             catch (Exception ex)
             {
                 var errorMessage = string.Format(ResourcesManager.GetValue(ConstsResources.CATEGORY_CUSTOMER_CLASS));
-                LogService.Error(errorMessage, ex);
+                ex.LogError(errorMessage);
 
                 return new List<CategoryCustomerClassModel>();
             }

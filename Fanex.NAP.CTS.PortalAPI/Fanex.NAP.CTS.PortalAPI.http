@@ -1,0 +1,6 @@
+@Fanex.NAP.CTS.PortalAPI_HostAddress = http://localhost:5284
+
+GET {{Fanex.NAP.CTS.PortalAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

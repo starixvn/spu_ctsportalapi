@@ -1,63 +1,56 @@
 ﻿namespace Fanex.NAP.CTS.Core.Utilities
-{    
-    using System.Configuration;
+{
+    using Microsoft.Extensions.Configuration;
 
     public static class ConfigSettings
     {
-        public static string GetConnectionStringByName(string name)
+        private static IConfiguration Configuration;
+
+        public static void Setup(IConfiguration configuration)
         {
-            string returnValue = null;
-
-            var settings = ConfigurationManager.ConnectionStrings[name];
-
-            if (settings != null)
-            {
-                returnValue = settings.ConnectionString;
-            }
-
-            return returnValue;
+            Configuration = configuration;
         }
 
         public static string GetConfigStringByName(string name)
         {
-            return ConfigurationManager.AppSettings[name];
+            return Configuration?[$"AppSettings:{name}"] ?? string.Empty;
         }
 
         public static string RabbitMQ_Host()
         {
-            return ConfigurationManager.AppSettings["RabbitMQ-Host"];
+            return Configuration?["RabbitMQ-Host"] ?? string.Empty;
         }
 
         public static string RabbitMQ_VirtualHost()
         {
-            return ConfigurationManager.AppSettings["RabbitMQ-VirtualHost"];
+            return Configuration?["RabbitMQ-VirtualHost"] ?? string.Empty;
         }
 
         public static string RabbitMQ_PrefetchCount()
         {
-            return ConfigurationManager.AppSettings["RabbitMQ-PrefetchCount"];
+            return Configuration?["RabbitMQ-PrefetchCount"] ?? string.Empty;
         }
 
         public static string RabbitMQ_Username()
         {
-            return ConfigurationManager.AppSettings["RabbitMQ-Username"];
+            return Configuration?["RabbitMQ-Username"] ?? string.Empty;
         }
 
         public static string RabbitMQ_Password()
         {
-            return ConfigurationManager.AppSettings["RabbitMQ-Password"];
+            return Configuration?["RabbitMQ-Password"] ?? string.Empty;
         }
 
         public static string RabbitMQ_Port()
         {
-            return ConfigurationManager.AppSettings["RabbitMQ-Port"];
+            return Configuration?["RabbitMQ-Port"] ?? string.Empty;
         }
 
         public static string RabbitMQ_Exchange()
         {
-            return ConfigurationManager.AppSettings["RabbitMQ-Exchange"];
+            return Configuration?["RabbitMQ-Exchange"] ?? string.Empty;
         }
-  
+
         public static string StoredProcedurePath => GetConfigStringByName("StoredProcedurePath");
 
         public static string GetProblemCaseMonitor => GetConfigStringByName("CTS_GetProblemCaseMonitor");
@@ -127,7 +120,7 @@
         }
 
         public static string VoidRequestToTVSURL => GetConfigStringByName("VoidRequestToTVS-URL");
-        
+
         public static int VoidRequestToTVSSubIssueTypeId
         {
             get
@@ -140,7 +133,7 @@
                 return subIssueTypeId == 0 ? 27 : subIssueTypeId;
             }
         }
-            
+
         public static int VoidRequestToTVSActionId
         {
             get
@@ -201,7 +194,7 @@
             {
                 var isWriteLog = false;
 
-                var configWriteLog = ConfigurationManager.AppSettings["IsWriteLogInfo"];
+                var configWriteLog = Configuration["IsWriteLogInfo"];
 
                 bool.TryParse(configWriteLog, out isWriteLog);
 
@@ -213,7 +206,7 @@
         {
             get
             {
-                var isFromMySQL = ConfigurationManager.AppSettings["GetFlaggedEviByAssFromMySQL"];
+                var isFromMySQL = Configuration["GetFlaggedEviByAssFromMySQL"];
 
                 return isFromMySQL == "1";
             }
@@ -223,7 +216,7 @@
         {
             get
             {
-                var rs = ConfigurationManager.AppSettings["IsSyncAntiFraudCenterData"];
+                var rs = Configuration["IsSyncAntiFraudCenterData"];
 
                 return rs == "1";
             }

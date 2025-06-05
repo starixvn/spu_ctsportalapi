@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Fanex.NAP.CTS.Model.Subscriber
+﻿namespace Fanex.NAP.CTS.Model.Subscriber
 {
     public class SubscriberInfo
     {

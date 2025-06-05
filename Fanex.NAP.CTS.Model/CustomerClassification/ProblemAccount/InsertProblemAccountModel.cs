@@ -1,8 +1,8 @@
 ﻿namespace Fanex.NAP.CTS.Model.CustomerClassification
 {
+    using Fanex.NAP.CTS.Core.Utilities;
     using Fanex.NAP.CTS.Model.CustomerClassification.RescanCustomerClassification;
     using System;
-    using System.Configuration;
 
     public class InsertProblemAccountModel : CustomerClassificationModel
     {
@@ -26,7 +26,7 @@
             this.IsFromCTS = false;
             this.IsFromTVS = false;
             this.IsFromTW = false;
-            this.CreatedBy = Convert.ToInt32(ConfigurationManager.AppSettings["StarixITUserId"]);            
+            this.CreatedBy = Convert.ToInt32(ConfigurationManager.AppSettings("StarixITUserId"));
         }
 
         public InsertProblemAccountModel(GetInitialTWGroupBettingModel twGBCust, PotentialPACustInfoModel ctsCust)
@@ -42,7 +42,7 @@
             this.IsFromCTS = false;
             this.IsFromTVS = false;
             this.IsFromTW = true;
-            this.CreatedBy = Convert.ToInt32(ConfigurationManager.AppSettings["StarixITUserId"]);         
+            this.CreatedBy = Convert.ToInt32(ConfigurationManager.AppSettings("StarixITUserId"));
         }
 
         public InsertProblemAccountModel(TWInitialSmartPAModel tWInitialSmartCust)
@@ -58,7 +58,7 @@
             this.IsFromCTS = false;
             this.IsFromTVS = false;
             this.IsFromTW = true;
-            this.CreatedBy = Convert.ToInt32(ConfigurationManager.AppSettings["StarixITUserId"]);            
+            this.CreatedBy = Convert.ToInt32(ConfigurationManager.AppSettings("StarixITUserId"));
         }
 
         public InsertProblemAccountModel(RescanCustomerClassificationModel data)

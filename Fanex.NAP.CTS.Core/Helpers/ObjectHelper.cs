@@ -1,9 +1,7 @@
 ﻿namespace Fanex.NAP.CTS.Core.Helpers
 {
     using System;
-    using System.Collections.Generic;
     using System.Reflection;
-    using System.Web.Script.Serialization;
 
     public static class ObjectHelper
     {
@@ -27,22 +25,5 @@
             }
             return target;
         }
-
-        public static string SerializeObj<T>(T obj)
-        {
-            var serializer = new JavaScriptSerializer();
-            serializer.MaxJsonLength = Int32.MaxValue;
-
-            return serializer.Serialize(obj);
-        }
-
-        public static IEnumerable<T> DeserializeObj<T>(string obj)
-        {
-            var serializer = new JavaScriptSerializer();
-            serializer.MaxJsonLength = Int32.MaxValue;
-
-            return serializer.Deserialize<IEnumerable<T>>(obj);
-        }
-
     }
 }

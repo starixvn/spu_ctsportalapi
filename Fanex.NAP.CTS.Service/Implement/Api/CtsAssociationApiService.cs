@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Service.Implement.Api
 {
-    using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.Api.CtsAssociationAPI;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Model.API;
@@ -11,11 +11,11 @@
 
     public class CtsAssociationApiService : ICtsAssociationApiService
     {
-        private readonly IDynamicRepository repository;
+        private readonly ICriteriaService repository;
 
-        public CtsAssociationApiService()
+        public CtsAssociationApiService(ICriteriaService repository)
         {
-            repository = new DynamicRepository();
+            this.repository = repository;
         }
 
         #region Get Association

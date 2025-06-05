@@ -1,7 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Service
 {
-    using Fanex.Data.Repository;
-    using Fanex.Logging;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Helpers.Api;
     using Fanex.NAP.CTS.Core.Utilities;
     using Newtonsoft.Json;
@@ -13,13 +12,6 @@
 
     public class AntiFraudCenterService : IAntiFraudCenterService
     {
-        private readonly IDynamicRepository repository;
-
-        public AntiFraudCenterService()
-        {
-            repository = new DynamicRepository();
-        }
-
         public async Task InsertAFCAccounts(IEnumerable<long> custIds, FromFlow fromFlow, bool isSyncAFC)
         {
             try
@@ -31,7 +23,7 @@
             }
             catch (Exception ex)
             {
-                LogService.Error($"{ConfigSettings.EnvironmentName} - AntiFraudCener - {fromFlow} - Insert Accounts - Exception: "
+                LogExtension.LogError($"AntiFraudCener - {fromFlow} - Insert Accounts - Exception: "
                     + ex.Message
                     + ex.StackTrace + "\n"
                     + ex?.InnerException?.Message + "\n"
@@ -52,7 +44,7 @@
             }
             catch (Exception ex)
             {
-                LogService.Error($"{ConfigSettings.EnvironmentName} - AntiFraudCener - {fromFlow} - Delete Accounts to AFC DB - Exception: "
+                LogExtension.LogError($"AntiFraudCener - {fromFlow} - Delete Accounts to AFC DB - Exception: "
                 + ex.Message
                 + ex.StackTrace + "\n"
                 + ex?.InnerException.Message + "\n"

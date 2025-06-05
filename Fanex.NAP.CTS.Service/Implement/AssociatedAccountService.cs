@@ -1,13 +1,21 @@
 ﻿namespace Fanex.NAP.CTS.Service.Implement
 {
-    using Fanex.Data;
     using Fanex.NAP.CTS.Model.DTO;
     using Fanex.NAP.CTS.Service.Interface;
     using System.Collections.Generic;
     using Fanex.NAP.CTS.Criteria.Api;
     using Fanex.NAP.CTS.Model.Account;
+    using Fanex.NAP.CTS.Core.Service;
+
     public class AssociatedAccountService : IAssociatedAccountService
-    {        
+    {
+        private readonly ICriteriaService _repository;
+
+        public AssociatedAccountService(ICriteriaService repository)
+        {
+            _repository = repository;
+        }
+
         public IEnumerable<CustomerEvidenceForTW> GetFlaggedEvidenceByDirectAssForAPI(string custIdList)
         {
             var criteria = new GetFlaggedEvidenceByDirectAssociationCriteria()
@@ -15,10 +23,7 @@
                 CustIds = custIdList
             };
 
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                return db.Query<CustomerEvidenceForTW>(criteria);
-            }
+            return _repository.Fetch<CustomerEvidenceForTW>(criteria);
         }
 
         public IEnumerable<CustomerEvidenceForTW> GetFlaggedEvidenceByLevel2AssForAPI(string custIdList)
@@ -28,10 +33,7 @@
                 CustIds = custIdList
             };
 
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                return db.Query<CustomerEvidenceForTW>(criteria);
-            }
+            return _repository.Fetch<CustomerEvidenceForTW>(criteria);
         }
 
         public IEnumerable<AssociatedAccountModel> GetAssociationForExtAcc(int custId)
@@ -43,10 +45,7 @@
                 AssType = 1
             };
 
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                return db.Query<AssociatedAccountModel>(criteria);
-            }
+            return _repository.Fetch<AssociatedAccountModel>(criteria);
         }
     }
 }

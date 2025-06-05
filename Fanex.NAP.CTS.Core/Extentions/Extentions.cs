@@ -2,9 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Linq;
-    using System.Reflection;
     using System.Security.Cryptography;
     using System.Text;
 
@@ -20,27 +18,27 @@
                 .Select(g => g.Select(x => x.v));
         }
 
-        public static IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> source, int chunksize)
-        {
-            var q = new Queue<T>();
+        //public static IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> source, int chunksize)
+        //{
+        //    var q = new Queue<T>();
 
-            foreach (var item in source)
-            {
-                // check if q is full
-                if (q.Count == chunksize)
-                {
-                    var ret = q;
-                    q = new Queue<T>();
+        //    foreach (var item in source)
+        //    {
+        //        // check if q is full
+        //        if (q.Count == chunksize)
+        //        {
+        //            var ret = q;
+        //            q = new Queue<T>();
 
-                    yield return ret;
-                }
+        //            yield return ret;
+        //        }
 
-                // enqueue item
-                q.Enqueue(item);
-            }
+        //        // enqueue item
+        //        q.Enqueue(item);
+        //    }
 
-            yield return q;
-        }
+        //    yield return q;
+        //}
 
         public static string CreateMD5Hash(string input)
         {

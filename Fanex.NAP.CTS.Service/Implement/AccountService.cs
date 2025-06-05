@@ -1,7 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Service
 {
-    using Fanex.Data;
-    using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.Account;
     using Fanex.NAP.CTS.Criteria.Account.CustomerCategory;
     using Fanex.NAP.CTS.Criteria.Account.CustomerInfo;
@@ -14,11 +13,11 @@
 
     public class AccountService : IAccountService
     {
-        private readonly IDynamicRepository repository;
+        private readonly ICriteriaService _repository;
 
-        public AccountService()
+        public AccountService(ICriteriaService repository)
         {
-            repository = new DynamicRepository();
+            _repository = repository;
         }
 
         public IEnumerable<CustInfoModel> GetCustInfoByCustID(string custIDs)
@@ -28,7 +27,7 @@
                 CustIDs = custIDs
             };
 
-            return repository.Fetch<CustInfoModel>(criteria);
+            return _repository.Fetch<CustInfoModel>(criteria);
         }
 
         public CustomerInfoAssociationAccountModel GetCustomerInfoAssociationAccount(long ctsCustId)
@@ -38,10 +37,7 @@
                 CTSCustId = ctsCustId
             };
 
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                return db.QueryEntity<CustomerInfoAssociationAccountModel>(criteria);
-            }
+            return _repository.Get<CustomerInfoAssociationAccountModel>(criteria);
         }
 
         public IEnumerable<GetCustomerClassificationModel> GetCustomerClassificationForAPI(string custIdList, string parentCateIdList)
@@ -52,10 +48,7 @@
                 ParentCateIdList = parentCateIdList
             };
 
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                return db.Query<GetCustomerClassificationModel>(criteria);
-            }
+            return _repository.Fetch<GetCustomerClassificationModel>(criteria);
         }     
 
         public IEnumerable<CustomerClassificationGeneralInfoModel> GetCustomerClassificationByCategory(string categoryIdList)
@@ -65,10 +58,7 @@
                 CategoryIDList = categoryIdList
             };
 
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                return db.Query<CustomerClassificationGeneralInfoModel>(criteria);
-            }
+            return _repository.Fetch<CustomerClassificationGeneralInfoModel>(criteria);
         }
 
         public IEnumerable<CTSCustomer> CheckCustomerNotExisted(string custIds, DateTime fromDate, DateTime toDate)
@@ -80,7 +70,7 @@
                 ToDate = toDate
             };
 
-            return repository.Fetch<CTSCustomer>(criteria);
+            return _repository.Fetch<CTSCustomer>(criteria);
         }
 
     }

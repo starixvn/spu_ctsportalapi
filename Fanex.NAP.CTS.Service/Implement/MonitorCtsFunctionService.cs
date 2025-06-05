@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Service.Implement
 {
-    using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Core;
     using Fanex.NAP.CTS.Criteria.MonitorFunction;
     using Fanex.NAP.CTS.Service.Interface;
@@ -8,11 +8,11 @@
 
     public class MonitorCtsFunctionService : IMonitorCtsFunctionService
     {
-        private readonly IDynamicRepository repository;
+        private readonly ICriteriaService _repository;
 
-        public MonitorCtsFunctionService()
+        public MonitorCtsFunctionService(ICriteriaService repository)
         {
-            repository = new DynamicRepository();
+            _repository = repository;
         }
 
         public DBResult StatsAccessmentInsert(SystemId systemId, TrackingCtsFunctionId funcId, int userId)
@@ -24,7 +24,7 @@
                 UserId = userId
             };
 
-            repository.Execute(criteria);
+            _repository.Execute(criteria);
 
             return new DBResult
             {

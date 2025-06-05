@@ -1,7 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Service
 {
-    using Fanex.Data.Repository;
-    using Fanex.Logging;
+    using Fanex.NAP.CTS.Core.Service;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.CTS.Criteria.CustomerClassification;
@@ -9,17 +8,18 @@
     using Newtonsoft.Json;
     using System;
     using System.Linq;
+    using Fanex.NAP.CTS.Core.Extentions;
 
     public class DataLogTrackingServices : IDataLogTrackingServices
     {
-        private readonly IDynamicRepository repository;
+        private readonly ICriteriaService _repository;
 
-        public DataLogTrackingServices()
-        {
-            repository = new DynamicRepository();
-        }
+		public DataLogTrackingServices(ICriteriaService repository)
+		{
+			_repository = repository;
+		}
 
-        public void LogErrorData(Exception exception, string serviceName)
+		public void LogErrorData(Exception exception, string serviceName)
         {
             try
             {
@@ -39,13 +39,7 @@
             }
             catch (Exception ex)
             {
-                var logMessage = new LogMessage(ex.Message)
-                                 .AddMessage($"{serviceName}")
-                                 .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                                 .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
-                                 .AddMessage($"{ DateTime.Now}").ToString();
-
-                LogService.Error(logMessage);
+                ex.LogError();
             }
         }
 
@@ -56,7 +50,7 @@
                 LogInfo = JsonConvert.SerializeObject(logInfo)
             };
 
-            repository.Execute(criteria);
+            _repository.Execute(criteria);
         }
     }
 }

@@ -1,100 +1,106 @@
 ﻿namespace Fanex.NAP.CTS.Service
 {
-    using Fanex.Data.Repository;
-    using Fanex.NAP.CTS.Core.Extentions;
-    using Fanex.NAP.CTS.Core.Utilities;
-    using Fanex.NAP.CTS.Criteria.CustomerClassification;
-    using Fanex.NAP.CTS.Model;
-    using Fanex.NAP.CTS.Model.CustomerClassification;
-    using Fanex.NAP.CTS.Model.RescanCustClassificationModel;
-    using Fanex.NAP.CTS.Model.SyncCustomerToMainDb;
-    using Fanex.NAP.CTS.Service.Implement;
-    using System.Collections.Generic;
-    using System.Linq;
-    using static Fanex.NAP.CTS.Resource.Consts.Consts;
+	using Fanex.NAP.CTS.Core.Service;
+	using Fanex.NAP.CTS.Core.Extentions;
+	using Fanex.NAP.CTS.Core.Utilities;
+	using Fanex.NAP.CTS.Criteria.CustomerClassification;
+	using Fanex.NAP.CTS.Model;
+	using Fanex.NAP.CTS.Model.CustomerClassification;
+	using Fanex.NAP.CTS.Model.RescanCustClassificationModel;
+	using Fanex.NAP.CTS.Model.SyncCustomerToMainDb;
+	using Fanex.NAP.CTS.Service.Implement;
+	using System.Collections.Generic;
+	using System.Linq;
+	using static Fanex.NAP.CTS.Resource.Consts.Consts;
 
-    public class RescanCustomerClassificationService : ProblemAccountClassificationService, IRescanCustomerClassificationService
-    {
-        private readonly ICustomerClassificationService custClassificationService;       
-        private readonly IDynamicRepository repository;
+	public class RescanCustomerClassificationService : ProblemAccountClassificationService, IRescanCustomerClassificationService
+	{
+		private readonly ICustomerClassificationService _custClassificationService;
+		private readonly ICriteriaService _repository;
 
-        public RescanCustomerClassificationService()
-        {
-            custClassificationService = new CustomerClassificationService();         
-            repository = new DynamicRepository();
-        }
+		public RescanCustomerClassificationService(
+			ICustomerClassificationService custClassificationService,
+			ICriteriaService repository,
+			ICustomerClassificationService ccService,
+			IDataLogTrackingServices dataLogTrackingServices)
+			: base(repository, ccService, dataLogTrackingServices)
+		{
+			_custClassificationService = custClassificationService;
+			_repository = repository;
+		}
 
-        /// <summary>
-        /// RescanCustomerClassification for Member
-        /// </summary>
-        public bool RescanCustomerClassification(RescanCustClassificationModel parameters)
-        {
-            var result = new RescanResultModel();
-            var custRescans = GetRescanCustomerClassification(string.Join(",", parameters.CustIds));
 
-            if (custRescans.CustInfos != null && custRescans.CustInfos.Any())
-            {
-                var groupingCustRescans = custRescans.CustInfos.GroupBy(x => x.InputFlowID).Select(g => new { InputFlowID = g.Key, CustRescans = g.Select(x => x) });
+		/// <summary>
+		/// RescanCustomerClassification for Member
+		/// </summary>
+		public bool RescanCustomerClassification(RescanCustClassificationModel parameters)
+		{
+			var result = new RescanResultModel();
+			var custRescans = GetRescanCustomerClassification(string.Join(",", parameters.CustIds));
 
-                foreach (var group in groupingCustRescans)
-                {
-                    if ((CCInputFlow)group.InputFlowID == CCInputFlow.RescanNormal)
-                    {
-                        PreNormalClassification(group.CustRescans.Select(x => x.CustID), parameters);
-                    }
-                    else
-                    {
-                        result = RescanProblemAccount(group.CustRescans, parameters, (CCInputFlow)group.InputFlowID);
-                    }
-                }                
-            }
-            return result.IsSuccess;
-        }
+			if (custRescans.CustInfos != null && custRescans.CustInfos.Any())
+			{
+				var groupingCustRescans = custRescans.CustInfos.GroupBy(x => x.InputFlowID).Select(g => new { InputFlowID = g.Key, CustRescans = g.Select(x => x) });
 
-        #region Private Methods
+				foreach (var group in groupingCustRescans)
+				{
+					if ((CCInputFlow)group.InputFlowID == CCInputFlow.RescanNormal)
+					{
+						PreNormalClassification(group.CustRescans.Select(x => x.CustID), parameters);
+					}
+					else
+					{
+						result = RescanProblemAccount(group.CustRescans, parameters, (CCInputFlow)group.InputFlowID);
+					}
+				}
+			}
+			return result.IsSuccess;
+		}
 
-        private RescanResultModel RescanProblemAccount(IEnumerable<RescanCustomerClassificationModel> custNormals, RescanCustClassificationModel paras, CCInputFlow ccInputFlow)
-        {
-            var resultCustRescans = base.RescanCustomerClassification(custNormals, ccInputFlow, paras.IsToQueue);
+		#region Private Methods
 
-            var isSuccess = PushDataToExternalPackge(resultCustRescans, paras);
+		private RescanResultModel RescanProblemAccount(IEnumerable<RescanCustomerClassificationModel> custNormals, RescanCustClassificationModel paras, CCInputFlow ccInputFlow)
+		{
+			var resultCustRescans = base.RescanCustomerClassification(custNormals, ccInputFlow, paras.IsToQueue);
 
-            return new RescanResultModel()
-            {
-                CustIds = resultCustRescans.ToList(),
-                IsSuccess = isSuccess
-            };
-        }
+			var isSuccess = PushDataToExternalPackge(resultCustRescans, paras);
 
-        private void PreNormalClassification(IEnumerable<long> custNormals, RescanCustClassificationModel paras)
-        {
-            var custIDToString = string.Join(",", custNormals);
+			return new RescanResultModel()
+			{
+				CustIds = resultCustRescans.ToList(),
+				IsSuccess = isSuccess
+			};
+		}
 
-            var criteria = new NormalClassificationRescanCriteria
-            {
-                ListCustId = custIDToString,
-                FunctionId = (int)paras.FunctionId,
-                RescanTypeId = (int)RescanNormalType.Manual
-            };
+		private void PreNormalClassification(IEnumerable<long> custNormals, RescanCustClassificationModel paras)
+		{
+			var custIDToString = string.Join(",", custNormals);
 
-            repository.Execute(criteria);           
-        }
+			var criteria = new NormalClassificationRescanCriteria
+			{
+				ListCustId = custIDToString,
+				FunctionId = (int)paras.FunctionId,
+				RescanTypeId = (int)RescanNormalType.Manual
+			};
 
-        private bool PushDataToExternalPackge(IEnumerable<long> custIdsToSyncCC, RescanCustClassificationModel parameters)
-        {            
-            if (custIdsToSyncCC.Any())
-            {
-                return custClassificationService.PushDataToExternalPackge(custIdsToSyncCC.Distinct(), new PushDataToExternalModel
-                {
-                    ExternalBatchSize = ConfigSettings.PushCCToExternalChunkSize,
-                    IsUpdateDangerToMainDB = parameters.IsUpdateDangerToMainDB,
-                    IsSyncAFC = ConfigSettings.IsSyncAFCData,
-                    RoleGroup = RoleGroupType.Member
-                }, FromFlow.CTSWEB);
-            }
+			_repository.Execute(criteria);
+		}
 
-            return true;
-        }
-        #endregion Private Methods
-    }
+		private bool PushDataToExternalPackge(IEnumerable<long> custIdsToSyncCC, RescanCustClassificationModel parameters)
+		{
+			if (custIdsToSyncCC.Any())
+			{
+				return _custClassificationService.PushDataToExternalPackge(custIdsToSyncCC.Distinct(), new PushDataToExternalModel
+				{
+					ExternalBatchSize = ConfigSettings.PushCCToExternalChunkSize,
+					IsUpdateDangerToMainDB = parameters.IsUpdateDangerToMainDB,
+					IsSyncAFC = ConfigSettings.IsSyncAFCData,
+					RoleGroup = RoleGroupType.Member
+				}, FromFlow.CTSWEB);
+			}
+
+			return true;
+		}
+		#endregion Private Methods
+	}
 }

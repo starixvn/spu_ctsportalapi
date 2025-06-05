@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Service.Implement
 {
-    using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.CustomerClassification.BaseCustomerClassification;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Model.CustomerClassification;   
@@ -8,11 +8,11 @@
 
     public class BaseCustomerClassificationService : IBaseCustomerClassificationService
     {
-        private readonly IDynamicRepository repository;
+        private readonly ICriteriaService _repository;
 
-        public BaseCustomerClassificationService()
+        public BaseCustomerClassificationService(ICriteriaService repository)
         {
-            repository = new DynamicRepository();
+            _repository = repository;
         }
 
         public GetRescanCustomerClassificationModel GetRescanCustomerClassification(string custIDs)
@@ -22,7 +22,7 @@
                 CustIDs = custIDs
             };
 
-            var custInfos = repository.Fetch<RescanCustomerClassificationModel>(criteria);
+            var custInfos = _repository.Fetch<RescanCustomerClassificationModel>(criteria);
 
             return new GetRescanCustomerClassificationModel { CustInfos = custInfos };
         }
@@ -40,7 +40,7 @@
                 FromAction = model.FromAction
             };
 
-            var custInfos = repository.Fetch<CustInfoClassificationModel>(criteria);
+            var custInfos = _repository.Fetch<CustInfoClassificationModel>(criteria);
 
             return new ResultInsertCustomerClassificationModel { CustInfos = custInfos, ErrorMessage = criteria.ErrorMessage };
         }
@@ -58,7 +58,7 @@
                 CustClassificationJson = model.CustClassificationJson
             };
 
-            var custInfos = repository.Fetch<ResultRemoveCCInfoModel>(criteria);
+            var custInfos = _repository.Fetch<ResultRemoveCCInfoModel>(criteria);
 
             return new ResultRemoveCustomerClassificationModel { CustInfos = custInfos, ErrorMessage = criteria.ErrorMessage };
         }
@@ -71,7 +71,7 @@
                 CustClassificationJson = model.CustClassificationJson
             };
 
-            var custInfos = repository.Fetch<CustInfoClassificationBySportModel>(criteria);
+            var custInfos = _repository.Fetch<CustInfoClassificationBySportModel>(criteria);
 
             return new ResultInsertCustomerClassificationBySportModel { CustInfos = custInfos, ErrorMessage = criteria.ErrorMessage };
         }
@@ -84,7 +84,7 @@
                 CustClassificationJson = model.CustClassificationJson
             };
 
-            var custInfos = repository.Fetch<ResultRemoveCCInfoBySportModel>(criteria);
+            var custInfos = _repository.Fetch<ResultRemoveCCInfoBySportModel>(criteria);
 
             return new ResultRemoveCustomerClassificationBySportModel { CustInfos = custInfos, ErrorMessage = criteria.ErrorMessage };
         }

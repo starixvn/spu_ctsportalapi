@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.CTS.Service.Implement.Api
 {
     using Fanex.NAP.CTS.Core.Extentions;
+    using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Core.Utilities;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Model.API;
@@ -11,19 +12,22 @@
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
     using static Fanex.NAP.CTS.Resource.Consts.Consts;
 
     public class LicenseeVIPBAService : BaseCustomerClassificationService, ILicenseeVIPBAService
-    {        
-        private readonly ICustomerClassificationService custClassificationService;
-        private readonly IRescanCustomerClassificationService rescanCustomerClassificationService;
+    {
+        private readonly ICustomerClassificationService _custClassificationService;
+        private readonly IRescanCustomerClassificationService _rescanCustomerClassificationService;
 
-        public LicenseeVIPBAService()
-        {            
-            custClassificationService = new CustomerClassificationService();
-            rescanCustomerClassificationService = new RescanCustomerClassificationService();
+        public LicenseeVIPBAService(
+            ICriteriaService repository,
+            ICustomerClassificationService custClassificationService,
+            IRescanCustomerClassificationService rescanCustomerClassificationService)
+            : base(repository)
+        {
+            _custClassificationService = custClassificationService;
+            _rescanCustomerClassificationService = rescanCustomerClassificationService;
         }
 
         public bool CheckValid(LicenseeVIPBAInputModel parameter)
@@ -51,10 +55,10 @@
 
                 if (custList != null && custList.CustInfos.IsNotNullOrEmpty())
                 {
-                    custClassificationService.PushDataToExternal(custList.CustInfos.Select(x => x.CustID), new PushDataToExternalModel
+                    _custClassificationService.PushDataToExternal(custList.CustInfos.Select(x => x.CustID), new PushDataToExternalModel
                     {
                         IsUpdateDangerToMainDB = false,
-                        IsSyncAFC = false,                    
+                        IsSyncAFC = false,
                         ExternalBatchSize = ConfigSettings.PushCCToExternalChunkSize
                     });
                 }
@@ -76,7 +80,7 @@
 
                 if (resultRemove != null && resultRemove.CustInfos.IsNotNullOrEmpty())
                 {
-                    rescanCustomerClassificationService.RescanCustomerClassification(new RescanCustClassificationModel
+                    _rescanCustomerClassificationService.RescanCustomerClassification(new RescanCustClassificationModel
                     {
                         CustIds = resultRemove.CustInfos.Select(x => x.CustID),
                         IsUpdateDangerToMainDB = true,
@@ -102,10 +106,10 @@
 
                 if (custList != null && custList.CustInfos.IsNotNullOrEmpty())
                 {
-                    custClassificationService.PushDataToExternal(custList.CustInfos.Select(x => x.CustID), new PushDataToExternalModel
+                    _custClassificationService.PushDataToExternal(custList.CustInfos.Select(x => x.CustID), new PushDataToExternalModel
                     {
                         IsUpdateDangerToMainDB = false,
-                        IsSyncAFC = false,                        
+                        IsSyncAFC = false,
                         ExternalBatchSize = ConfigSettings.PushCCToExternalChunkSize
                     });
                 }
@@ -127,9 +131,9 @@
 
                 if (resultRemove.CustInfos != null && resultRemove.CustInfos.Any())
                 {
-                    rescanCustomerClassificationService.RescanCustomerClassification(new RescanCustClassificationModel
+                    _rescanCustomerClassificationService.RescanCustomerClassification(new RescanCustClassificationModel
                     {
-                        CustIds = resultRemove.CustInfos.Select(x=>x.CustID),
+                        CustIds = resultRemove.CustInfos.Select(x => x.CustID),
                         IsUpdateDangerToMainDB = false,
                         FunctionId = FunctionId.RemoveLicBA_API,
                         ServiceName = "RemoveLicBA"
@@ -151,7 +155,7 @@
                     var listCust = custIds.Select(c => new LicenseeVIPBAModel
                     {
                         CustID = c,
-                        CreatedBy = parameter.CreatedBy ?? Convert.ToInt32(ConfigurationManager.AppSettings["StarixITUserId"]) //Lic UserID is not in CTS system, so default StarixIT
+                        CreatedBy = parameter.CreatedBy ?? Convert.ToInt32(ConfigurationManager.AppSettings("StarixITUserId")) //Lic UserID is not in CTS system, so default StarixIT
                     });
 
                     return listCust.Distinct().Chunk(ConfigSettings.InternalChunkSize);
@@ -173,7 +177,7 @@
         }
 
         private ResultRemoveCustomerClassificationModel RemoveLicVIP(IEnumerable<LicenseeVIPBAModel> model)
-        {           
+        {
             var modelRemove = new RemoveCustomerClassificationModel
             {
                 FromAction = (int)FromFlow.CTSAPI,
@@ -196,7 +200,7 @@
 
         private ResultRemoveCustomerClassificationModel RemoveLicBA(IEnumerable<LicenseeVIPBAModel> model)
         {
-            var modelRemove = new RemoveCustomerClassificationModel 
+            var modelRemove = new RemoveCustomerClassificationModel
             {
                 FromAction = (int)FromFlow.CTSAPI,
                 CustClassificationJson = JsonConvert.SerializeObject(model)

@@ -1,11 +1,12 @@
 ﻿namespace Fanex.NAP.CTS.Portal.API.Controllers
 {
     using Fanex.NAP.CTS.Core.Extentions;
+    using Fanex.NAP.CTS.Portal.API.ActionFilter;
     using Fanex.NAP.CTS.ViewModel.API.Http;
     using Microsoft.AspNetCore.Mvc;
     using System.Net;
 
-    //[UnderMaintainaceHappenFilter]
+    [UnderMaintainaceHappenFilter]
     public abstract class BaseController : ControllerBase
     {
         public BaseController()

@@ -3,6 +3,7 @@
     using Fanex.Logging;
     using Fanex.NAP.CTS.Service.Interface;
     using Microsoft.AspNetCore.Mvc.Filters;
+    using Microsoft.Extensions.DependencyInjection;
     using System;
     using static Fanex.NAP.CTS.Resource.Consts.Consts;
 
@@ -17,18 +18,21 @@
 
         public SystemId SystemId { get; set; }
 
-        private static IMonitorCtsFunctionService MonitorService;
+        private IMonitorCtsFunctionService _monitorService;
+        private static IServiceProvider ServiceProvider;
 
         public static void Setup(IServiceProvider serviceProvider)
         {
-            using (var scope = serviceProvider.CreateScope())
-            {
-                MonitorService = scope.ServiceProvider.GetRequiredService<IMonitorCtsFunctionService>();
-            }
+            ServiceProvider = serviceProvider;
         }
 
         public TrackingFunctionUsageFilterAttribute(SystemId systemId, TrackingCtsFunctionId functionId)
         {
+            using (var scope = ServiceProvider.CreateScope())
+            {
+                _monitorService = scope.ServiceProvider.GetRequiredService<IMonitorCtsFunctionService>();
+            }
+
             this.FunctionId = functionId;
             this.SystemId = systemId;
         }
@@ -37,7 +41,7 @@
         {
             try
             {
-                MonitorService.StatsAccessmentInsert(SystemId, FunctionId, 0);
+                _monitorService.StatsAccessmentInsert(SystemId, FunctionId, 0);
             }
             catch (Exception ex)
             {

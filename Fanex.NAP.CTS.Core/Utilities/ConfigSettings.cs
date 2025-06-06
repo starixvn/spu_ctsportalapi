@@ -11,6 +11,10 @@
             Configuration = configuration;
         }
 
+        public static string SentryDsn => Configuration?["Sentry:Dsn"] ?? string.Empty;
+
+        public static string SentryCategory => Configuration?["Sentry:Category"] ?? string.Empty;
+
         public static string GetConfigStringByName(string name)
         {
             return Configuration?[$"AppSettings:{name}"] ?? string.Empty;

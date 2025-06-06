@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.CTS.Portal.API.ActionFilter
 {
-    using ONEbook.UM;
     using ONEbook.UM.Services;
     using Fanex.NAP.CTS.User.Helper;
     using Microsoft.AspNetCore.Mvc.Filters;
@@ -8,11 +7,20 @@
 
     public class UnderMaintainaceHappenFilterAttribute : ActionFilterAttribute
     {
+        private static IServiceProvider ServiceProvider;
         private IMaintenanceService _maintenanceService;
+
+        public static void Setup(IServiceProvider serviceProvider)
+        {
+            ServiceProvider = serviceProvider;
+        }
 
         public UnderMaintainaceHappenFilterAttribute()
         {
-            _maintenanceService = new MaintenanceService(UMClientManager.RestClient, UMClientManager.CacheService, UMClientManager.UMClientConfigs, UMClientManager.HttpContext);
+            using (var scope = ServiceProvider.CreateScope())
+            {
+                _maintenanceService = scope.ServiceProvider.GetRequiredService<IMaintenanceService>();
+            }
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)

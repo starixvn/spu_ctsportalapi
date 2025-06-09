@@ -37,7 +37,7 @@ try
       .StartNewSession()
       .WithSqlServer(configuration)
       .WithMySql(configuration)
-      .UseDefaultDbSettingProvider("~/App_Data/SQL/SPNames.xml")
+      .UseDefaultDbSettingProvider(ConfigSettings.StoredProcedurePath)
       .Run();
 
     // SetupDI

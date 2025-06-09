@@ -117,6 +117,10 @@
                         return "PRO";
                     case "4":
                         return "SIT";
+                    case "5":
+                        return "AWS";
+                    case "6":
+                        return "KLDR";
                     default:
                         return "LOCAL";
                 }

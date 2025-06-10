@@ -1,70 +1,46 @@
-using Fanex.NAP.CTS.Core.Utilities;
-using Fanex.NAP.CTS.Portal.API.ActionFilter;
-using Fanex.NAP.CTS.Service;
-using Fanex.Data;
-using Fanex.Data.MySql;
-using Fanex.Data.SqlServer;
-using Fanex.NAP.CTS.User.Helper;
-using Fanex.RemotingRef;
-using Fanex.Logging.Sentry.RavenClient;
-using Fanex.NAP.CTS.Core.Extentions;
-using Microsoft.OpenApi.Models;
-
-try
+namespace Fanex.NAP.SPU.CTS.JobService
 {
-    var builder = WebApplication.CreateBuilder(args);
+    using Fanex.NAP.CTS.Core.Extentions;
+    using Fanex.NAP.CTS.PortalAPI;
 
-    // Add services to the container.
-    var services = builder.Services;
-    var configuration = builder.Configuration;
-
-    services.AddHttpContextAccessor();
-    services.AddControllers();
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    services.AddEndpointsApiExplorer();
-    services.AddSwaggerGen(c =>
+    public static class Program
     {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fanex.NAP.CTS.PortalAPI", Version = "v1" });
-    });
+        public static void Main(string[] args)
+        {
+            try
+            {
+                var host = CreateHostBuilder(args).Build();
 
-    ConfigSettings.Setup(configuration);
-    Fanex.NAP.CTS.Core.Utilities.ConfigurationManager.Setup(configuration);
-    services.AddFanexLogSentry(configuration);
+                (string.Format("{0} has been started at {1}", typeof(Program).FullName, DateTime.Now)).LogInfo();
 
-    UMHelper.Setup(services);
+                host.Run();
+            }
+            catch (Exception ex)
+            {
+                ex.LogError();
+            }
+        }
 
-    DbSettingProviderManager
-      .StartNewSession()
-      .WithSqlServer(configuration)
-      .WithMySql(configuration)
-      .UseDefaultDbSettingProvider(ConfigSettings.StoredProcedurePath)
-      .Run();
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    var env = hostingContext.HostingEnvironment;
 
-    // SetupDI
-    ServiceDIConfig.Setup(services);
+                    config.SetBasePath(env.ContentRootPath);
+                    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-    var app = builder.Build();
+                    config.AddEnvironmentVariables();
+                })
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseUrls("http://*:5000");
 
-    // Setup ActionFilter
-    TrackingFunctionUsageFilterAttribute.Setup(app.Services);
-    UnderMaintainaceHappenFilterAttribute.Setup(app.Services);
+                    webBuilder
+                    .UseStartup<Startup>();
+                });
+        }
 
-    RefDataTypeContainer
-        .ConnectTo(new Uri(Fanex.NAP.CTS.Core.Utilities.ConfigurationManager.AppSettings("Fanex.RemotingRef.Service.Url")))
-        .FromApplication("CTS Portal API");
-
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
-    app.UseHttpsRedirection();
-
-    app.UseAuthorization();
-
-    app.MapControllers();
-
-    app.Run();
-}
-catch (Exception ex)
-{
-    ex.LogError();
+    }
 }

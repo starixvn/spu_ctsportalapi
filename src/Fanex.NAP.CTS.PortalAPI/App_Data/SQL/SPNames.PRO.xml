@@ -8,8 +8,8 @@
 	<Function Name="Evidence">
 		<Setting Key="CTS_DC_CustEvidence_InsertMultilpleEvidencesForCustomers" SpName="CTS_DC_CustEvidence_InsertMultilpleEvidencesForCustomers" DbName="CTSMain.CTS_DataCenter.ctsAPIAdmin" />
 
-		<Setting Key="CTS_DC_CustEvidence_GetEvidencesByDirectAssociation" SpName="CTS_DC_CustEvidence_GetEvidencesByDirectAssociation" DbName="MySQL.SLAVE.CTS_DataCenter.Reporter" TimeOut="300"/>
-		<Setting Key="CTS_DC_CustEvidence_GetEvidencesByLevel2Association" SpName="CTS_DC_CustEvidence_GetEvidencesByLevel2Association" DbName="MySQL.SLAVE.CTS_DataCenter.Reporter" TimeOut="600"/>
+		<Setting Key="CTS_DC_CustEvidence_GetEvidencesByDirectAssociation" SpName="CTS_DC_CustEvidence_GetEvidencesByDirectAssociation" DbName="CTSMain.CTS_DataCenter.ctsAPI" TimeOut="300"/>
+		<Setting Key="CTS_DC_CustEvidence_GetEvidencesByLevel2Association" SpName="CTS_DC_CustEvidence_GetEvidencesByLevel2Association" DbName="CTSMain.CTS_DataCenter.ctsAPI" TimeOut="600"/>
 		<Setting Key="NAP_BLControl_EvidenceFlagged" SpName="NAP_BLControl_EvidenceFlagged" DbName="DBCust.CustDB.wsv_nap" TimeOut="300"/>
 		<Setting Key="NAP_BLControl_EvidenceUnflagged" SpName="NAP_BLControl_EvidenceUnflagged" DbName="DBCust.CustDB.wsv_nap" TimeOut="300"/>
 	</Function>

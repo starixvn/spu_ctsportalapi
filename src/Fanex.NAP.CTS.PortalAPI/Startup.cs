@@ -1,22 +1,19 @@
-﻿using Fanex.Data;
-using Fanex.Logging.Sentry.RavenClient;
-using Fanex.Logging;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.OpenApi.Models;
-using SharpRaven;
-using Fanex.Data.SqlServer;
-using Fanex.NAP.CTS.Core.Utilities;
-using Fanex.NAP.CTS.Service;
-using Fanex.NAP.CTS.User.Helper;
-using System.Configuration;
-using Fanex.Data.MySql;
-using Fanex.NAP.CTS.Portal.API.ActionFilter;
-using Fanex.RemotingRef;
-using HealthChecks.UI.Client;
-
-namespace Fanex.NAP.CTS.PortalAPI
+﻿namespace Fanex.NAP.CTS.PortalAPI
 {
+    using Fanex.Data;
+    using Fanex.Logging.Sentry.RavenClient;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+    using Microsoft.OpenApi.Models;
+    using Fanex.Data.SqlServer;
+    using Fanex.NAP.CTS.Core.Utilities;
+    using Fanex.NAP.CTS.Service;
+    using Fanex.NAP.CTS.User.Helper;
+    using Fanex.Data.MySql;
+    using Fanex.NAP.CTS.Portal.API.ActionFilter;
+    using Fanex.RemotingRef;
+    using HealthChecks.UI.Client;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)

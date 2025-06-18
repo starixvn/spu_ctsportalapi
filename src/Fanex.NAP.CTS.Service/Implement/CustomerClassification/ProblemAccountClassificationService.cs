@@ -20,9 +20,9 @@
     {
         private readonly ICriteriaService _repository;
         private readonly ICustomerClassificationService _ccService;
-        private readonly IDataLogTrackingServices _dataLogTrackingServices;
+        private readonly IDataLogTrackingService _dataLogTrackingServices;
 
-        public ProblemAccountClassificationService(ICriteriaService repository, ICustomerClassificationService ccService, IDataLogTrackingServices dataLogTrackingServices)
+        public ProblemAccountClassificationService(ICriteriaService repository, ICustomerClassificationService ccService, IDataLogTrackingService dataLogTrackingServices)
             : base(repository)
         {
             _repository = repository;

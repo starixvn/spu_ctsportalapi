@@ -22,7 +22,7 @@
 			ICustomerClassificationService custClassificationService,
 			ICriteriaService repository,
 			ICustomerClassificationService ccService,
-			IDataLogTrackingServices dataLogTrackingServices)
+			IDataLogTrackingService dataLogTrackingServices)
 			: base(repository, ccService, dataLogTrackingServices)
 		{
 			_custClassificationService = custClassificationService;

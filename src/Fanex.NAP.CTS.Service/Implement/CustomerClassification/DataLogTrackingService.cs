@@ -10,11 +10,11 @@
     using System.Linq;
     using Fanex.NAP.CTS.Core.Extentions;
 
-    public class DataLogTrackingServices : IDataLogTrackingServices
+    public class DataLogTrackingService : IDataLogTrackingService
     {
         private readonly ICriteriaService _repository;
 
-		public DataLogTrackingServices(ICriteriaService repository)
+		public DataLogTrackingService(ICriteriaService repository)
 		{
 			_repository = repository;
 		}

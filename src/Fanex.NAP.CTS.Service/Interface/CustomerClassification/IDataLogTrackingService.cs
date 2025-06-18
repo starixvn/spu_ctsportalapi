@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface IDataLogTrackingServices
+    public interface IDataLogTrackingService
     {
         void LogErrorData(Exception exception, string serviceName);
     }

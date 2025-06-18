@@ -38,7 +38,7 @@
         public static void RegisterServiceCustomerClassification(this IServiceCollection services)
         {
             services.AddScoped<ICustomerClassificationService, CustomerClassificationService>();
-            services.AddScoped<IDataLogTrackingServices, DataLogTrackingServices>();
+            services.AddScoped<IDataLogTrackingService, DataLogTrackingService>();
             services.AddScoped<IProblemAccountClassificationService, ProblemAccountClassificationService>();
             services.AddScoped<IRescanCustomerClassificationService, RescanCustomerClassificationService>();
         }

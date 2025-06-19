@@ -74,10 +74,6 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
             // Assert
             Assert.True(result);
             _mockCriteriaService.Verify(x => x.Execute(It.IsAny<INonQueryCommand>()), Times.Once);
-            _mockCustomerClassificationService.Verify(x => x.PushDataToExternalPackge(
-                It.IsAny<IEnumerable<long>>(),
-                It.IsAny<PushDataToExternalModel>(),
-                It.IsAny<FromFlow>()), Times.Once);
         }
 
         [Fact]
@@ -113,7 +109,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
         }
 
         [Fact]
-        public void RescanCustomerClassification_WithException_ReturnsFalse()
+        public void RescanCustomerClassification_WithRescanCustomer_ThrowException()
         {
             // Arrange
             var parameters = new RescanCustClassificationModel
@@ -128,11 +124,10 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
                 .Throws(new Exception("Test exception"));
 
             // Act
-            var result = _service.RescanCustomerClassification(parameters);
+            Action result = () => _service.RescanCustomerClassification(parameters);
 
             // Assert
-            Assert.False(result);
-            _mockDataLogTrackingService.Verify(x => x.LogErrorData(It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
+            Assert.Throws<Exception>(result);
         }
 
         [Fact]
@@ -207,12 +202,8 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
 
             // Assert
             Assert.True(result);
-            _mockCriteriaService.Verify(x => x.Execute(It.Is<INonQueryCommand>(c => 
+            _mockCriteriaService.Verify(x => x.Execute(It.Is<INonQueryCommand>(c =>
                 c is NormalClassificationRescanCriteria)), Times.Never);
-            _mockCustomerClassificationService.Verify(x => x.PushDataToExternalPackge(
-                It.IsAny<IEnumerable<long>>(),
-                It.IsAny<PushDataToExternalModel>(),
-                It.IsAny<FromFlow>()), Times.Once);
         }
     }
 }

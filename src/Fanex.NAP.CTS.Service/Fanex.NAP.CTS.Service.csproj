@@ -1,17 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Fanex.NAP.CTS.Core\Fanex.NAP.CTS.Core.csproj" />
-    <ProjectReference Include="..\Fanex.NAP.CTS.Criteria\Fanex.NAP.CTS.Criteria.csproj" />
-    <ProjectReference Include="..\Fanex.NAP.CTS.Model\Fanex.NAP.CTS.Model.csproj" />
-    <ProjectReference Include="..\Fanex.NAP.CTS.Resource\Fanex.NAP.CTS.Resource.csproj" />
-    <ProjectReference Include="..\Fanex.NAP.CTS.ViewModel\Fanex.NAP.CTS.ViewModel.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Fanex.NAP.CTS.Core\Fanex.NAP.CTS.Core.csproj" />
+		<ProjectReference Include="..\Fanex.NAP.CTS.Criteria\Fanex.NAP.CTS.Criteria.csproj" />
+		<ProjectReference Include="..\Fanex.NAP.CTS.Model\Fanex.NAP.CTS.Model.csproj" />
+		<ProjectReference Include="..\Fanex.NAP.CTS.Resource\Fanex.NAP.CTS.Resource.csproj" />
+		<ProjectReference Include="..\Fanex.NAP.CTS.ViewModel\Fanex.NAP.CTS.ViewModel.csproj" />
+	</ItemGroup>
 
+	<ItemGroup>
+		<SonarQubeSetting Include="sonar.coverage.exclusions">
+			<Value>**/Implement/**/*, **/Features/**/*</Value>
+		</SonarQubeSetting>
+	</ItemGroup>
 </Project>

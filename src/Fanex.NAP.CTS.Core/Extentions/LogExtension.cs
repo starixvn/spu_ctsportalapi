@@ -30,13 +30,14 @@
             LogService.Error(ConfigSettings.EnvironmentName + " " + message);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S6566:Use DateTimeOffset instead of DateTime", Justification = "Legacy code or specific reason")]
         public static string CreateLogMessage(this Exception ex, string message = null)
         {
             return new LogMessage(ConfigSettings.EnvironmentName + " " + ex.Message)
                 .AddMessage(message)
                 .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                 .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
-                .AddMessage($"{DateTime.Now}").ToString();
+                .AddMessage($"{DateTime.Now}").ToString(); // NOSONAR
         }
     }
 }

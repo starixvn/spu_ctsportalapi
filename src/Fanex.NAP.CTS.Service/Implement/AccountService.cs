@@ -22,7 +22,7 @@
 
         public IEnumerable<CustInfoModel> GetCustInfoByCustID(string custIDs)
         {
-            var criteria = new CustInfoByCustIdGetCriteria()
+            var criteria = new CustInfoByCustIdGetCriteria
             {
                 CustIDs = custIDs
             };

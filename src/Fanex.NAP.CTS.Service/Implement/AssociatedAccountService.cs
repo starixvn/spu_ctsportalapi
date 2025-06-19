@@ -18,7 +18,7 @@
 
         public IEnumerable<CustomerEvidenceForTW> GetFlaggedEvidenceByDirectAssForAPI(string custIdList)
         {
-            var criteria = new GetFlaggedEvidenceByDirectAssociationCriteria()
+            var criteria = new GetFlaggedEvidenceByDirectAssociationCriteria
             {
                 CustIds = custIdList
             };
@@ -28,7 +28,7 @@
 
         public IEnumerable<CustomerEvidenceForTW> GetFlaggedEvidenceByLevel2AssForAPI(string custIdList)
         {
-            var criteria = new GetFlaggedEvidenceByLevel2AssociationCriteria()
+            var criteria = new GetFlaggedEvidenceByLevel2AssociationCriteria
             {
                 CustIds = custIdList
             };
@@ -38,7 +38,7 @@
 
         public IEnumerable<AssociatedAccountModel> GetAssociationForExtAcc(int custId)
         {
-            var criteria = new GetAssociationForExtAccCriteria()
+            var criteria = new GetAssociationForExtAccCriteria
             {
                 CustId = custId,
                 AssStatus = 1,

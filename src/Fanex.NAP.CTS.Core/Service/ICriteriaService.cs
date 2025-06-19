@@ -2,7 +2,7 @@
 {
     using Fanex.Data.Repository;
     using Fanex.NAP.CTS.Core.BaseClasses;
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
     public interface ICriteriaService
     {

@@ -17,7 +17,7 @@
 
         public DBResult StatsAccessmentInsert(SystemId systemId, TrackingCtsFunctionId funcId, int userId)
         {
-            var criteria = new StatsAccessmentInsertCriteria()
+            var criteria = new StatsAccessmentInsertCriteria
             {
                 SystemId = (long) systemId,
                 FunctionId = (int) funcId,

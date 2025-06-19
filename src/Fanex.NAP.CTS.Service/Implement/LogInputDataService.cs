@@ -14,28 +14,60 @@
 
     public class LogInputDataService : ILogInputDataService
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S6566:Use DateTimeOffset instead of DateTime", Justification = "Legacy logging code")]
         public void LogInputData(LogInputViewModel content, FunctionId funcId)
         {
             try
             {
-                if (content != null)
+                if (content == null)
                 {
-                    var inputData = MappingLogInputData(content);
+                    return;
+                }
 
-                    if (inputData != null && inputData.Any())
+                var inputData = MappingLogInputData(content);
+
+                if (inputData.IsNullOrEmpty())
+                {
+                    return;
+                }
+
+                var result = LogInputDataAccessLayer(inputData, funcId);
+
+                if (!string.IsNullOrEmpty(result.ErrorMsg))
+                {
+                    LogExtension.LogError(
+                        $"LogInputData failed - FuncId: {(int)funcId}, " +
+                        $"inputData {JsonConvert.SerializeObject(content)} - " +
+                        $"Exception {result.ErrorMsg} - Datetime: {DateTime.Now}");
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtension.LogError(
+                    $"LogInputData failed - FuncId: {(int)funcId}, " +
+                    $"inputData {JsonConvert.SerializeObject(content)} - " +
+                    $"Exception {ex}- Datetime: {DateTime.Now}");
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S6566:Use DateTimeOffset instead of DateTime", Justification = "Legacy logging code")]
+        public void LogInputData(IEnumerable<LogInputDataModel> data, FunctionId funcId)
+        {
+            try
+            {
+                if (data != null && data.Any())
+                {
+                    var result = LogInputDataAccessLayer(data, funcId);
+
+                    if (!string.IsNullOrEmpty(result.ErrorMsg))
                     {
-                        var result = LogInputDataAccessLayer(inputData, funcId);
-
-                        if (!string.IsNullOrEmpty(result.ErrorMsg))
-                        {
-                            LogExtension.LogError($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(content)} - Exception {result.ErrorMsg} - Datetime: {DateTime.Now}");
-                        }
+                        LogExtension.LogError($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(data)} - Exception {result.ErrorMsg} - Datetime: {DateTime.Now}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                LogExtension.LogError($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(content)} - Exception {ex}- Datetime: {DateTime.Now}");
+                LogExtension.LogError($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(data)} - Exception {ex}- Datetime: {DateTime.Now}");
             }
         }
 
@@ -60,7 +92,11 @@
                 logInputData.Add(new LogInputDataModel
                 {
                     CustId = 0,
-                    InputValue = new { content.LicenseeVIPBAModel.Data.CreatedBy, FromSystem = Enum.GetName(typeof(FromSystem), content.LicenseeVIPBAModel.FromSystem), content.LicenseeVIPBAModel.Data.CustIDs }.ToString()
+                    InputValue = new { 
+                        content.LicenseeVIPBAModel.Data.CreatedBy, 
+                        FromSystem = Enum.GetName(typeof(FromSystem), 
+                        content.LicenseeVIPBAModel.FromSystem), 
+                        content.LicenseeVIPBAModel.Data.CustIDs }.ToString()
                 });
             }
 
@@ -69,31 +105,15 @@
                 logInputData.Add(new LogInputDataModel
                 {
                     CustId = 0,
-                    InputValue = new { content.RemoveLicenseeBABySiteModel.Data.CreatedBy, FromSystem = Enum.GetName(typeof(FromSystem), content.RemoveLicenseeBABySiteModel.FromSystem), content.RemoveLicenseeBABySiteModel.Data.SiteName }.ToString()
+                    InputValue = new { 
+                        content.RemoveLicenseeBABySiteModel.Data.CreatedBy,
+                        FromSystem = Enum.GetName(typeof(FromSystem), 
+                        content.RemoveLicenseeBABySiteModel.FromSystem),
+                        content.RemoveLicenseeBABySiteModel.Data.SiteName }.ToString()
                 });
             }
 
             return logInputData;
-        }
-
-        public void LogInputData(IEnumerable<LogInputDataModel> data, FunctionId funcId)
-        {
-            try
-            {
-                if (data != null && data.Any())
-                {
-                    var result = LogInputDataAccessLayer(data, funcId);
-
-                    if (!string.IsNullOrEmpty(result.ErrorMsg))
-                    {
-                        LogExtension.LogError($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(data)} - Exception {result.ErrorMsg} - Datetime: {DateTime.Now}");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtension.LogError($"LogInputData failed - FuncId: {(int)funcId}, inputData {JsonConvert.SerializeObject(data)} - Exception {ex}- Datetime: {DateTime.Now}");
-            }
         }
 
         #region DataAccess Layer

@@ -1,5 +1,8 @@
 ﻿namespace Fanex.NAP.CTS.Service.Implement
 {
+    using System;
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.Category;
     using Fanex.NAP.CTS.Model;
@@ -9,15 +12,12 @@
     using Fanex.NAP.CTS.Model.API.CustomerClassCategory;
     using Fanex.NAP.CTS.Model.CustomerClassification;
     using Fanex.NAP.CTS.Resource;
-    using Newtonsoft.Json;
-    using System;
-    using System.Collections.Generic;
-    using static Fanex.NAP.CTS.Resource.Consts.Consts;
     using Fanex.NAP.CTS.Core.Extentions;
+    using static Fanex.NAP.CTS.Resource.Consts.Consts;
 
     public class CustomerCategoryService : BaseCustomerClassificationService, ICustomerCategoryService
     {
-        private ICriteriaService _repository;
+        private readonly ICriteriaService _repository;
 
         public CustomerCategoryService(ICriteriaService repository) : base(repository)
         {
@@ -41,7 +41,7 @@
 
         public ResultInsertCustomerClassificationModel MarkVVIPCustomerCategory(CustomerCategoryModel custCategoryModel)
         {
-            var custList = new List<AddCustomerCategoryInfoModel>()
+            var custList = new List<AddCustomerCategoryInfoModel>
             {
                 new AddCustomerCategoryInfoModel
                 {
@@ -54,7 +54,7 @@
                 }
             };
 
-            var modelInsert = new InsertCustomerClassificationModel()
+            var modelInsert = new InsertCustomerClassificationModel
             {
                 CustClassificationJson = JsonConvert.SerializeObject(custList),
                 FromAction = (int)FromFlow.CTSWEB,
@@ -66,18 +66,17 @@
 
         public ResultRemoveCustomerClassificationModel UnmarkVVIPCustomerCategory(CustomerCategoryModel custCategoryModel)
         {
-            var custList = new List<RemoveCustomerCategoryInfoModel>()
+            var custList = new List<RemoveCustomerCategoryInfoModel>
             {
                 new RemoveCustomerCategoryInfoModel
                 {
                     CustID = custCategoryModel.CustId,
                     CTSCustID = custCategoryModel.CTSCustId,
-                    //RoleID = custCategoryModel.RoleId,
                     CreatedBy = custCategoryModel.CreatedBy
                 }
             };
 
-            var modelRemove = new RemoveCustomerClassificationModel()
+            var modelRemove = new RemoveCustomerClassificationModel
             {
                 CustClassificationJson = JsonConvert.SerializeObject(custList),
                 FromAction = (int)FromFlow.CTSWEB,
@@ -89,7 +88,7 @@
 
         public IEnumerable<CustomerClassCategoryByCustIDModel> GetCustomerClassCategoryByCustID(long custid)
         {
-            var criteria = new GetCategoryCustomerClassByCustIDCriteria()
+            var criteria = new GetCategoryCustomerClassByCustIDCriteria
             {
                 CustIDs = custid.ToString()
             };

@@ -80,7 +80,7 @@
         {
             var paClassification = CombinePAWithLosingPerformace(problemAccounts, funcId);
 
-            var modelInsert = new InsertCustomerClassificationModel()
+            var modelInsert = new InsertCustomerClassificationModel
             {
                 CustClassificationJson = JsonConvert.SerializeObject(paClassification),
                 IsToQueue = isToQueue,
@@ -103,7 +103,7 @@
         {
             if (custIds != null && custIds.Any())
             {
-                var criteria = new ProblemAccountLosingClassificationGetCriteria()
+                var criteria = new ProblemAccountLosingClassificationGetCriteria
                 {
                     ListCustIds = string.Join(",", custIds.Distinct()),
                     FunctionId = (int)funcId
@@ -117,7 +117,7 @@
 
         public ResultRemoveCustomerClassificationModel UnmarkProblemAccount(IEnumerable<UnmarkProblemAccountModel> paUnmark, bool isFromQueue)
         {
-            var modelRemove = new RemoveCustomerClassificationModel()
+            var modelRemove = new RemoveCustomerClassificationModel
             {
                 CustClassificationJson = JsonConvert.SerializeObject(paUnmark),
                 IsFromQueue = isFromQueue,
@@ -155,7 +155,9 @@
             }
         }
 
-        private IEnumerable<InsertProblemAccountModel> MergeProblemAccountClassification(IEnumerable<InsertProblemAccountModel> problemAccounts, IEnumerable<ProblemAccountLosingClassificationModel> probAccountLosing)
+        private IEnumerable<InsertProblemAccountModel> MergeProblemAccountClassification(
+            IEnumerable<InsertProblemAccountModel> problemAccounts,
+            IEnumerable<ProblemAccountLosingClassificationModel> probAccountLosing)
         {
             if (problemAccounts != null && problemAccounts.Any())
             {

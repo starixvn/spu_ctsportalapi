@@ -10,9 +10,9 @@
     {
         IEnumerable<CategoryCustomerClassModel> GetCustomerClassCategory();
 
-        ResultInsertCustomerClassificationModel MarkVVIPCustomerCategory(CustomerCategoryModel categoryModel);
+        ResultInsertCustomerClassificationModel MarkVVIPCustomerCategory(CustomerCategoryModel custCategoryModel);
 
-        ResultRemoveCustomerClassificationModel UnmarkVVIPCustomerCategory(CustomerCategoryModel categoryModel);
+        ResultRemoveCustomerClassificationModel UnmarkVVIPCustomerCategory(CustomerCategoryModel custCategoryModel);
 
         IEnumerable<CustomerClassCategoryByCustIDModel> GetCustomerClassCategoryByCustID(long custid);
     }

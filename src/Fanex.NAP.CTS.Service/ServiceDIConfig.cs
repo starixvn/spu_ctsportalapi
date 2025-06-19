@@ -6,6 +6,8 @@
     using Fanex.NAP.CTS.Service.Interface.Api;
     using Fanex.NAP.CTS.Service.Interface;
     using Fanex.NAP.CTS.Service.Implement;
+    using Fanex.NAP.CTS.Service.Implement.CustomerClassification;
+    using Fanex.NAP.CTS.Service.Interface.CustomerClassification;
 
     public static class ServiceDIConfig
     {

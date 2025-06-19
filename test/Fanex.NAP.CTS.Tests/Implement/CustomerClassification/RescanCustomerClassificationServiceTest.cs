@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.NAP.CTS.Core.Service;
-using Fanex.NAP.CTS.Model;
-using Fanex.NAP.CTS.Model.CustomerClassification;
-using Fanex.NAP.CTS.Model.RescanCustClassificationModel;
-using Fanex.NAP.CTS.Model.SyncCustomerToMainDb;
-using Fanex.NAP.CTS.Service;
-using Fanex.NAP.CTS.Service.Implement;
-using Fanex.Data.Repository;
-using Fanex.NAP.CTS.Criteria.CustomerClassification;
-using Moq;
-using Xunit;
-using static Fanex.NAP.CTS.Resource.Consts.Consts;
-
-namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
+﻿namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
 {
+    using Fanex.NAP.CTS.Core.Service;
+    using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Model.CustomerClassification;
+    using Fanex.NAP.CTS.Model.RescanCustClassificationModel;
+    using Fanex.NAP.CTS.Model.SyncCustomerToMainDb;
+    using Fanex.NAP.CTS.Service;
+    using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Criteria.CustomerClassification;
+    using Moq;
+    using Fanex.NAP.CTS.Service.Implement.CustomerClassification;
+    using static Fanex.NAP.CTS.Resource.Consts.Consts;
+
     public class RescanCustomerClassificationServiceTest
     {
         private readonly Mock<ICustomerClassificationService> _mockCustomerClassificationService;

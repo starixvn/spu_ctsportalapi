@@ -1,7 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Service.Implement.Api
 {
     using Fanex.NAP.CTS.Core.Service;
-    using Fanex.NAP.CTS.Core.BaseClasses;
     using Fanex.NAP.CTS.Criteria.Api.FPS.Account;
     using Fanex.NAP.CTS.Criteria.Api.FPS.Device;
     using Fanex.NAP.CTS.Criteria.Api.FPS.Search;
@@ -104,7 +103,7 @@
         public GetAssMatrixAccountByCustSubscriberResultModel GetAssMatrixAccountByCustSubscriber_DCSCenter(GetAssMatrixAccountByCustSubscriberParamModel param)
         {
             var data = new GetAssMatrixAccountByCustSubscriberResultModel();
-            var criteria = new GetAssMatrixAccountByCustSubscriberDCSCenterCriteria()
+            var criteria = new GetAssMatrixAccountByCustSubscriberDCSCenterCriteria
             {
                 SubscriberID = param.SubscriberID,
                 CTSCustID = param.CTSCustID,
@@ -180,7 +179,7 @@
                 Take = param.Take
             };
 
-            data.Items = _repository.Fetch<LatestTransactionDCSCenterItemModel>(criteria).Select(x => new LatestTransactionItemModel()
+            data.Items = _repository.Fetch<LatestTransactionDCSCenterItemModel>(criteria).Select(x => new LatestTransactionItemModel
             {
                 Action = x.Action,
                 ActionResult = x.ActionResult,
@@ -272,7 +271,7 @@
                 items = _repository.Fetch<SearchAccountItemDCSExtraModel>(criteria);
             }
 
-            data.Items = items.Select(x => new SearchAccountItemModel()
+            data.Items = items.Select(x => new SearchAccountItemModel
             {
                 CTSCustID = x.AccountID,
                 SubscriberID = x.SubscriberID,
@@ -349,7 +348,7 @@
         public GetAssMatrixAccountByCustSubscriberResultModel GetAssMatrixAccountByCustSubscriber_DCSExtra(GetAssMatrixAccountByCustSubscriberParamModel param)
         {
             var data = new GetAssMatrixAccountByCustSubscriberResultModel();
-            var criteria = new GetAssMatrixAccountByCustSubscriberDCSExtraCriteria()
+            var criteria = new GetAssMatrixAccountByCustSubscriberDCSExtraCriteria
             {
                 SubscriberID = param.SubscriberID,
                 CTSCustID = param.CTSCustID,
@@ -374,7 +373,7 @@
         #region device
         public GetAssDeviceInfoByIDSubscriberModel GetAssDeviceInfoByIDSubscriber_DCSExtra(GetAssDeviceInfoByIDSubscriberParamModel param)
         {
-            var criteria = new GetAssDeviceInfoByIDSubscriberDCSExtraCriteria()
+            var criteria = new GetAssDeviceInfoByIDSubscriberDCSExtraCriteria
             {
                 DeviceID = param.DeviceID,
                 SubscriberID = param.SubscriberID,
@@ -438,7 +437,7 @@
                 Take = param.Take,
             };
 
-            return new TransactionHistoryByDeviceDCSExtraResultModel()
+            return new TransactionHistoryByDeviceDCSExtraResultModel
             {
                 Items = _repository.Fetch<TransactionHistoryByDeviceDCSExtraItemModel>(criteria),
                 TotalItem = criteria.TotalItem
@@ -457,7 +456,7 @@
                 Take = param.Take,
             };
 
-            return new TransactionHistoryByAccountDCSExtraResultModel()
+            return new TransactionHistoryByAccountDCSExtraResultModel
             {
                 Items = _repository.Fetch<TransactionHistoryByAccountDCSExtraItemModel>(criteria),
                 TotalItem = criteria.TotalItem
@@ -484,27 +483,30 @@
                 Take = param.Take
             };
 
-            data.Items = _repository.Fetch<TransactionDCSExtraItemModel>(criteria).Select(x => new TransactionItemModel()
-            {
-                Action = x.Action,
-                ActionResult = x.ActionResult,
-                Browser = x.Browser,
-                CTSCustID = x.AccountID,
-                FirstDeviceCode = x.FirstDeviceCode,
-                IP = x.IP,
-                OS = x.OS,
-                UserName = x.LoginName,
-                RobotTracking = x.RobotTracking,
-                SubscriberID = x.SubscriberID,
-                TransID = x.TransID,
-                TransTime = x.TransTime,
-                URLDetails = x.URLDetails,
-                City = x.City,
-                Country = x.Country,
-                ISP = x.ISP,
-                Region = x.Region,
-                UserAgent = x.UserAgent,
-            });
+            data.Items = _repository
+                            .Fetch<TransactionDCSExtraItemModel>(criteria)
+                            .Select(x => new TransactionItemModel
+                            {
+                                Action = x.Action,
+                                ActionResult = x.ActionResult,
+                                Browser = x.Browser,
+                                CTSCustID = x.AccountID,
+                                FirstDeviceCode = x.FirstDeviceCode,
+                                IP = x.IP,
+                                OS = x.OS,
+                                UserName = x.LoginName,
+                                RobotTracking = x.RobotTracking,
+                                SubscriberID = x.SubscriberID,
+                                TransID = x.TransID,
+                                TransTime = x.TransTime,
+                                URLDetails = x.URLDetails,
+                                City = x.City,
+                                Country = x.Country,
+                                ISP = x.ISP,
+                                Region = x.Region,
+                                UserAgent = x.UserAgent,
+                            });
+
             data.TotalItem = criteria.TotalItem;
 
             return data;
@@ -522,7 +524,7 @@
                 Take = param.Take
             };
 
-            data.Items = _repository.Fetch<LatestTransactionDCSExtraItemModel>(criteria).Select(x => new LatestTransactionItemModel()
+            data.Items = _repository.Fetch<LatestTransactionDCSExtraItemModel>(criteria).Select(x => new LatestTransactionItemModel
             {
                 Action = x.Action,
                 ActionResult = x.ActionResult,

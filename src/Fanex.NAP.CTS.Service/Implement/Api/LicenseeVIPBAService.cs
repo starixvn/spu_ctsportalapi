@@ -9,6 +9,7 @@
     using Fanex.NAP.CTS.Model.RescanCustClassificationModel;
     using Fanex.NAP.CTS.Model.SyncCustomerToMainDb;
     using Fanex.NAP.CTS.Service.Interface.Api;
+    using Fanex.NAP.CTS.Service.Interface.CustomerClassification;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;

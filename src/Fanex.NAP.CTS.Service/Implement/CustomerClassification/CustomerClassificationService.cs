@@ -73,27 +73,31 @@
 
         private bool UpdateDangerLevelToMainDB(IEnumerable<LatestCCDangerLevelModel> lastestClassifications)
         {
-            if (lastestClassifications != null && lastestClassifications.Any())
+            if (lastestClassifications.IsNullOrEmpty())
             {
-                var groupDangerType = lastestClassifications.Where(c => c.DangerLevel != null).GroupBy(c => c.DangerLevelType);
+                return true;
+            }
 
-                if (groupDangerType != null && groupDangerType.Any())
+            var groupDangerType = lastestClassifications.Where(c => c.DangerLevel != null).GroupBy(c => c.DangerLevelType);
+
+            if (groupDangerType.IsNullOrEmpty())
+            {
+                return true;
+            }
+
+            foreach (var dangerBatch in groupDangerType)
+            {
+                var updateDangerLevel = dangerBatch.Select(c => new DangerLevelModel
                 {
-                    foreach (var dangerBatch in groupDangerType)
-                    {
-                        var updateDangerLevel = dangerBatch.Select(c => new DangerLevelModel()
-                        {
-                            CustId = c.CustID,
-                            DangerLevel = c.DangerLevel.Value
-                        });
+                    CustId = c.CustID,
+                    DangerLevel = c.DangerLevel.Value
+                });
 
-                        var isUpdateSuccessful = RetryUpdateDangerLevelToMainDB(updateDangerLevel, dangerBatch.Key.Value, Consts.Retry);
+                var isUpdateSuccessful = RetryUpdateDangerLevelToMainDB(updateDangerLevel, dangerBatch.Key.Value, Consts.Retry);
 
-                        if (!isUpdateSuccessful)
-                        {
-                            return isUpdateSuccessful;
-                        }
-                    }
+                if (!isUpdateSuccessful)
+                {
+                    return isUpdateSuccessful;
                 }
             }
 
@@ -106,7 +110,7 @@
 
             if (lastestClassifications != null && lastestClassifications.Any())
             {
-                var custClassification = lastestClassifications.Select(c => new LatestClassificationModel()
+                var custClassification = lastestClassifications.Select(c => new LatestClassificationModel
                 {
                     CustId = c.CustID,
                     Category = c.CategoryID,
@@ -144,7 +148,10 @@
 
                     if (retryTime == 0)
                     {
-                        LogExtension.LogError($"CTS - PushDataToExternalService - exception from MainDB with error code: {result.ErrorCode}, error msg: {result.ErrorMsg} with listCust: {JsonConvert.SerializeObject(customerClassifications)}");
+                        LogExtension.LogError(
+                            $"CTS - PushDataToExternalService - exception from MainDB with error code: " +
+                            $"{result.ErrorCode}, error msg: {result.ErrorMsg} " +
+                            $"with listCust: {JsonConvert.SerializeObject(customerClassifications)}");
 
                         return false;
                     }

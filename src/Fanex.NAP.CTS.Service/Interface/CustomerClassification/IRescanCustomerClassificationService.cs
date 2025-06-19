@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.CTS.Service
+﻿namespace Fanex.NAP.CTS.Service.Interface.CustomerClassification
 {
     using Fanex.NAP.CTS.Model.RescanCustClassificationModel;
 

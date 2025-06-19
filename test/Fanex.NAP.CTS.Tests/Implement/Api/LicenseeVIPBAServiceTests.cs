@@ -9,6 +9,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.Api
     using Fanex.NAP.CTS.Model.SyncCustomerToMainDb;
     using Fanex.NAP.CTS.Service;
     using Fanex.NAP.CTS.Service.Implement.Api;
+    using Fanex.NAP.CTS.Service.Interface.CustomerClassification;
     using Moq;
     using System.Collections.Generic;
     using System.Linq;

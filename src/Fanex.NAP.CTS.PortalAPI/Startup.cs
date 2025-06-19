@@ -36,12 +36,12 @@
             });
 
             ConfigSettings.Setup(Configuration);
-            Core.Utilities.ConfigurationManager.Setup(Configuration);
+            ConfigurationManager.Setup(Configuration);
             services.AddFanexLogSentry(Configuration);
             UMHelper.Setup(services);
 
             RefDataTypeContainer
-                .ConnectTo(new Uri(Core.Utilities.ConfigurationManager.AppSettings("Fanex.RemotingRef.Service.Url")))
+                .ConnectTo(new Uri(ConfigurationManager.AppSettings("Fanex.RemotingRef.Service.Url")))
                 .FromApplication("CTS Portal API");
 
             DbSettingProviderManager

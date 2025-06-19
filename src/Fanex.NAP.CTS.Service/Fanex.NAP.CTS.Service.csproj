@@ -14,9 +14,4 @@
 		<ProjectReference Include="..\Fanex.NAP.CTS.ViewModel\Fanex.NAP.CTS.ViewModel.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<SonarQubeSetting Include="sonar.coverage.exclusions">
-			<Value>**/Implement/**/*, **/Features/**/*</Value>
-		</SonarQubeSetting>
-	</ItemGroup>
 </Project>

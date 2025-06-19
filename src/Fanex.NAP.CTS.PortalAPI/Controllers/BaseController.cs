@@ -31,5 +31,11 @@
         {
             return Ok(data);
         }
+
+        [NonAction]
+        protected IActionResult JsonResult(object? data)
+        {
+            return new JsonResult(data);
+        }
     }
 }

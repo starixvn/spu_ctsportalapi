@@ -68,7 +68,7 @@
             {
                 _commonService.CheckConnection();
 
-                return Ok("ok");
+                return JsonResult("Ok");
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@
         /// <returns></returns>
         [HttpGet]
         [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssociationForExtAccAPI)]
-        public string GetAssociationForExtAcc(int custId)
+        public IActionResult GetAssociationForExtAcc(int custId)
         {
             string xmlString = string.Empty;
             try
@@ -104,7 +104,7 @@
                     xmlString = XmlHelper.ToXmlString(associationList);
                 }
 
-                return xmlString;
+                return JsonResult(xmlString);
             }
             catch (Exception ex)
             {
@@ -120,7 +120,7 @@
         /// <returns>Customer classification in XML format</returns>
         [HttpGet]
         [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetCustomerClassificationAPI)]
-        public string GetCustomerClassification(string custIdList)
+        public IActionResult GetCustomerClassification(string custIdList)
         {
             var result = string.Empty;
             try
@@ -151,7 +151,7 @@
                     + "\nException" + ex.Message + ex.StackTrace);
             }
 
-            return result;
+            return JsonResult(result);
         }
 
         /// <summary>
@@ -161,12 +161,12 @@
         /// <returns>Customer classification in XML format</returns>
         [HttpGet]
         [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetCustomerClassificationByCategoryIDsAPI)]
-        public string GetCustomerClassificationByCategoryIDs(string categoryIDList)
+        public IActionResult GetCustomerClassificationByCategoryIDs(string categoryIDList)
         {
             try
             {
                 var custClassifications = _accountService.GetCustomerClassificationByCategory(categoryIDList);
-                return custClassifications.Any()
+                var result = custClassifications.Any()
                     ? custClassifications.Select(c => new CustomerClassification()
                     {
                         CustID = c.CustID,
@@ -174,13 +174,15 @@
                         CategoryName = c.CategoryName
                     }).ToXmlString()
                     : string.Empty;
+
+                return JsonResult(result);
             }
             catch (Exception ex)
             {
                 LogExtension.LogError("GetCustomerClassificationByCategoryIDs failed: " + ex.Message + ex.StackTrace);
             }
 
-            return string.Empty;
+            return JsonResult(string.Empty);
         }
 
         /// <summary>

@@ -94,6 +94,12 @@
 		<Setting Key="DCS_DC_Transaction_GetLatestBySubscriber" SpName="DCS_DC_Transaction_GetLatestBySubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
 		<Setting Key="DCS_DC_Association_GetAccountsPerDevice" SpName="DCS_DC_Association_GetAccountsPerDevice" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
 		<Setting Key="DCS_DC_Association_GetDevicesPerAccount" SpName="DCS_DC_Association_GetDevicesPerAccount" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Device_GetByDeviceCodeSubscriber" SpName="DCS_DC_Device_GetByDeviceCodeSubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Association_GetDeviceInfoByDeviceSubscriber" SpName="DCS_DC_Association_GetDeviceInfoByDeviceSubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Association_GetAssociationAccountByDeviceSubscriber" SpName="DCS_DC_Association_GetAssociationAccountByDeviceSubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Association_GetAssociationDeviceByDeviceSubscriber" SpName="DCS_DC_Association_GetAssociationDeviceByDeviceSubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Association_GetAssociationMatrixByDeviceSubscriber" SpName="DCS_DC_Association_GetAssociationMatrixByDeviceSubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Transaction_GetHistoryByDeviceSubscriber" SpName="DCS_DC_Transaction_GetHistoryByDeviceSubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
 		<Setting Key="DCS_ET_Subscriber_GetInfoBySubscriberName" SpName="DCS_ET_Subscriber_GetInfoBySubscriberName" DbName="CTSMain.DCS_Extra.ctsAPI" />
 		<Setting Key="DCS_ET_Transaction_GetHistoryByAccountSubscriber" SpName="DCS_ET_Transaction_GetHistoryByAccountSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
 		<Setting Key="DCS_ET_Transaction_GetHistoryBySubscriber" SpName="DCS_ET_Transaction_GetHistoryBySubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />

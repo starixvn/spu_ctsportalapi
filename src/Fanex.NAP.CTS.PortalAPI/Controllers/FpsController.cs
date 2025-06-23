@@ -180,6 +180,113 @@
                 return Ok(new GetAccountsPerDeviceResultModel());
             }
         }
+
+        [HttpPost]
+        public IActionResult SearchDeviceDCSCenter(SearchDeviceParamModel param)
+        {
+            try
+            {
+                var data = _fpsService.SearchDevice_DCSCenter(param);
+
+                return Ok(data.ToList());
+
+            }
+            catch (Exception ex)
+            {
+                LogExtension.LogError("FPS Search Device DCS Center exception: " + ex.Message);
+                return Ok(new List<SearchDeviceItemModel>());
+            }
+        }
+
+        [HttpPost]
+        public IActionResult GetAssDeviceInfoByIdSubscriberDCSCenter(GetAssDeviceInfoByIDSubscriberParamModel param)
+        {
+            try
+            {
+                var data = _fpsService.GetAssDeviceInfoByIDSubscriber_DCSCenter(param);
+
+                return Ok(data);
+
+            }
+            catch (Exception ex)
+            {
+                LogExtension.LogError("FPS Get Ass Account info by id subscriber DCS Center exception: " + ex.Message);
+                return Ok(new GetAssDeviceInfoByIDSubscriberModel());
+            }
+        }
+
+        [HttpPost]
+        public IActionResult GetAssAccountsByDeviceSubscriberDCSCenter(GetAssAccByDevSubscriberParamModel param)
+        {
+            try
+            {
+                var data = _fpsService.GetAssAccByDevSubscriber_DCSCenter(param);
+
+                return Ok(data.ToList());
+            }
+            catch (Exception ex)
+            {
+                LogExtension.LogError("FPS Get Ass Account by Device subscriber DCS Center exception: " + ex.Message);
+                return Ok(new List<GetAssAccByDevSubscriberItemDCSCenterModel>());
+            }
+        }
+
+        [HttpPost]
+        public IActionResult GetAssDevByDeviceSubscriberDCSCenter(GetAssDevByDevSubscriberParamModel param)
+        {
+            try
+            {
+                var data = _fpsService.GetAssDevByDevSubscriber_DCSCenter(param);
+
+                return Ok(data.ToList());
+
+            }
+            catch (Exception ex)
+            {
+                LogExtension.LogError("FPS Get Ass Device by Device subscriber DCS Center exception: " + ex.Message);
+                return Ok(new List<GetAssDevByDevSubscriberItemModel>());
+            }
+        }
+
+        [HttpPost]
+        public IActionResult GetAssMatrixByDeviceSubscriberDCSCenter(GetAssMatrixByDeviceSubscriberParamModel param)
+        {
+            try
+            {
+                var data = _fpsService.GetAssMatrixByDeviceSubscriber_DCSCenter(param);
+
+                return Ok(data.ToList());
+
+            }
+            catch (Exception ex)
+            {
+                LogExtension.LogError("FPS Get Ass Matrix by Device subscriber DCS Center exception: " + ex.Message);
+                return Ok(new List<GetAssMatrixByDeviceSubscriberItemDataCenterModel>());
+            }
+        }
+
+        [HttpPost]
+        public IActionResult GetTransactionHistoryByDeviceDCSCenter(TransactionHistoryByDeviceParamModel param)
+        {
+            try
+            {
+                var data = _fpsService.GetTransactionHistoryByDeviceDCSCenter(param);
+
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                LogExtension.LogError("FPS Get Transaction History By Device DCS Center exception: " + ex.Message);
+
+                if (!string.IsNullOrEmpty(ex.Message) && ex.Message.ToLower().Contains("timeout expired"))
+                {
+                    return Ok(new TransactionHistoryByDeviceDCSCenterResultModel() { IsTimeout = true });
+                }
+
+                return Ok(new TransactionHistoryByDeviceDCSCenterResultModel());
+            }
+        }
+
         #endregion dcs center
 
         #region dcs extra

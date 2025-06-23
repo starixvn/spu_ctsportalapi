@@ -451,6 +451,280 @@ namespace Fanex.NAP.CTS.Tests.Implement.Api
             _mockRepository.Verify(x => x.Fetch<GetDevicesPerAccountItemModel>(It.IsAny<GetDevicesPerAccountDCSCenterCriteria>()), Times.Once);
         }
 
+        [Fact]
+        public void SearchDevice_DCSCenter_WithValidParams_ReturnsExpectedResult()
+        {
+            // Arrange
+            var param = new SearchDeviceParamModel
+            {
+                DeviceCode = "DEV001",
+                SubscriberID = 12345
+            };
+
+            var expectedResult = new List<SearchDeviceItemModel>
+            {
+                new SearchDeviceItemModel
+                {
+                    DeviceID = 1L,
+                    DeviceCode = "DEV001",
+                    OS = "Windows"
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<SearchDeviceItemModel>(It.IsAny<GetDeviceByDeviceCodeSubscriberDCSCenterCriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.SearchDevice_DCSCenter(param);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Single(result);
+            var item = result.First();
+            Assert.Equal(expectedResult[0].DeviceID, item.DeviceID);
+            Assert.Equal(expectedResult[0].DeviceCode, item.DeviceCode);
+            Assert.Equal(expectedResult[0].OS, item.OS);
+            _mockRepository.Verify(x => x.Fetch<SearchDeviceItemModel>(It.IsAny<GetDeviceByDeviceCodeSubscriberDCSCenterCriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetAssDeviceInfoByIDSubscriber_DCSCenter_WithValidParams_ReturnsExpectedResult()
+        {
+            // Arrange
+            var param = new GetAssDeviceInfoByIDSubscriberParamModel
+            {
+                DeviceID = 123,
+                SubscriberID = 456
+            };
+
+            var expectedFirstResult = new List<GetAssDeviceInfoByIDSubscriberModel>
+            {
+                new GetAssDeviceInfoByIDSubscriberModel
+                {
+                    AssociatedAccounts = 5
+                }
+            };
+
+            var expectedSecondResult = new List<GetAssDeviceFirstSeen>
+            {
+                new GetAssDeviceFirstSeen
+                {
+                    SubscriberID = 456,
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<GetAssDeviceInfoByIDSubscriberModel, GetAssDeviceFirstSeen>(It.IsAny<GetAssDeviceInfoByIDSubscriberDCSCenterCriteria>()))
+                .Returns((expectedFirstResult, expectedSecondResult));
+
+            // Act
+            var result = _service.GetAssDeviceInfoByIDSubscriber_DCSCenter(param);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(expectedFirstResult[0].AssociatedAccounts, result.AssociatedAccounts);
+            Assert.Equal(expectedSecondResult, result.FirstSeenBySubscriber);
+            _mockRepository.Verify(x => x.Fetch<GetAssDeviceInfoByIDSubscriberModel, GetAssDeviceFirstSeen>(It.IsAny<GetAssDeviceInfoByIDSubscriberDCSCenterCriteria>()), Times.Once);
+        }
+
+
+        [Fact]
+        public void GetAssAccByDevSubscriber_DCSCenter_WithValidParams_ReturnsExpectedResult()
+        {
+            // Arrange
+            var param = new GetAssAccByDevSubscriberParamModel
+            {
+                DeviceID = 123,
+                SubscriberID = 456
+            };
+
+            var expectedItems = new List<GetAssAccByDevSubscriberItemDCSCenterModel>
+                {
+                    new GetAssAccByDevSubscriberItemDCSCenterModel
+                    {
+                        AccountID = 789,
+                        RegisterName = "testuser",
+                        UserName = "testuser",
+                        DeviceInCommon = 2,
+                        OtherDeives = 1,
+                        AssociatedAccount = 5
+                    }
+                };
+
+            _mockRepository.Setup(x => x.Fetch<GetAssAccByDevSubscriberItemDCSCenterModel>(It.IsAny<GetAssAccByDevSubscriberDCSCenterCriteria>()))
+                .Returns(expectedItems);
+
+            // Act
+            var result = _service.GetAssAccByDevSubscriber_DCSCenter(param);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotNull(result);
+            Assert.Single(result);
+
+            var item = result.First();
+
+            Assert.Equal(expectedItems[0].AccountID, item.AccountID);
+            Assert.Equal(expectedItems[0].RegisterName, item.RegisterName);
+            Assert.Equal(expectedItems[0].UserName, item.UserName);
+            Assert.Equal(expectedItems[0].DeviceInCommon, item.DeviceInCommon);
+            Assert.Equal(expectedItems[0].OtherDeives, item.OtherDeives);
+            Assert.Equal(expectedItems[0].AssociatedAccount, item.AssociatedAccount);
+            _mockRepository.Verify(x => x.Fetch<GetAssAccByDevSubscriberItemDCSCenterModel>(It.IsAny<GetAssAccByDevSubscriberDCSCenterCriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetAssDevByDevSubscriber_DCSCenter_WithValidParams_ReturnsExpectedResult()
+        {
+            // Arrange
+            var param = new GetAssDevByDevSubscriberParamModel
+            {
+                DeviceID = 123,
+                SubscriberID = 456,
+                NoOfRecord = 10
+            };
+
+            var expectedItems = new List<GetAssDevByDevSubscriberItemModel>
+            {
+                new GetAssDevByDevSubscriberItemModel
+                {
+                    DeviceID = 1L,
+                    DeviceCode = "DEV001",
+                    FirstSeenDate = DateTime.Now,
+                    AssociatedAccounts = 3,
+                    AssociatedDevices = 2
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<GetAssDevByDevSubscriberItemModel>(It.IsAny<GetAssDevByDevSubscriberDCSCenterCriteria>()))
+                .Returns(expectedItems);
+
+            // Act
+            var result = _service.GetAssDevByDevSubscriber_DCSCenter(param);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotNull(result);
+            Assert.Single(result);
+
+            var item = result.First();
+
+            Assert.Equal(expectedItems[0].DeviceID, item.DeviceID);
+            Assert.Equal(expectedItems[0].DeviceCode, item.DeviceCode);
+            Assert.Equal(expectedItems[0].FirstSeenDate, item.FirstSeenDate);
+            Assert.Equal(expectedItems[0].AssociatedAccounts, item.AssociatedAccounts);
+            Assert.Equal(expectedItems[0].AssociatedDevices, item.AssociatedDevices);
+            _mockRepository.Verify(x => x.Fetch<GetAssDevByDevSubscriberItemModel>(It.IsAny<GetAssDevByDevSubscriberDCSCenterCriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetAssMatrixByDeviceSubscriberDCSCenter_WithValidParams_ReturnsExpectedResult()
+        {
+            // Arrange
+            var param = new GetAssMatrixByDeviceSubscriberParamModel
+            {
+                DeviceID = 123,
+                SubscriberID = 456,
+                NoOfCustomer = 10,
+                NoOfDevice = 5
+            };
+
+            var expectedItems = new List<GetAssMatrixByDeviceSubscriberItemDataCenterModel>
+            {
+                new GetAssMatrixByDeviceSubscriberItemDataCenterModel
+                {
+                    AccountID = 789,
+                    RegisterName = "testuser",
+                    UserName = "testuser",
+                    DeviceID = 123,
+                    FirstDeviceCode = "DEV001",
+                    CreatedTime = DateTime.Now
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<GetAssMatrixByDeviceSubscriberItemDataCenterModel>(It.IsAny<GetAssMatrixByDeviceSubsriberDCSCenterCriteria>()))
+                .Returns(expectedItems);
+
+            // Act
+            var result = _service.GetAssMatrixByDeviceSubscriber_DCSCenter(param);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotNull(result);
+            Assert.Single(result);
+
+            var item = result.First();
+
+            Assert.Equal(expectedItems[0].AccountID, item.AccountID);
+            Assert.Equal(expectedItems[0].RegisterName, item.RegisterName);
+            Assert.Equal(expectedItems[0].UserName, item.UserName);
+            Assert.Equal(expectedItems[0].DeviceID, item.DeviceID);
+            Assert.Equal(expectedItems[0].FirstDeviceCode, item.FirstDeviceCode);
+
+            _mockRepository.Verify(x => x.Fetch<GetAssMatrixByDeviceSubscriberItemDataCenterModel>(It.IsAny<GetAssMatrixByDeviceSubsriberDCSCenterCriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetTransactionHistoryByDeviceDCSCenter_WithValidParams_ReturnsExpectedResult()
+        {
+            // Arrange
+            var param = new TransactionHistoryByDeviceParamModel
+            {
+                DeviceID = 123,
+                SubscriberID = 456,
+                FromDate = DateTime.Now.AddDays(-7),
+                ToDate = DateTime.Now,
+                Skip = 0,
+                Take = 10
+            };
+
+            var expectedItems = new List<TransactionHistoryByDeviceDCSCenterItemModel>
+            {
+                new TransactionHistoryByDeviceDCSCenterItemModel
+                {
+                    TransID = 1,
+                    TransTime = DateTime.Now,
+                    RegisterName = "Test Register",
+                    UserName = "testuser",
+                    AccountID = 789,
+                    Action = "Login",
+                    ActionResult = "Success",
+                    OS = "Windows",
+                    Browser = "Chrome",
+                    URLDetails = "https://example.com",
+                    IP = "8.8.8.8",
+                    RobotTracking = "No"
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<TransactionHistoryByDeviceDCSCenterItemModel>(It.IsAny<GetTransHistoryByDevSubDCSCenterCriteria>()))
+                .Returns(expectedItems);
+            // Act
+
+            var result = _service.GetTransactionHistoryByDeviceDCSCenter(param);
+            // Assert
+
+            Assert.NotNull(result);
+            Assert.NotNull(result.Items);
+            Assert.Single(result.Items);
+
+            var item = result.Items.First();
+
+            Assert.Equal(expectedItems[0].TransID, item.TransID);
+            Assert.Equal(expectedItems[0].TransTime, item.TransTime);
+            Assert.Equal(expectedItems[0].RegisterName, item.RegisterName);
+            Assert.Equal(expectedItems[0].UserName, item.UserName);
+            Assert.Equal(expectedItems[0].AccountID, item.AccountID);
+            Assert.Equal(expectedItems[0].Action, item.Action);
+            Assert.Equal(expectedItems[0].ActionResult, item.ActionResult);
+            Assert.Equal(expectedItems[0].OS, item.OS);
+            Assert.Equal(expectedItems[0].Browser, item.Browser);
+            Assert.Equal(expectedItems[0].URLDetails, item.URLDetails);
+            Assert.Equal(expectedItems[0].IP, item.IP);
+            Assert.Equal(expectedItems[0].RobotTracking, item.RobotTracking);
+
+            _mockRepository.Verify(x => x.Fetch<TransactionHistoryByDeviceDCSCenterItemModel>(It.IsAny<GetTransHistoryByDevSubDCSCenterCriteria>()), Times.Once);
+        }
+
         #endregion
 
         #region DCS Extra Tests

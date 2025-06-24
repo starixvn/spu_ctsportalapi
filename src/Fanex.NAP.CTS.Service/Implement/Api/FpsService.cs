@@ -251,7 +251,7 @@
 
         public GetAssDeviceInfoByIDSubscriberModel GetAssDeviceInfoByIDSubscriber_DCSCenter(GetAssDeviceInfoByIDSubscriberParamModel param)
         {
-            var criteria = new GetAssDeviceInfoByIDSubscriberDCSCenterCriteria()
+            var criteria = new GetAssDeviceInfoByIDSubscriberDCSCenterCriteria
             {
                 DeviceID = param.DeviceID,
                 SubscriberID = param.SubscriberID,
@@ -313,7 +313,7 @@
                 Take = param.Take,
             };
 
-            return new TransactionHistoryByDeviceDCSCenterResultModel()
+            return new TransactionHistoryByDeviceDCSCenterResultModel
             {
                 Items = _repository.Fetch<TransactionHistoryByDeviceDCSCenterItemModel>(criteria),
                 TotalItem = criteria.TotalItem

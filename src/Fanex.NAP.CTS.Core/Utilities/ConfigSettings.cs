@@ -120,7 +120,9 @@
                     case "5":
                         return "AWS";
                     case "6":
-                        return "KLDR";
+                        return "KL Simple";
+                    case "7":
+                        return "KL Prod";
                     default:
                         return "LOCAL";
                 }

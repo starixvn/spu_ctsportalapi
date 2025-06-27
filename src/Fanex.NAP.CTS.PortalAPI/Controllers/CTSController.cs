@@ -292,7 +292,7 @@
         /// </summary>
         /// <param name="custId"></param>
         [HttpGet]
-        [Route("Association/GetByCustId")]
+        [Route("/api/Cts/Association/GetByCustId")]
         [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssociationPerTypeAPI)]
         public IEnumerable<DetectAssociationByTypeModel> GetAssociationByCustId(long custId)
         {
@@ -317,7 +317,7 @@
         /// </summary>
         /// <param name="custId"></param>
         [HttpGet]
-        [Route("Association/CheckByCustId")]
+        [Route("/api/Cts/Association/CheckByCustId")]
         [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.CheckAssociationAPI)]
         public IActionResult CheckAssociationByCustId(long custId)
         {

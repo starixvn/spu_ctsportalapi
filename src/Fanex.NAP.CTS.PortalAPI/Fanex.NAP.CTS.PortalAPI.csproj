@@ -52,9 +52,6 @@
     <None Update="App_Data\Fanex.NAP.CTS.Portal.API.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="App_Data\SQL\SPNames.KLPROD.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="App_Data\SQL\SPNames.AWS.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

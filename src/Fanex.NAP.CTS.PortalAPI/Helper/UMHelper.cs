@@ -1,9 +1,8 @@
 ﻿namespace Fanex.NAP.CTS.User.Helper
 {
     using Fanex.NAP.CTS.Portal.API.ActionFilter;
-    using Microsoft.Extensions.Caching.Memory;
+    using ONEbook.UM.AspNetCore;
     using ONEbook.UM.Configurations;
-    using ONEbook.UM.DependencyInjection;
     using ONEbook.UM.Helpers;
     using ONEbook.UM.Services;
     using ONEbook.UM.Transport;
@@ -11,28 +10,15 @@
 
     public static class UMHelper
     {
-        public static void Setup(IServiceCollection services)
+        public static void Setup(IServiceCollection services, IConfiguration configuration)
         {
-            var umConfig = new UMClientConfiguration(GetValue<string>("ONEbook.UM:ServiceUri"), GetValue("ONEbook.UM:EnableCheckUM", defaultValue: true), GetValue("ONEbook.UM:SecretKey", "9yBNYA5Fnv2V58+pKLvYpFwV5BMkIh9NNTxPQk6Sbss="), GetValue("ONEbook.UM:EnableUnscheduledUM", defaultValue: false), GetValue<string>("ONEbook.UM:UMFrom"), GetValue<string>("ONEbook.UM:UMTo"), GetValue("ONEbook.UM:UMPageUrl", "~/UserLogin/Common/Offline"), GetValue("ONEbook.UM:SiteId", 4120), GetValue("ONEbook.UM:ResultCacheDuration", 60), GetValue("ONEbook.UM:UMLoggingCategory", "ONEbook-UM"), GetValue<string>("ONEbook.UM:ErrorUMPageUrl"));
-            services.AddSingleton(umConfig);
-            services.AddSingleton<IMemoryCache, MemoryCache>(sp =>
-            {
-                var options = new MemoryCacheOptions();
-                return new MemoryCache(options);
-            });
-
-            services.AddScoped<IUMRestClient>(sp =>
-            {
-                var configuration = sp.GetRequiredService<UMClientConfiguration>();
-                return new UMRestClient(configuration, null);
-            });
-            services.AddScoped<IUMCacheService, MemoryUmCacheService>(sp =>
-            {
-                var configuration = sp.GetRequiredService<IMemoryCache>();
-                return new MemoryUmCacheService(configuration);
-            });
-            services.AddScoped<IHttpContextHelper, HttpContextHelper>();
-            services.AddScoped<IMaintenanceService, MaintenanceService>();
+            services.AddSingleton(new UMClientConfiguration().Initialize(configuration));
+            services.AddSingleton<IUMCacheService, UMCacheService>();
+            services.AddSingleton<IUMRestClient, UMRestClient>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IHttpContextHelper, HttpContextHelper>();
+            services.AddSingleton<IMaintenanceService, MaintenanceService>();
+            services.AddScoped<UnderMaintainaceHappenFilterAttribute>();
         }
 
         public static bool IsUnderMaintainaceHappen(IMaintenanceService maintenanceService)

@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.CTS.Core.Helpers.Api
 {
-    using MailDelivery.Client;
     using Newtonsoft.Json;
     using System;
     using System.Net;
@@ -12,41 +11,6 @@
 
     public static class ApiHelper
     {
-        [Obsolete("Too many generic and parameter")]
-        public static async Task<TResult?> Post<TParam, TResult>(string url, TParam param, int environment, int mailingListId)
-        {
-            try
-            {
-                using (var web = new HttpClient())
-                {
-                    var response = await web.PostAsJsonAsync(url, param).ConfigureAwait(false);
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        return default;
-                    }
-
-                    var jsonResult = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                    return string.IsNullOrEmpty(jsonResult) ? default : JsonConvert.DeserializeObject<TResult>(jsonResult);
-                }
-            }
-            catch (Exception exception)
-            {
-                var newMail = new MailDelivery.Core.Models.Mail
-                {
-                    Subject = string.Format("[({0}) SPU FS] ", environment == 1 ? "LOCAL" : environment == 2 ? "UAT" : "PRO") + " Error Calling FPS Middle Service's API",
-                    Title = "SPU Fraud Sensor",
-                    Body = "Error when calling API from FPS Middle Service \n API url: " + url + " \n Params: " + param + " \n Error: " + exception,
-                    MailingListId = mailingListId
-                };
-
-                MailClientHandler.SendFunctionMail(newMail);
-
-                return default;
-            }
-        }
-
         public static async Task<TResult?> Post<TResult>(string url, object param, double timeOutbySeconds = 120)
         {
             using (var web = new HttpClient())

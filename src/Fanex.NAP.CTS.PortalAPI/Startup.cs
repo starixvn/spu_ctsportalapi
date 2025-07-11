@@ -38,7 +38,7 @@
             ConfigSettings.Setup(Configuration);
             ConfigurationManager.Setup(Configuration);
             services.AddFanexLogSentry(Configuration);
-            UMHelper.Setup(services);
+            UMHelper.Setup(services, Configuration);
 
             RefDataTypeContainer
                 .ConnectTo(new Uri(ConfigurationManager.AppSettings("Fanex.RemotingRef.Service.Url")))
@@ -67,7 +67,6 @@
 
             // Setup ActionFilter
             TrackingFunctionUsageFilterAttribute.Setup(app.ApplicationServices);
-            UnderMaintainaceHappenFilterAttribute.Setup(app.ApplicationServices);
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fanex.NAP.CTS.PortalAPI v1"));

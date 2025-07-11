@@ -4,23 +4,15 @@
     using Fanex.NAP.CTS.User.Helper;
     using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.AspNetCore.Mvc;
+    using Newtonsoft.Json;
 
     public class UnderMaintainaceHappenFilterAttribute : ActionFilterAttribute
     {
-        private static IServiceProvider ServiceProvider;
         private IMaintenanceService _maintenanceService;
 
-        public static void Setup(IServiceProvider serviceProvider)
+        public UnderMaintainaceHappenFilterAttribute(IMaintenanceService maintenanceService)
         {
-            ServiceProvider = serviceProvider;
-        }
-
-        public UnderMaintainaceHappenFilterAttribute()
-        {
-            using (var scope = ServiceProvider.CreateScope())
-            {
-                _maintenanceService = scope.ServiceProvider.GetRequiredService<IMaintenanceService>();
-            }
+            _maintenanceService = maintenanceService;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -29,7 +21,7 @@
             {
                 filterContext.Result = new ContentResult()
                 {
-                    Content = "System is under maintenance, please try again later.",
+                    Content = JsonConvert.SerializeObject("System is under maintenance, please try again later."),
                     StatusCode = (int)System.Net.HttpStatusCode.InternalServerError,
                     ContentType = "application/json"
                 };

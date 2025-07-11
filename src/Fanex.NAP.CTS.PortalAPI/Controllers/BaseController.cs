@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Net;
 
-    [UnderMaintainaceHappenFilter]
+    [ServiceFilter(typeof(UnderMaintainaceHappenFilterAttribute))]
     public abstract class BaseController : ControllerBase
     {
         public BaseController()

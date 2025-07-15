@@ -17,17 +17,19 @@
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (UMHelper.IsUnderMaintainaceHappen(_maintenanceService))
-            {
-                filterContext.Result = new ContentResult()
-                {
-                    Content = JsonConvert.SerializeObject("System is under maintenance, please try again later."),
-                    StatusCode = (int)System.Net.HttpStatusCode.InternalServerError,
-                    ContentType = "application/json"
-                };
+            // TODO comment for check API in UM
+            //if (UMHelper.IsUnderMaintainaceHappen(_maintenanceService))
+            //{
+            //    filterContext.Result = new ContentResult()
+            //    {
+            //        Content = JsonConvert.SerializeObject("System is under maintenance, please try again later."),
+            //        StatusCode = (int)System.Net.HttpStatusCode.InternalServerError,
+            //        ContentType = "application/json"
+            //    };
 
-                return;
-            }
+            //    return;
+            //}
+            // TODO comment for check API in UM
 
             base.OnActionExecuting(filterContext);
         }

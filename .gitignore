@@ -1,0 +1,22 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/src/Fanex.NAP.CTS.Core/obj
+/src/Fanex.NAP.CTS.Criteria/bin/Debug/net8.0
+/src/Fanex.NAP.CTS.Criteria/obj
+/src/Fanex.NAP.CTS.Model/bin/Debug/net8.0
+/src/Fanex.NAP.CTS.Model/obj
+/src/Fanex.NAP.CTS.PortalAPI/bin/Debug/net8.0
+/src/Fanex.NAP.CTS.PortalAPI/obj
+/src/Fanex.NAP.CTS.Resource/bin/Debug/net8.0
+/src/Fanex.NAP.CTS.Resource/obj
+/src/Fanex.NAP.CTS.Service/bin/Debug/net8.0
+/src/Fanex.NAP.CTS.Service/obj
+/src/Fanex.NAP.CTS.ViewModel/bin/Debug/net8.0
+/src/Fanex.NAP.CTS.ViewModel/obj
+/src/Fanex.NAP.CTS.Core/bin/Debug/net8.0
+/test/Fanex.NAP.CTS.Tests/bin/Debug/net8.0
+/test/Fanex.NAP.CTS.Tests/obj
+/test/Fanex.NAP.CTS.Tests/bin/Release/net8.0

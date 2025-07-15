@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<SonarQubeExclude>True</SonarQubeExclude>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.CTS.Core\Fanex.NAP.CTS.Core.csproj" />
+    <ProjectReference Include="..\Fanex.NAP.CTS.Resource\Fanex.NAP.CTS.Resource.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -53,8 +53,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
                     CustID = 1,
                     CustomerClass = 1,
                     CategoryID = 1,
-                    DangerLevel = null,
-                    DangerLevelType = null
+                    DangerLevel = null                   
                 }
             };
 
@@ -138,8 +137,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
                     CustID = 1,
                     CustomerClass = 2,
                     CategoryID = 3,
-                    DangerLevel = 7,
-                    DangerLevelType = 2
+                    DangerLevel = 7                    
                 }
             };
 
@@ -195,8 +193,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
                     CustID = 1,
                     CustomerClass = 1,
                     CategoryID = 1,
-                    DangerLevel = null,
-                    DangerLevelType = null
+                    DangerLevel = null                   
                 }
             };
 
@@ -271,8 +268,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
                     CustID = 1,
                     CustomerClass = 1,
                     CategoryID = 1,
-                    DangerLevel = 5,
-                    DangerLevelType = 1
+                    DangerLevel = 5                   
                 }
             };
 
@@ -480,8 +476,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
                     CustID = 1,
                     CustomerClass = 1,
                     CategoryID = 1,
-                    DangerLevel = 5,
-                    DangerLevelType = 1
+                    DangerLevel = 5                  
                 }
             };
 
@@ -540,8 +535,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
                     CustID = 1,
                     CustomerClass = 1,
                     CategoryID = 1,
-                    DangerLevel = 5,
-                    DangerLevelType = 1
+                    DangerLevel = 5                   
                 }
             };
 

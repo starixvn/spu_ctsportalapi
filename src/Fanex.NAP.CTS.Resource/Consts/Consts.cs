@@ -617,5 +617,11 @@
             (int) MatchMonitorSportType.Basketball,
             (int) MatchMonitorSportType.Cricket
         };
+
+        public enum DangerType
+        {
+            Ori = 1,
+            ABI = 2
+        };
     }
 }

@@ -127,13 +127,8 @@
             {
                 var parentIDs = new List<int>
                 {
-                    MEMBER_PARENTID_VVIP,
-                    MEMBER_PARENTID_PA,
-                    MEMBER_PARENTID_POTENTIALPA,
-                    MEMBER_PARENTID_NORMAL,
-                    AGENCY_PARENTID_VVIP,
-                    AGENCY_PARENTID_PA,
-                    AGENCY_PARENTID_NORMAL
+                    MEMBER_PARENTID_VVIP, MEMBER_PARENTID_PA, MEMBER_PARENTID_POTENTIALPA, MEMBER_PARENTID_NORMAL,
+                    AGENCY_PARENTID_VVIP, AGENCY_PARENTID_PA, AGENCY_PARENTID_CONSIDERABLE, AGENCY_PARENTID_NORMAL
                 };
 
                 var custClassifications = _accountService.GetCustomerClassificationForAPI(custIdList, string.Join(",", parentIDs));

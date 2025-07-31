@@ -2,59 +2,59 @@
 <Functions>
 	<Function Name="HealthCheck">
 		<!--DO NOT REMOVE - Dummy used for check db connection status-->
-		<Setting Key="checkHealth" SpName="checkHealth" DbName="CTSMain.CTS_DataCenter.ctsAPIAdmin" />
+		<Setting Key="checkHealth" SpName="checkHealth" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPIAdmin" />
 	</Function>
 	
 	<Function Name="Evidence">
-		<Setting Key="CTS_DC_CustEvidence_InsertMultilpleEvidencesForCustomers" SpName="CTS_DC_CustEvidence_InsertMultilpleEvidencesForCustomers" DbName="CTSMain.CTS_DataCenter.ctsAPIAdmin" />
+		<Setting Key="CTS_DC_CustEvidence_InsertMultilpleEvidencesForCustomers" SpName="CTS_DC_CustEvidence_InsertMultilpleEvidencesForCustomers" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPIAdmin" />
 
-		<Setting Key="CTS_DC_CustEvidence_GetEvidencesByDirectAssociation" SpName="CTS_DC_CustEvidence_GetEvidencesByDirectAssociation" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
-		<Setting Key="CTS_DC_CustEvidence_GetEvidencesByLevel2Association" SpName="CTS_DC_CustEvidence_GetEvidencesByLevel2Association" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustEvidence_GetEvidencesByDirectAssociation" SpName="CTS_DC_CustEvidence_GetEvidencesByDirectAssociation" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustEvidence_GetEvidencesByLevel2Association" SpName="CTS_DC_CustEvidence_GetEvidencesByLevel2Association" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 		<Setting Key="NAP_BLControl_EvidenceFlagged" SpName="NAP_BLControl_EvidenceFlagged" DbName="DBCUST.CustDB.wsv_nap" TimeOut="300"/>
 		<Setting Key="NAP_BLControl_EvidenceUnflagged" SpName="NAP_BLControl_EvidenceUnflagged" DbName="DBCUST.CustDB.wsv_nap" TimeOut="300"/>
 	</Function>
 
 	<Function Name="CustomerClassification">
-		<Setting Key="CTS_DC_CustClassification_Get4API" SpName="CTS_DC_CustClassification_Get4API_xtest" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
-		<Setting Key="CTS_DC_CustClassification_GetAllByCategory" SpName="CTS_DC_CustClassification_GetAllByCategory" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustClassification_Get4API" SpName="CTS_DC_CustClassification_Get4API_xtest" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustClassification_GetAllByCategory" SpName="CTS_DC_CustClassification_GetAllByCategory" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 		<Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass" DbName="DBCUST.CustDB.wsv_nap" TimeOut="300" />
-		<Setting Key="CTS_DC_CustClassification_Get" SpName="CTS_DC_CustClassification_Get" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
-		<Setting Key="CTS_DC_CustClassification_BySport_GetCC" SpName="CTS_DC_CustClassification_BySport_GetCC" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustClassification_Get" SpName="CTS_DC_CustClassification_Get" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustClassification_BySport_GetCC" SpName="CTS_DC_CustClassification_BySport_GetCC" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 		<Setting Key="Acc_CustomerUpdateCustomerClassBySport" SpName="Acc_CustomerUpdateCustomerClassBySport" DbName="DBCUST.CustDB.wsv_nap" TimeOut="600" />
-    <Setting Key="CTS_DC_CustClassification_Insert" SpName="CTS_DC_CustClassification_Insert" DbName="CTSMain.CTS_DataCenter.ctsAPIAdmin" TimeOut="600"/>
-    <Setting Key="CTS_DC_CustClassification_Remove" SpName="CTS_DC_CustClassification_Remove" DbName="CTSMain.CTS_DataCenter.ctsAPIAdmin" TimeOut="600"/>
-    <Setting Key="CTS_DC_CustClassification_Rescan_Get" SpName="CTS_DC_CustClassification_Rescan_Get" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
+    <Setting Key="CTS_DC_CustClassification_Insert" SpName="CTS_DC_CustClassification_Insert" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPIAdmin" TimeOut="600"/>
+    <Setting Key="CTS_DC_CustClassification_Remove" SpName="CTS_DC_CustClassification_Remove" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPIAdmin" TimeOut="600"/>
+    <Setting Key="CTS_DC_CustClassification_Rescan_Get" SpName="CTS_DC_CustClassification_Rescan_Get" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 	</Function>
 
 	<Function Name="CustomerClass">
 		<Setting Key="CTS_CustomerClass_GetByCustId" SpName="CTS_CustomerClass_GetByCustId" DbName="DBCTS.bodb02.wsv_cts" />
 
-		<Setting Key="CTS_DC_CustClassification_LogInputData" SpName="CTS_DC_CustClassification_LogInputData" DbName="CTSMain.CTS_DataCenter.ctsAPIAdmin" />
+		<Setting Key="CTS_DC_CustClassification_LogInputData" SpName="CTS_DC_CustClassification_LogInputData" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPIAdmin" />
 		<Setting Key="CTS_CustomerUpdDanger" SpName="CTS_CustomerUpdDanger" DbName="DBCUST.CustDB.wsv_nap" TimeOut="300" />
 	</Function>
 
 	<Function Name="Customer">
-		<Setting Key="CTS_DC_CustInfo_CheckCustNotExistedByCustIds" SpName="CTS_DC_CustInfo_CheckCustNotExistedByCustIds" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
-		<Setting Key="CTS_DC_CustInfo_GetByCustID" SpName="CTS_DC_CustInfo_GetByCustID" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
-		<Setting Key="CTS_DC_CustInfo_Profile_GetAssociationAccount" SpName="CTS_DC_CustInfo_Profile_GetAssociationAccount" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustInfo_CheckCustNotExistedByCustIds" SpName="CTS_DC_CustInfo_CheckCustNotExistedByCustIds" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustInfo_GetByCustID" SpName="CTS_DC_CustInfo_GetByCustID" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustInfo_Profile_GetAssociationAccount" SpName="CTS_DC_CustInfo_Profile_GetAssociationAccount" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 	</Function>
 
 	<Function Name="Category">
-		<Setting Key="CTS_DC_Category_Get4CustomerClass" SpName="CTS_DC_Category_Get4CustomerClass" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
-		<Setting Key="CTS_DC_CustClassification_GetCategoryByCustIDs" SpName="CTS_DC_CustClassification_GetCategoryByCustIDs" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_Category_Get4CustomerClass" SpName="CTS_DC_Category_Get4CustomerClass" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustClassification_GetCategoryByCustIDs" SpName="CTS_DC_CustClassification_GetCategoryByCustIDs" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 	</Function>
 
 	<Function Name="Association">
-		<Setting Key="CTS_DC_Association_GetForExtAcc" SpName="CTS_DC_Association_GetForExtAcc" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
-		<Setting Key="CTS_DC_Association_GetByCustID" SpName="CTS_DC_Association_GetByCustID" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_Association_GetForExtAcc" SpName="CTS_DC_Association_GetForExtAcc" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_Association_GetByCustID" SpName="CTS_DC_Association_GetByCustID" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 	</Function>
 
 	<Function Name="Subscriber">
-		<Setting Key="CTS_AD_Subscriber_GetInfoBySubscriberName" SpName="CTS_AD_Subscriber_GetInfoBySubscriberName" DbName="CTSMain.CTS_Admin.ctsAPIAdmin"/>
+		<Setting Key="CTS_AD_Subscriber_GetInfoBySubscriberName" SpName="CTS_AD_Subscriber_GetInfoBySubscriberName" DbName="CTSMain_DEV.CTS_Admin.ctsAPIAdmin"/>
 	</Function>
 
 	<Function name="CustInfo">
-		<Setting Key="CTS_DC_CustInfo_GetCustIDsRole" SpName="CTS_DC_CustInfo_GetCustIDsRole" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustInfo_GetCustIDsRole" SpName="CTS_DC_CustInfo_GetCustIDsRole" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 	</Function>
 
 	<Function name ="RobotUser">		
@@ -62,7 +62,7 @@
 	</Function>
 
 	<Function name="MemberCheckList">
-		<Setting Key="CTS_DC_Common_GetStaticList" SpName="CTS_DC_Common_GetStaticList" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_Common_GetStaticList" SpName="CTS_DC_Common_GetStaticList" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 	</Function>
 
 	<Function name="TWProblemAccountDetection">
@@ -71,59 +71,59 @@
 	</Function>
 
 	<Function name="MonitorCTSFunction">
-		<Setting Key="SPU_Stats_Accessment_Insert" SpName="SPU_Stats_Accessment_Insert" DbName="CTSMain.SPU_Stats.spustatsServiceAdmin" />
+		<Setting Key="SPU_Stats_Accessment_Insert" SpName="SPU_Stats_Accessment_Insert" DbName="CTSMain_DEV.SPU_Stats.spustatsServiceAdmin" />
 	</Function>
 	<Function name="RescanCustomerClassification">
 		<Setting Key="CTS_ProblemAccountsClassification_Daily" SpName="CTS_ProblemAccountsClassification_Daily" DbName="DBVR2.bodb_VR2Model.wsv_cts" />
-		<Setting Key="CTS_Arc_CustomerAssociation_RollBack_CheckByNewPA" SpName="CTS_Arc_CustomerAssociation_RollBack_CheckByNewPA" DbName="CTSMain.CTS_Archive.ctsAPIAdmin" />					
+		<Setting Key="CTS_Arc_CustomerAssociation_RollBack_CheckByNewPA" SpName="CTS_Arc_CustomerAssociation_RollBack_CheckByNewPA" DbName="CTSMain_DEV.CTS_Archive.ctsAPIAdmin" />					
 
-		<Setting Key="CTS_DC_CustClassification_GetCCAndDangerLevel" SpName="CTS_DC_CustClassification_GetCCAndDangerLevel" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustClassification_GetCCAndDangerLevel" SpName="CTS_DC_CustClassification_GetCCAndDangerLevel" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 		<Setting Key="CTS_GeneralNormalClassification_RescanNormal_Preprocess" SpName="CTS_GeneralNormalClassification_RescanNormal_Preprocess" DbName="DBVR2.bodb_VR2Model.wsv_cts" />
     <Setting Key="CTS_ProblemAccountsClassificationAgency_Daily" SpName="CTS_ProblemAccountsClassificationAgency_Daily" DbName="DBVR2.bodb_VR2Model.wsv_cts" />
 	</Function>
 	<Function name="LogData">
-		<Setting Key="CTS_Archive_Log_Insert" SpName="CTS_Archive_Log_Insert" DbName="CTSARC.CTS_Archive.ctsServiceAdmin" />
+		<Setting Key="CTS_Archive_Log_Insert" SpName="CTS_Archive_Log_Insert" DbName="CTSARC_DEV.CTS_Archive.ctsServiceAdmin" />
 	</Function>
 	<Function name="FPS">
-		<Setting Key="CTS_DC_CustInfo_GetByNameSubscriber" SpName="CTS_DC_CustInfo_GetByNameSubscriber" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
-		<Setting Key="CTS_DC_CustInfo_GetPartialByUserNameSubscriber" SpName="CTS_DC_CustInfo_GetPartialByUserNameSubscriber" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
-		<Setting Key="CTS_DC_Association_GetAccountInfoByCustSubscriber" SpName="CTS_DC_Association_GetAccountInfoByCustSubscriber" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
-		<Setting Key="DCS_DC_Transaction_GetHistoryBySubscriber" SpName="DCS_DC_Transaction_GetHistoryBySubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
-		<Setting Key="DCS_DC_Transaction_GetHistoryByCustSubscriber" SpName="DCS_DC_Transaction_GetHistoryByCustSubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
-		<Setting Key="CTS_DC_Association_GetAssociationListByCustSubscriber" SpName="CTS_DC_Association_GetAssociationListByCustSubscriber" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
-		<Setting Key="CTS_DC_Association_GetAssociationDeviceByCustSubscriber" SpName="CTS_DC_Association_GetAssociationDeviceByCustSubscriber" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
-		<Setting Key="CTS_DC_Association_GetAssociationMatrixByCustSubscriber" SpName="CTS_DC_Association_GetAssociationMatrixByCustSubscriber" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
-		<Setting Key="DCS_DC_Transaction_GetLatestBySubscriber" SpName="DCS_DC_Transaction_GetLatestBySubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
-		<Setting Key="DCS_DC_Association_GetAccountsPerDevice" SpName="DCS_DC_Association_GetAccountsPerDevice" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
-		<Setting Key="DCS_DC_Association_GetDevicesPerAccount" SpName="DCS_DC_Association_GetDevicesPerAccount" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
-		<Setting Key="DCS_DC_Device_GetByDeviceCodeSubscriber" SpName="DCS_DC_Device_GetByDeviceCodeSubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
-		<Setting Key="DCS_DC_Association_GetDeviceInfoByDeviceSubscriber" SpName="DCS_DC_Association_GetDeviceInfoByDeviceSubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
-		<Setting Key="DCS_DC_Association_GetAssociationAccountByDeviceSubscriber" SpName="DCS_DC_Association_GetAssociationAccountByDeviceSubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
-		<Setting Key="DCS_DC_Association_GetAssociationDeviceByDeviceSubscriber" SpName="DCS_DC_Association_GetAssociationDeviceByDeviceSubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
-		<Setting Key="DCS_DC_Association_GetAssociationMatrixByDeviceSubscriber" SpName="DCS_DC_Association_GetAssociationMatrixByDeviceSubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
-		<Setting Key="DCS_DC_Transaction_GetHistoryByDeviceSubscriber" SpName="DCS_DC_Transaction_GetHistoryByDeviceSubscriber" DbName="CTSMain.DCS_DataCenter.ctsWeb" />
-		<Setting Key="DCS_ET_Subscriber_GetInfoBySubscriberName" SpName="DCS_ET_Subscriber_GetInfoBySubscriberName" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_Transaction_GetHistoryByAccountSubscriber" SpName="DCS_ET_Transaction_GetHistoryByAccountSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_Transaction_GetHistoryBySubscriber" SpName="DCS_ET_Transaction_GetHistoryBySubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_Transaction_GetLatestBySubscriber" SpName="DCS_ET_Transaction_GetLatestBySubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_AccountInfo_GetByLoginNameSubscriber" SpName="DCS_ET_AccountInfo_GetByLoginNameSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_AccountInfo_GetPartialByLoginNameSubscriber" SpName="DCS_ET_AccountInfo_GetPartialByLoginNameSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_Association_GetAccountInfoByAccountSubscriber" SpName="DCS_ET_Association_GetAccountInfoByAccountSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_Association_GetAssociationListByAccountSubscriber" SpName="DCS_ET_Association_GetAssociationListByAccountSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_Association_GetAssociationDeviceByAccountSubscriber" SpName="DCS_ET_Association_GetAssociationDeviceByAccountSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_Association_GetAssociationMatrixByAccountSubscriber" SpName="DCS_ET_Association_GetAssociationMatrixByAccountSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_DeviceInfo_GetByDeviceSubscriber" SpName="DCS_ET_DeviceInfo_GetByDeviceSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_Association_GetDeviceInfoByDeviceSubscriber" SpName="DCS_ET_Association_GetDeviceInfoByDeviceSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_Association_GetAssociationAccountByDeviceSubscriber" SpName="DCS_ET_Association_GetAssociationAccountByDeviceSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_Association_GetAssociationDeviceByDeviceSubscriber" SpName="DCS_ET_Association_GetAssociationDeviceByDeviceSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_Association_GetAssociationMatrixByDeviceSubscriber" SpName="DCS_ET_Association_GetAssociationMatrixByDeviceSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
-		<Setting Key="DCS_ET_Transaction_GetHistoryByDeviceSubscriber" SpName="DCS_ET_Transaction_GetHistoryByDeviceSubscriber" DbName="CTSMain.DCS_Extra.ctsAPI" />
+		<Setting Key="CTS_DC_CustInfo_GetByNameSubscriber" SpName="CTS_DC_CustInfo_GetByNameSubscriber" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustInfo_GetPartialByUserNameSubscriber" SpName="CTS_DC_CustInfo_GetPartialByUserNameSubscriber" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_Association_GetAccountInfoByCustSubscriber" SpName="CTS_DC_Association_GetAccountInfoByCustSubscriber" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="DCS_DC_Transaction_GetHistoryBySubscriber" SpName="DCS_DC_Transaction_GetHistoryBySubscriber" DbName="CTSMain_DEV.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Transaction_GetHistoryByCustSubscriber" SpName="DCS_DC_Transaction_GetHistoryByCustSubscriber" DbName="CTSMain_DEV.DCS_DataCenter.ctsWeb" />
+		<Setting Key="CTS_DC_Association_GetAssociationListByCustSubscriber" SpName="CTS_DC_Association_GetAssociationListByCustSubscriber" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_Association_GetAssociationDeviceByCustSubscriber" SpName="CTS_DC_Association_GetAssociationDeviceByCustSubscriber" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_Association_GetAssociationMatrixByCustSubscriber" SpName="CTS_DC_Association_GetAssociationMatrixByCustSubscriber" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="DCS_DC_Transaction_GetLatestBySubscriber" SpName="DCS_DC_Transaction_GetLatestBySubscriber" DbName="CTSMain_DEV.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Association_GetAccountsPerDevice" SpName="DCS_DC_Association_GetAccountsPerDevice" DbName="CTSMain_DEV.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Association_GetDevicesPerAccount" SpName="DCS_DC_Association_GetDevicesPerAccount" DbName="CTSMain_DEV.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Device_GetByDeviceCodeSubscriber" SpName="DCS_DC_Device_GetByDeviceCodeSubscriber" DbName="CTSMain_DEV.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Association_GetDeviceInfoByDeviceSubscriber" SpName="DCS_DC_Association_GetDeviceInfoByDeviceSubscriber" DbName="CTSMain_DEV.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Association_GetAssociationAccountByDeviceSubscriber" SpName="DCS_DC_Association_GetAssociationAccountByDeviceSubscriber" DbName="CTSMain_DEV.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Association_GetAssociationDeviceByDeviceSubscriber" SpName="DCS_DC_Association_GetAssociationDeviceByDeviceSubscriber" DbName="CTSMain_DEV.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Association_GetAssociationMatrixByDeviceSubscriber" SpName="DCS_DC_Association_GetAssociationMatrixByDeviceSubscriber" DbName="CTSMain_DEV.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_DC_Transaction_GetHistoryByDeviceSubscriber" SpName="DCS_DC_Transaction_GetHistoryByDeviceSubscriber" DbName="CTSMain_DEV.DCS_DataCenter.ctsWeb" />
+		<Setting Key="DCS_ET_Subscriber_GetInfoBySubscriberName" SpName="DCS_ET_Subscriber_GetInfoBySubscriberName" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_Transaction_GetHistoryByAccountSubscriber" SpName="DCS_ET_Transaction_GetHistoryByAccountSubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_Transaction_GetHistoryBySubscriber" SpName="DCS_ET_Transaction_GetHistoryBySubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_Transaction_GetLatestBySubscriber" SpName="DCS_ET_Transaction_GetLatestBySubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_AccountInfo_GetByLoginNameSubscriber" SpName="DCS_ET_AccountInfo_GetByLoginNameSubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_AccountInfo_GetPartialByLoginNameSubscriber" SpName="DCS_ET_AccountInfo_GetPartialByLoginNameSubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_Association_GetAccountInfoByAccountSubscriber" SpName="DCS_ET_Association_GetAccountInfoByAccountSubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_Association_GetAssociationListByAccountSubscriber" SpName="DCS_ET_Association_GetAssociationListByAccountSubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_Association_GetAssociationDeviceByAccountSubscriber" SpName="DCS_ET_Association_GetAssociationDeviceByAccountSubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_Association_GetAssociationMatrixByAccountSubscriber" SpName="DCS_ET_Association_GetAssociationMatrixByAccountSubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_DeviceInfo_GetByDeviceSubscriber" SpName="DCS_ET_DeviceInfo_GetByDeviceSubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_Association_GetDeviceInfoByDeviceSubscriber" SpName="DCS_ET_Association_GetDeviceInfoByDeviceSubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_Association_GetAssociationAccountByDeviceSubscriber" SpName="DCS_ET_Association_GetAssociationAccountByDeviceSubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_Association_GetAssociationDeviceByDeviceSubscriber" SpName="DCS_ET_Association_GetAssociationDeviceByDeviceSubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_Association_GetAssociationMatrixByDeviceSubscriber" SpName="DCS_ET_Association_GetAssociationMatrixByDeviceSubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
+		<Setting Key="DCS_ET_Transaction_GetHistoryByDeviceSubscriber" SpName="DCS_ET_Transaction_GetHistoryByDeviceSubscriber" DbName="CTSMain_DEV.DCS_Extra.ctsAPI" />
 	</Function>
 	<Function name="TW">
-		<Setting Key="CTS_DC_CustClassification_InitialSmart_Insert" SpName="CTS_DC_CustClassification_InitialSmart_Insert" DbName="CTSMain.CTS_DataCenter.ctsAPIAdmin" />
+		<Setting Key="CTS_DC_CustClassification_InitialSmart_Insert" SpName="CTS_DC_CustClassification_InitialSmart_Insert" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPIAdmin" />
 	</Function>
 
 	<Function name="TWSpecialLicSub">
-		<Setting Key="CTS_DC_SpecialLicSubCC_Insert" SpName="CTS_DC_SpecialLicSubCC_Insert" DbName="CTSMain.CTS_DataCenter.ctsAPIAdmin" />
+		<Setting Key="CTS_DC_SpecialLicSubCC_Insert" SpName="CTS_DC_SpecialLicSubCC_Insert" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPIAdmin" />
 	</Function>
 </Functions>

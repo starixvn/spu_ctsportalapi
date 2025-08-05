@@ -127,6 +127,7 @@
         public const int MEMBER_PARENTID_NORMAL = 40000;
         public const int AGENCY_PARENTID_VVIP = 101000; 
         public const int AGENCY_PARENTID_PA = 120000;
+        public const int AGENCY_PARENTID_CONSIDERABLE = 130000;
         public const int AGENCY_PARENTID_NORMAL = 140000;
         public const int MEMBER_CATEID_VVIP = 1010;
         public const int AGENCY_CATEID_VVIP = 101010;

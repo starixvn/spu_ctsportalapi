@@ -15,7 +15,7 @@
 	</Function>
 
 	<Function Name="CustomerClassification">
-		<Setting Key="CTS_DC_CustClassification_Get4API" SpName="CTS_DC_CustClassification_Get4API_xtest" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+		<Setting Key="CTS_DC_CustClassification_Get4API" SpName="CTS_DC_CustClassification_Get4API" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 		<Setting Key="CTS_DC_CustClassification_GetAllByCategory" SpName="CTS_DC_CustClassification_GetAllByCategory" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 		<Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass" DbName="DBCUST.CustDB.wsv_nap" TimeOut="300" />
 		<Setting Key="CTS_DC_CustClassification_Get" SpName="CTS_DC_CustClassification_Get" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />

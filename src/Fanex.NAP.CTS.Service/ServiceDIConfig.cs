@@ -20,6 +20,8 @@
             services.RegisterServiceCustomerClassification();
 
             services.RegisterServiceOther();
+
+            services.RegisterServiceMatchMonitor();
         }
 
         public static void RegisterServiceCore(this IServiceCollection services)
@@ -56,6 +58,11 @@
             services.AddScoped<ILogInputDataService, LogInputDataService>();
             services.AddScoped<IMonitorCtsFunctionService, MonitorCtsFunctionService>();
             services.AddScoped<ISubscriberService, SubscriberService>();
+        }
+
+        public static void RegisterServiceMatchMonitor(this IServiceCollection services)
+        {
+            services.AddScoped<IMatchMonitorService, MatchMonitorService>();
         }
     }
 }

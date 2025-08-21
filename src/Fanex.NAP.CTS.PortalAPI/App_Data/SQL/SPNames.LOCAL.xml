@@ -125,4 +125,8 @@
 	<Function name="TWSpecialLicSub">
 		<Setting Key="CTS_DC_SpecialLicSubCC_Insert" SpName="CTS_DC_SpecialLicSubCC_Insert" DbName="CTSMain.CTS_DataCenter.ctsAPIAdmin" />
 	</Function>
+
+	<Function name="MatchMonitor">
+		<Setting Key="CTS_Rpt_MatchMonitor_MatchInfo" SpName="CTS_Rpt_MatchMonitor_MatchInfo" DbName="DBCTS.WASAVerse.wsv_cts" />
+	</Function>
 </Functions>

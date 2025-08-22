@@ -231,5 +231,14 @@
                 return rs == "1";
             }
         }
+
+        public static string ApiKey
+        {
+            get
+            {
+                var apiKey = Configuration["ApiKey"] ?? string.Empty;
+                return apiKey;
+            }
+        }
     }
 }

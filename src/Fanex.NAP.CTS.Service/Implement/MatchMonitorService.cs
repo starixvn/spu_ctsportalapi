@@ -14,6 +14,7 @@
             _repository = repository;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S6566:Use DateTimeOffset instead of DateTime", Justification = "Legacy code or specific reason")]
         public IEnumerable<MatchFromMainInfoModel> GetMatchFromMainInfos(GetMatchFromMainInfoModel model)
         {
             var criteria = new GetMatchFromMainInfoCriteria

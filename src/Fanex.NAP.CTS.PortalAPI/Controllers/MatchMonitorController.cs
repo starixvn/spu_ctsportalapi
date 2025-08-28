@@ -23,5 +23,19 @@
             var result = _matchMonitorService.GetMatchFromMainInfos(model);
             return Ok(result);
         }
+
+        [HttpPost]
+        public IActionResult GetMatchMonitor([FromBody] MatchMonitorGetModel model)
+        {
+            var result = _matchMonitorService.GetMatchMonitor(model);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public IActionResult GetMMFraudTicketsSummary([FromBody] MMFraudTicketsSummaryModel model)
+        {
+            var result = _matchMonitorService.GetMMFraudTicketsSummary(model);
+            return Ok(result);
+        }
     }
 }

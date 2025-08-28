@@ -1,6 +1,6 @@
-﻿namespace Fanex.NAP.CTS.Model.MatchMonitor
+﻿namespace Fanex.NAP.CTS.ViewModel.MatchMonitor
 {
-    public class MatchFromMainInfoModel
+    public class MatchFromMainInfoViewModel
     {
         public int MatchId { get; set; }
 

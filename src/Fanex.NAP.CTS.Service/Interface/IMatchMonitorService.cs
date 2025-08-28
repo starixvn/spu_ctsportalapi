@@ -1,9 +1,14 @@
 ﻿namespace Fanex.NAP.CTS.Service.Interface
 {
     using Fanex.NAP.CTS.Model.MatchMonitor;
+    using Fanex.NAP.CTS.ViewModel.MatchMonitor;
 
     public interface IMatchMonitorService
     {
-        IEnumerable<MatchFromMainInfoModel> GetMatchFromMainInfos(GetMatchFromMainInfoModel model);
+        IEnumerable<MatchFromMainInfoViewModel> GetMatchFromMainInfos(GetMatchFromMainInfoModel model);
+
+        IEnumerable<GetMatchMonitorViewModel> GetMatchMonitor(MatchMonitorGetModel model);
+
+        IEnumerable<MMFraudTicketsSummaryViewModel> GetMMFraudTicketsSummary(MMFraudTicketsSummaryModel model);
     }
 }

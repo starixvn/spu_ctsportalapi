@@ -59,5 +59,15 @@
 
             return _repository.Fetch<MMFraudTicketsSummaryViewModel>(criteria);
         }
+
+        public IEnumerable<MMFraudTicketsSummaryViewModel> GetMMParlayFraudTicketsSummary(MMParlayFraudTicketsSummaryModel model)
+        {
+            var criteria = new MMParlayFraudTicketsSummaryCriteria
+            {
+                FraudTickets = model.FraudTickets
+            };
+
+            return _repository.Fetch<MMFraudTicketsSummaryViewModel>(criteria);
+        }
     }
 }

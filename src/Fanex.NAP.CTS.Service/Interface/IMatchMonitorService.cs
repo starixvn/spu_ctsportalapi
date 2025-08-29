@@ -10,5 +10,7 @@
         IEnumerable<GetMatchMonitorViewModel> GetMatchMonitor(MatchMonitorGetModel model);
 
         IEnumerable<MMFraudTicketsSummaryViewModel> GetMMFraudTicketsSummary(MMFraudTicketsSummaryModel model);
+
+        IEnumerable<MMFraudTicketsSummaryViewModel> GetMMParlayFraudTicketsSummary(MMParlayFraudTicketsSummaryModel model);
     }
 }

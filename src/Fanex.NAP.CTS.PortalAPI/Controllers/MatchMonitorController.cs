@@ -37,5 +37,12 @@
             var result = _matchMonitorService.GetMMFraudTicketsSummary(model);
             return Ok(result);
         }
+
+        [HttpPost]
+        public IActionResult GetMMParlayFraudTicketsSummary([FromBody] MMParlayFraudTicketsSummaryModel model)
+        {
+            var result = _matchMonitorService.GetMMParlayFraudTicketsSummary(model);
+            return Ok(result);
+        }
     }
 }

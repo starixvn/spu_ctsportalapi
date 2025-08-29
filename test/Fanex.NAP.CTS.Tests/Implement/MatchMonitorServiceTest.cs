@@ -532,5 +532,445 @@
             
             _mockRepository.Verify(x => x.Fetch<GetMatchMonitorViewModel>(It.IsAny<ICriteria>()), Times.Once);
         }
+
+        [Fact]
+        public void GetMMFraudTicketsSummary_WithValidParameters_ReturnsExpectedResult()
+        {
+            // Arrange
+            var model = new MMFraudTicketsSummaryModel
+            {
+                FraudTickets = "TICKET001,TICKET002,TICKET003"
+            };
+
+            var expectedResult = new List<MMFraudTicketsSummaryViewModel>
+            {
+                new MMFraudTicketsSummaryViewModel
+                {
+                    MatchId = 123,
+                    IsLive = true,
+                    Bettype = 1,
+                    Betteam = "Team A vs Team B",
+                    BetId = 1001,
+                    Turnover = 50000,
+                    BetCount = 25
+                },
+                new MMFraudTicketsSummaryViewModel
+                {
+                    MatchId = 456,
+                    IsLive = false,
+                    Bettype = 2,
+                    Betteam = "Team C vs Team D",
+                    BetId = 1002,
+                    Turnover = 75000,
+                    BetCount = 30
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetMMFraudTicketsSummary(model);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(expectedResult, result);
+            Assert.Equal(2, result.Count());
+            
+            var firstTicket = result.First();
+            var secondTicket = result.Skip(1).First();
+            
+            Assert.Equal(123, firstTicket.MatchId);
+            Assert.True(firstTicket.IsLive);
+            Assert.Equal(1, firstTicket.Bettype);
+            Assert.Equal("Team A vs Team B", firstTicket.Betteam);
+            Assert.Equal(1001, firstTicket.BetId);
+            Assert.Equal(50000, firstTicket.Turnover);
+            Assert.Equal(25, firstTicket.BetCount);
+            
+            Assert.Equal(456, secondTicket.MatchId);
+            Assert.False(secondTicket.IsLive);
+            Assert.Equal(2, secondTicket.Bettype);
+            Assert.Equal("Team C vs Team D", secondTicket.Betteam);
+            Assert.Equal(1002, secondTicket.BetId);
+            Assert.Equal(75000, secondTicket.Turnover);
+            Assert.Equal(30, secondTicket.BetCount);
+            
+            _mockRepository.Verify(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetMMFraudTicketsSummary_WithEmptyFraudTickets_ReturnsEmptyResult()
+        {
+            // Arrange
+            var model = new MMFraudTicketsSummaryModel
+            {
+                FraudTickets = ""
+            };
+
+            var expectedResult = new List<MMFraudTicketsSummaryViewModel>();
+
+            _mockRepository.Setup(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetMMFraudTicketsSummary(model);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+            
+            _mockRepository.Verify(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetMMFraudTicketsSummary_WithNullFraudTickets_ReturnsEmptyResult()
+        {
+            // Arrange
+            var model = new MMFraudTicketsSummaryModel
+            {
+                FraudTickets = null
+            };
+
+            var expectedResult = new List<MMFraudTicketsSummaryViewModel>();
+
+            _mockRepository.Setup(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetMMFraudTicketsSummary(model);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+            
+            _mockRepository.Verify(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetMMFraudTicketsSummary_WithRepositoryException_ThrowsException()
+        {
+            // Arrange
+            var model = new MMFraudTicketsSummaryModel
+            {
+                FraudTickets = "TICKET001"
+            };
+
+            _mockRepository.Setup(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()))
+                .Throws(new System.Exception("Database connection failed"));
+
+            // Act & Assert
+            var exception = Assert.Throws<System.Exception>(() => _service.GetMMFraudTicketsSummary(model));
+            Assert.Equal("Database connection failed", exception.Message);
+            
+            _mockRepository.Verify(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetMMFraudTicketsSummary_WithSingleTicket_ReturnsSingleResult()
+        {
+            // Arrange
+            var model = new MMFraudTicketsSummaryModel
+            {
+                FraudTickets = "SINGLE_TICKET"
+            };
+
+            var expectedResult = new List<MMFraudTicketsSummaryViewModel>
+            {
+                new MMFraudTicketsSummaryViewModel
+                {
+                    MatchId = 789,
+                    IsLive = true,
+                    Bettype = 3,
+                    Betteam = "Single Match",
+                    BetId = 1003,
+                    Turnover = 25000,
+                    BetCount = 15
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetMMFraudTicketsSummary(model);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Single(result);
+            
+            var ticket = result.First();
+            Assert.Equal(789, ticket.MatchId);
+            Assert.True(ticket.IsLive);
+            Assert.Equal(3, ticket.Bettype);
+            Assert.Equal("Single Match", ticket.Betteam);
+            Assert.Equal(1003, ticket.BetId);
+            Assert.Equal(25000, ticket.Turnover);
+            Assert.Equal(15, ticket.BetCount);
+            
+            _mockRepository.Verify(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetMMParlayFraudTicketsSummary_WithValidParameters_ReturnsExpectedResult()
+        {
+            // Arrange
+            var model = new MMParlayFraudTicketsSummaryModel
+            {
+                FraudTickets = "PARLAY_TICKET001,PARLAY_TICKET002"
+            };
+
+            var expectedResult = new List<MMFraudTicketsSummaryViewModel>
+            {
+                new MMFraudTicketsSummaryViewModel
+                {
+                    MatchId = 111,
+                    IsLive = true,
+                    Bettype = 4,
+                    Betteam = "Parlay Match 1",
+                    BetId = 2001,
+                    Turnover = 100000,
+                    BetCount = 50
+                },
+                new MMFraudTicketsSummaryViewModel
+                {
+                    MatchId = 222,
+                    IsLive = false,
+                    Bettype = 5,
+                    Betteam = "Parlay Match 2",
+                    BetId = 2002,
+                    Turnover = 150000,
+                    BetCount = 75
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetMMParlayFraudTicketsSummary(model);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(expectedResult, result);
+            Assert.Equal(2, result.Count());
+            
+            var firstTicket = result.First();
+            var secondTicket = result.Skip(1).First();
+            
+            Assert.Equal(111, firstTicket.MatchId);
+            Assert.True(firstTicket.IsLive);
+            Assert.Equal(4, firstTicket.Bettype);
+            Assert.Equal("Parlay Match 1", firstTicket.Betteam);
+            Assert.Equal(2001, firstTicket.BetId);
+            Assert.Equal(100000, firstTicket.Turnover);
+            Assert.Equal(50, firstTicket.BetCount);
+            
+            Assert.Equal(222, secondTicket.MatchId);
+            Assert.False(secondTicket.IsLive);
+            Assert.Equal(5, secondTicket.Bettype);
+            Assert.Equal("Parlay Match 2", secondTicket.Betteam);
+            Assert.Equal(2002, secondTicket.BetId);
+            Assert.Equal(150000, secondTicket.Turnover);
+            Assert.Equal(75, secondTicket.BetCount);
+            
+            _mockRepository.Verify(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetMMParlayFraudTicketsSummary_WithEmptyFraudTickets_ReturnsEmptyResult()
+        {
+            // Arrange
+            var model = new MMParlayFraudTicketsSummaryModel
+            {
+                FraudTickets = ""
+            };
+
+            var expectedResult = new List<MMFraudTicketsSummaryViewModel>();
+
+            _mockRepository.Setup(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetMMParlayFraudTicketsSummary(model);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+            
+            _mockRepository.Verify(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetMMParlayFraudTicketsSummary_WithNullFraudTickets_ReturnsEmptyResult()
+        {
+            // Arrange
+            var model = new MMParlayFraudTicketsSummaryModel
+            {
+                FraudTickets = null
+            };
+
+            var expectedResult = new List<MMFraudTicketsSummaryViewModel>();
+
+            _mockRepository.Setup(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetMMParlayFraudTicketsSummary(model);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+            
+            _mockRepository.Verify(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetMMParlayFraudTicketsSummary_WithRepositoryException_ThrowsException()
+        {
+            // Arrange
+            var model = new MMParlayFraudTicketsSummaryModel
+            {
+                FraudTickets = "PARLAY_TICKET001"
+            };
+
+            _mockRepository.Setup(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()))
+                .Throws(new System.Exception("Database connection failed"));
+
+            // Act & Assert
+            var exception = Assert.Throws<System.Exception>(() => _service.GetMMParlayFraudTicketsSummary(model));
+            Assert.Equal("Database connection failed", exception.Message);
+            
+            _mockRepository.Verify(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetMMParlayFraudTicketsSummary_WithSingleTicket_ReturnsSingleResult()
+        {
+            // Arrange
+            var model = new MMParlayFraudTicketsSummaryModel
+            {
+                FraudTickets = "SINGLE_PARLAY_TICKET"
+            };
+
+            var expectedResult = new List<MMFraudTicketsSummaryViewModel>
+            {
+                new MMFraudTicketsSummaryViewModel
+                {
+                    MatchId = 333,
+                    IsLive = true,
+                    Bettype = 6,
+                    Betteam = "Single Parlay Match",
+                    BetId = 2003,
+                    Turnover = 80000,
+                    BetCount = 40
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetMMParlayFraudTicketsSummary(model);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Single(result);
+            
+            var ticket = result.First();
+            Assert.Equal(333, ticket.MatchId);
+            Assert.True(ticket.IsLive);
+            Assert.Equal(6, ticket.Bettype);
+            Assert.Equal("Single Parlay Match", ticket.Betteam);
+            Assert.Equal(2003, ticket.BetId);
+            Assert.Equal(80000, ticket.Turnover);
+            Assert.Equal(40, ticket.BetCount);
+            
+            _mockRepository.Verify(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetMMParlayFraudTicketsSummary_WithMultipleTickets_ReturnsAllResults()
+        {
+            // Arrange
+            var model = new MMParlayFraudTicketsSummaryModel
+            {
+                FraudTickets = "PARLAY_TICKET001,PARLAY_TICKET002,PARLAY_TICKET003,PARLAY_TICKET004"
+            };
+
+            var expectedResult = new List<MMFraudTicketsSummaryViewModel>
+            {
+                new MMFraudTicketsSummaryViewModel
+                {
+                    MatchId = 401,
+                    IsLive = true,
+                    Bettype = 7,
+                    Betteam = "Parlay Match 1",
+                    BetId = 2004,
+                    Turnover = 120000,
+                    BetCount = 60
+                },
+                new MMFraudTicketsSummaryViewModel
+                {
+                    MatchId = 402,
+                    IsLive = false,
+                    Bettype = 8,
+                    Betteam = "Parlay Match 2",
+                    BetId = 2005,
+                    Turnover = 180000,
+                    BetCount = 90
+                },
+                new MMFraudTicketsSummaryViewModel
+                {
+                    MatchId = 403,
+                    IsLive = true,
+                    Bettype = 9,
+                    Betteam = "Parlay Match 3",
+                    BetId = 2006,
+                    Turnover = 95000,
+                    BetCount = 45
+                },
+                new MMFraudTicketsSummaryViewModel
+                {
+                    MatchId = 404,
+                    IsLive = false,
+                    Bettype = 10,
+                    Betteam = "Parlay Match 4",
+                    BetId = 2007,
+                    Turnover = 200000,
+                    BetCount = 100
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetMMParlayFraudTicketsSummary(model);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(4, result.Count());
+            
+            var tickets = result.ToList();
+            
+            Assert.Equal(401, tickets[0].MatchId);
+            Assert.Equal("Parlay Match 1", tickets[0].Betteam);
+            Assert.Equal(120000, tickets[0].Turnover);
+            
+            Assert.Equal(402, tickets[1].MatchId);
+            Assert.Equal("Parlay Match 2", tickets[1].Betteam);
+            Assert.Equal(180000, tickets[1].Turnover);
+            
+            Assert.Equal(403, tickets[2].MatchId);
+            Assert.Equal("Parlay Match 3", tickets[2].Betteam);
+            Assert.Equal(95000, tickets[2].Turnover);
+            
+            Assert.Equal(404, tickets[3].MatchId);
+            Assert.Equal("Parlay Match 4", tickets[3].Betteam);
+            Assert.Equal(200000, tickets[3].Turnover);
+            
+            _mockRepository.Verify(x => x.Fetch<MMFraudTicketsSummaryViewModel>(It.IsAny<ICriteria>()), Times.Once);
+        }
     }
 }

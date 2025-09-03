@@ -33,12 +33,35 @@
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fanex.NAP.CTS.PortalAPI", Version = "v1" });
+                c.AddSecurityDefinition("apiKey", new OpenApiSecurityScheme()
+                {
+                    Description = "API KEY",
+                    Name = "X-API-KEY",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "apiKey"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
             });
 
             ConfigSettings.Setup(Configuration);
             ConfigurationManager.Setup(Configuration);
             services.AddFanexLogSentry(Configuration);
             UMHelper.Setup(services, Configuration);
+            services.AddScoped<ApiKeyAuthFilterAttribute>();
 
             RefDataTypeContainer
                 .ConnectTo(new Uri(ConfigurationManager.AppSettings("Fanex.RemotingRef.Service.Url")))
@@ -79,8 +102,6 @@
             });
 
             app.UseHttpsRedirection();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

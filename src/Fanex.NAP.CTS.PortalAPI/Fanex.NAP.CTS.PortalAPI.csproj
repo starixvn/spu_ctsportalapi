@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -28,29 +28,45 @@
 
   <ItemGroup>
     <Content Update="appsettings.LOCAL_99.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	    <DependentUpon>appsettings.json</DependentUpon>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="appsettings.KLSIMPLE.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	    <DependentUpon>appsettings.json</DependentUpon>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		<DependentUpon>appsettings.json</DependentUpon>
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="appsettings.KLPROD.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		<DependentUpon>appsettings.json</DependentUpon>
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="appsettings.LOCAL.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		<DependentUpon>appsettings.json</DependentUpon>
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="appsettings.PRO.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		<DependentUpon>appsettings.json</DependentUpon>
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="appsettings.SIT.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		<DependentUpon>appsettings.json</DependentUpon>
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="appsettings.UAT.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		<DependentUpon>appsettings.json</DependentUpon>
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+	<Content Update="appsettings.AWS.json">
+		<DependentUpon>appsettings.json</DependentUpon>
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+	<Content Update="appsettings.Development.json">
+		<DependentUpon>appsettings.json</DependentUpon>
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
   </ItemGroup>
 
   <ItemGroup>

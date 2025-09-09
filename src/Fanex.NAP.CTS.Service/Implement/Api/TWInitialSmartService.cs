@@ -26,5 +26,13 @@
             return _repository.Fetch<long>(criteria);
         }
 
+        public IEnumerable<IntialSmartCustInfoBySportEntity> AddCustTWInitialSmartsBySport(IEnumerable<InitialSmartCustInfoBySportModel> initialSmartCustInfos)
+        {
+            var criteria = new InsertTWInitialSmartBySportCriteria
+            {
+                CustInfoJson = JsonConvert.SerializeObject(initialSmartCustInfos)
+            };
+            return _repository.Fetch<IntialSmartCustInfoBySportEntity>(criteria);
+        }
     }
 }

@@ -92,20 +92,33 @@
 
         private IEnumerable<InsertProblemAccountModel> CombinePAWithLosingPerformace(IEnumerable<InsertProblemAccountModel> problemAccounts, FunctionId funcId)
         {
-            var custIds = problemAccounts.Select(c => c.CustID)?.Distinct();
+            var custInfos = problemAccounts
+                                .Select(c =>
+                                    new PADailyScanFromQueueModel
+                                    {
+                                        CustID = c.CustID,
+                                        DWSportType = c.DWSportType
+                                    });
 
-            var paLosing = GetProblemAccountLosingClassification(custIds, funcId);
+            var paLosing = GetProblemAccountLosingClassification(custInfos, funcId);
 
             return MergeProblemAccountClassification(problemAccounts, paLosing);
         }
 
         public IEnumerable<ProblemAccountLosingClassificationModel> GetProblemAccountLosingClassification(IEnumerable<long> custIds, FunctionId funcId)
         {
-            if (custIds != null && custIds.Any())
+            var custInfos = custIds?.Select(x => new PADailyScanFromQueueModel { CustID = x });
+
+            return GetProblemAccountLosingClassification(custInfos, funcId);
+        }
+
+        public IEnumerable<ProblemAccountLosingClassificationModel> GetProblemAccountLosingClassification(IEnumerable<PADailyScanFromQueueModel> custInfos, FunctionId funcId)
+        {
+            if (custInfos.IsNotNullOrEmpty())
             {
                 var criteria = new ProblemAccountLosingClassificationGetCriteria
                 {
-                    ListCustIds = string.Join(",", custIds.Distinct()),
+                    CustJson = JsonConvert.SerializeObject(custInfos),
                     FunctionId = (int)funcId
                 };
 
@@ -162,8 +175,8 @@
             if (problemAccounts != null && problemAccounts.Any())
             {
                 return problemAccounts.GroupJoin(probAccountLosing ?? Enumerable.Empty<ProblemAccountLosingClassificationModel>(),
-                                            pa => pa.CustID,
-                                            pl => pl.CustId,
+                                            pa => $"{pa.CustID}_{pa.DWSportType}",
+                                            pl => $"{pl.CustId}_{pl.SportGroup}",
                                             (pa, pl) => new { pa, pl })
                                             .SelectMany(
                                                  group => group.pl.DefaultIfEmpty(),
@@ -190,6 +203,7 @@
                                                      TVSReasonID = group.pa.TVSReasonID,
                                                      IsParlay = group.pa.IsParlay,
                                                      SportType = group.pa.SportType,
+                                                     DWSportType = group.pa.DWSportType,
                                                      IssueTypeID = group.pa.IssueTypeID,
 
                                                      BetCount = temp?.BetCount,

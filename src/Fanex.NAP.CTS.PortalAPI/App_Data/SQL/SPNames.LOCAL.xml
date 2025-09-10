@@ -21,9 +21,9 @@
 		<Setting Key="CTS_DC_CustClassification_Get" SpName="CTS_DC_CustClassification_Get" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
 		<Setting Key="CTS_DC_CustClassification_BySport_GetCC" SpName="CTS_DC_CustClassification_BySport_GetCC" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
 		<Setting Key="Acc_CustomerUpdateCustomerClassBySport" SpName="Acc_CustomerUpdateCustomerClassBySport" DbName="DBCUST.CustDB.wsv_nap" TimeOut="600" />
-    <Setting Key="CTS_DC_CustClassification_Insert" SpName="CTS_DC_CustClassification_Insert" DbName="CTSMain.CTS_DataCenter.ctsAPIAdmin" TimeOut="600"/>
+    <Setting Key="CTS_DC_CustClassification_Insert" SpName="CTS_DC_CustClassification_Insert_xtest" DbName="CTSMain.CTS_DataCenter.ctsAPIAdmin" TimeOut="600"/>
     <Setting Key="CTS_DC_CustClassification_Remove" SpName="CTS_DC_CustClassification_Remove" DbName="CTSMain.CTS_DataCenter.ctsAPIAdmin" TimeOut="600"/>
-    <Setting Key="CTS_DC_CustClassification_Rescan_Get" SpName="CTS_DC_CustClassification_Rescan_Get" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
+    <Setting Key="CTS_DC_CustClassification_Rescan_Get" SpName="CTS_DC_CustClassification_Rescan_Get_xtest" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
 	</Function>
 
 	<Function Name="CustomerClass">

@@ -1,15 +1,19 @@
 ﻿namespace Fanex.NAP.CTS.Tests.Implement
 {
+    using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Service.Implement;
+    using Moq;
     using Xunit;
 
     public class CommonServiceTest
     {
+        private readonly Mock<ICriteriaService> _mockRepository;
         private readonly CommonService _service;
 
         public CommonServiceTest()
         {
-            _service = new CommonService();
+            _mockRepository = new Mock<ICriteriaService>();
+            _service = new CommonService(_mockRepository.Object);
         }
 
         #region CheckConnection Tests
@@ -44,8 +48,8 @@
         public void CheckConnection_ServiceInstanceCanBeReused()
         {
             // Arrange
-            var service1 = new CommonService();
-            var service2 = new CommonService();
+            var service1 = new CommonService(_mockRepository.Object);
+            var service2 = new CommonService(_mockRepository.Object);
 
             // Act & Assert
             // Multiple service instances should work independently
@@ -63,7 +67,7 @@
         public void CommonService_CanBeInstantiated()
         {
             // Arrange & Act
-            var service = new CommonService();
+            var service = new CommonService(_mockRepository.Object);
 
             // Assert
             Assert.NotNull(service);
@@ -73,10 +77,10 @@
         public void CommonService_ImplementsICommonService()
         {
             // Arrange
-            var service = new CommonService();
+            var service = new CommonService(_mockRepository.Object);
 
             // Act & Assert
-            Assert.IsAssignableFrom<Fanex.NAP.CTS.Service.Interface.ICommonService>(service);
+            Assert.IsAssignableFrom<ICommonService>(service);
         }
 
         #endregion

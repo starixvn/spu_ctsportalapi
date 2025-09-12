@@ -22,6 +22,13 @@
             services.RegisterServiceOther();
 
             services.RegisterServiceMatchMonitor();
+
+            services.RegisterServiceAssociationDetection();
+        }        
+
+        public static void RegisterServiceAssociationDetection(this IServiceCollection services)
+        {
+            services.AddScoped<IAssociationDetectionService, AssociationDetectionService>();
         }
 
         public static void RegisterServiceCore(this IServiceCollection services)

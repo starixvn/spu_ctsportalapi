@@ -7,4 +7,8 @@
 	<SonarQubeExclude>True</SonarQubeExclude>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.CTS.Model\Fanex.NAP.CTS.Model.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,13 @@
+﻿namespace Fanex.NAP.CTS.Model.AssociationDetection
+{
+    public class ValidateUserNameModel
+    {
+        public string UserName { get; set; }
+
+        public int CTSCustID { get; set; }
+
+        public int CustID { get; set; }
+
+        public bool IsInternal { get; set; }
+    }
+}

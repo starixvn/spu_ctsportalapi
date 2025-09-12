@@ -2,6 +2,7 @@
 {
     using System;
     using System.Reflection;
+    using System.Text.Json;
 
     public static class ObjectHelper
     {
@@ -25,5 +26,16 @@
             }
             return target;
         }
+
+        public static string SerializeObj<T>(T obj)
+        {           
+            return JsonSerializer.Serialize(obj);
+        }
+
+        public static IEnumerable<T> DeserializeObj<T>(string obj)
+        {
+            return JsonSerializer.Deserialize<IEnumerable<T>>(obj) ?? Enumerable.Empty<T>();
+        }
+
     }
 }

@@ -8,10 +8,9 @@
     using Fanex.NAP.CTS.Model.AssociationDetection;
     using Fanex.NAP.CTS.ViewModel.AssociationDetection;
     using Newtonsoft.Json;
-    using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     public interface IAssociationDetectionService
@@ -43,16 +42,16 @@
         {
             var userNames = userNameString.Split(',');
 
-            var userNameList = string.Join(",", userNames.Select(x => x.ToUpper()).Distinct());
+            var userNameList = string.Join(",", userNames.Select(x => x.ToUpper(CultureInfo.InvariantCulture)).Distinct());
 
             var orgUserList = userNames.Select(x => new ValidateUserNameModel { UserName = x });
 
-            var validatedList = _commonService.ValidateUsernames(userNameList, out bool isException);
+            var validatedList = _commonService.ValidateUsernames(userNameList);
 
-            orgUserList = orgUserList.Join(validatedList, c1 => c1.UserName.ToLower(), c2 => c2.UserName.ToLower(),
+            orgUserList = orgUserList.Join(validatedList, c1 => c1.UserName.ToLower(CultureInfo.InvariantCulture), c2 => c2.UserName.ToLower(CultureInfo.InvariantCulture),
                 (c1, c2) => new ValidateUserNameModel
                 {
-                    UserName = c2.UserName,
+                    UserName = c1.UserName,
                     CustID = c2.CustID,
                     CTSCustID = c2.CTSCustID,
                     IsInternal = c2.IsInternal

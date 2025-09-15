@@ -1,7 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Service.Implement
 {
     using Fanex.Data;
-    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.AssociationDetection;
     using Fanex.NAP.CTS.Criteria.Common;
@@ -11,7 +10,7 @@
     {
         void CheckConnection();
 
-        IEnumerable<ValidateUserNameModel> ValidateUsernames(string userNames, out bool isException);
+        IEnumerable<ValidateUserNameModel> ValidateUsernames(string userNames);
     }
 
     public class CommonService : ICommonService
@@ -33,26 +32,14 @@
             }
         }
 
-        public IEnumerable<ValidateUserNameModel> ValidateUsernames(string userNames, out bool isException)
-        {
-            isException = false;
-
+        public IEnumerable<ValidateUserNameModel> ValidateUsernames(string userNames)
+        {            
             var criteria = new ValidateUsernameCriteria
             {
                 UserNames = userNames
             };
 
-            try
-            {
-                return _repository.Fetch<ValidateUserNameModel>(criteria);
-            }
-            catch (Exception ex)
-            {
-                isException = true;
-                LogExtension.LogError(ex.Message, ex);
-
-                return Enumerable.Empty<ValidateUserNameModel>();
-            }
+            return _repository.Fetch<ValidateUserNameModel>(criteria);
         }
     }
 }

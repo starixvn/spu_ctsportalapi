@@ -21,9 +21,9 @@
 		<Setting Key="CTS_DC_CustClassification_Get" SpName="CTS_DC_CustClassification_Get" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 		<Setting Key="CTS_DC_CustClassification_BySport_GetCC" SpName="CTS_DC_CustClassification_BySport_GetCC" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 		<Setting Key="Acc_CustomerUpdateCustomerClassBySport" SpName="Acc_CustomerUpdateCustomerClassBySport" DbName="DBCUST.CustDB.wsv_nap" TimeOut="600" />
-    <Setting Key="CTS_DC_CustClassification_Insert" SpName="CTS_DC_CustClassification_Insert_xtest" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPIAdmin" TimeOut="600"/>
+    <Setting Key="CTS_DC_CustClassification_Insert" SpName="CTS_DC_CustClassification_Insert" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPIAdmin" TimeOut="600"/>
     <Setting Key="CTS_DC_CustClassification_Remove" SpName="CTS_DC_CustClassification_Remove" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPIAdmin" TimeOut="600"/>
-    <Setting Key="CTS_DC_CustClassification_Rescan_Get" SpName="CTS_DC_CustClassification_Rescan_Get_xtest" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
+    <Setting Key="CTS_DC_CustClassification_Rescan_Get" SpName="CTS_DC_CustClassification_Rescan_Get" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
 	</Function>
 
 	<Function Name="CustomerClass">
@@ -74,7 +74,7 @@
 		<Setting Key="SPU_Stats_Accessment_Insert" SpName="SPU_Stats_Accessment_Insert" DbName="CTSMain_DEV.SPU_Stats.spustatsServiceAdmin" />
 	</Function>
 	<Function name="RescanCustomerClassification">
-		<Setting Key="CTS_ProblemAccountsClassification_Daily" SpName="CTS_ProblemAccountsClassification_Daily_xtest" DbName="DBVR2.bodb_VR2Model.wsv_cts" />
+		<Setting Key="CTS_ProblemAccountsClassification_Daily" SpName="CTS_ProblemAccountsClassification_Daily" DbName="DBVR2.bodb_VR2Model.wsv_cts" />
 		<Setting Key="CTS_Arc_CustomerAssociation_RollBack_CheckByNewPA" SpName="CTS_Arc_CustomerAssociation_RollBack_CheckByNewPA" DbName="CTSMain_DEV.CTS_Archive.ctsAPIAdmin" />					
 
 		<Setting Key="CTS_DC_CustClassification_GetCCAndDangerLevel" SpName="CTS_DC_CustClassification_GetCCAndDangerLevel" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPI" />
@@ -121,7 +121,7 @@
 	</Function>
 	<Function name="TW">
 		<Setting Key="CTS_DC_CustClassification_InitialSmart_Insert" SpName="CTS_DC_CustClassification_InitialSmart_Insert" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPIAdmin" />
-		<Setting Key="CTS_DC_CustClassification_InitialSmart_BySport_Insert" SpName="CTS_DC_CustClassification_InitialSmart_BySport_Insert_xtest" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPIAdmin" />
+		<Setting Key="CTS_DC_CustClassification_InitialSmart_BySport_Insert" SpName="CTS_DC_CustClassification_InitialSmart_BySport_Insert" DbName="CTSMain_DEV.CTS_DataCenter.ctsAPIAdmin" />
 	</Function>
 
 	<Function name="TWSpecialLicSub">

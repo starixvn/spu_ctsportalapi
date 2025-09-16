@@ -27,6 +27,81 @@
             return Ok(result);
         }
 
+        [HttpPost]
+        public IActionResult PrepareDataExportDetectAssociation([FromBody] DetectAssociationByUserNamesViewModel model)
+        {
+            var result = new DetectAssociationViewModel();
+
+            if (!string.IsNullOrWhiteSpace(model.UserNames))
+            {
+                var orgUserList = _associationDetectionService.ValidateUserName(model.UserNames);
+
+                var assMergeGroup = _associationDetectionService.DetectAssociation(model, orgUserList, true);
+
+                var assRearrangeGroup = RearrangeAssGroup(assMergeGroup);
+
+                var custIDs = string.Join(",", orgUserList.Select(x => x.CustID).Distinct());
+
+                var custStatisticsList = _associationDetectionService.GetCustStatisticsInfoRealtime(custIDs);
+
+                result.ExportItemList = GetExportItem(orgUserList, assRearrangeGroup, custStatisticsList);
+            }
+           
+            return Ok(result);
+        }
+
+        private IEnumerable<ExportAssociationDetectModel> GetExportItem(IEnumerable<ValidateUserNameModel> orgUserList
+            , IEnumerable<DetectAssociationMergeGroupModel> assMergeGroup
+            , IEnumerable<GetCustStatisticsInfoRealtimeModel> custStatisticsList)
+        {
+            if (assMergeGroup.Any())
+            {
+                var assMergeGroupDictionary = assMergeGroup.Distinct(x => x.CustID, y => y);
+                var custStatisticsDictionary = custStatisticsList.Distinct(x => x.CustID, y => y);
+
+                return orgUserList.Select(x =>
+                {
+                    var cust1 = assMergeGroupDictionary.GetValueOrDefault(x.CustID);
+                    var cust2 = custStatisticsDictionary.GetValueOrDefault(x.CustID);
+
+                    var item = new ExportAssociationDetectModel { UserName = x.UserName };
+                    if (cust1 != null)
+                    {
+                        item.CreatedDate = cust1.CreatedDate;
+                        item.CustomerClass = cust1.CustomerClass;
+                        item.CustomerCategory = cust1.CustomerCategory;
+                        item.GroupID = cust1.GroupID;
+                        item.Danger1 = cust1.Danger1;
+                        item.Danger2 = cust1.Danger2;
+                        item.Danger3 = cust1.Danger3;
+                        item.Danger4 = cust1.Danger4;
+                        item.Danger5 = cust1.Danger5;
+                        item.BotTransSum = cust1.BotTransSum;
+                        item.BotTransPercentage = cust1.BotTransPercentage;
+                        item.InvalidBrowserInfoTransSum = cust1.InvalidBrowserInfoTransSum;
+                        item.InvalidBrowserInfoTransPercentage = cust1.InvalidBrowserInfoTransPercentage;
+                    }
+                    if (cust2 != null)
+                    {
+                        item.TotalSettledTickets = cust2.TotalSettledTickets;
+                        item.TotalWinloss = cust2.TotalWinlossRM;
+                        item.WinlossLast3Days = cust2.WinlossRM_Last3Days;
+                        item.WinlossLast7Days = cust2.WinlossRM_Last7Days;
+                        item.TotalSabaTurnoverRM = cust2.TotalSabaTurnoverRM;
+                        item.SabaTurnoverRMLast3Days = cust2.SabaTurnoverRM_Last3Days;
+                        item.SabaTurnoverRMLast7Days = cust2.SabaTurnoverRM_Last7Days;
+                        item.TotalTurnover = cust2.TotalTurnoverRM;
+                        item.TurnoverLast3Days = cust2.TurnoverRM_Last3Days;
+                        item.TurnoverLast7Days = cust2.TurnoverRM_Last7Days;
+                    }
+
+                    return item;
+                });
+            }
+
+            return new List<ExportAssociationDetectModel>();
+        }
+
         private DetectAssociationViewModel DetectAssociation(DetectAssociationByUserNamesViewModel model)
         {
             var result = new DetectAssociationViewModel();

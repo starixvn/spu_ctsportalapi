@@ -25,6 +25,8 @@
 
         IEnumerable<DetectAssociationMergeGroupModel> DetectGroupDetectAssociation(MergeGroupInfoModel model);
 
+        IEnumerable<GetCustStatisticsInfoRealtimeModel> GetCustStatisticsInfoRealtime(string custIDList);
+
     }
 
     public class AssociationDetectionService : IAssociationDetectionService
@@ -167,6 +169,18 @@
 
             return DetectAssByIPMappingToSharedIPInfo(mergeIP_DetectAssByIP, validateUsernames);
         }
+
+        public IEnumerable<GetCustStatisticsInfoRealtimeModel> GetCustStatisticsInfoRealtime(string custIDList)
+        {
+            var criteria = new GetMainCustStatisticsInfoCriteria
+            {
+                CustIDList = custIDList,
+                IsResetBalance = true
+            };
+
+            return _repository.Fetch<GetCustStatisticsInfoRealtimeModel>(criteria);
+        }
+
 
         #region Private Methods
         private IEnumerable<DetectAssociationBySharedIPModel> DetectAssociationByIP(string custIDList)

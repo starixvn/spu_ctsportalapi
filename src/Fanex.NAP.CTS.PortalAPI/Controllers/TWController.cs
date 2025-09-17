@@ -54,5 +54,37 @@
 
             return Ok("Success");
         }
+
+        [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.AddCustomerInitialSmartsBySport)]
+        public IActionResult AddCustomerEarlyBlockBySport([FromBody] List<InitialSmartCustInfoBySportModel> custInfos)
+        {
+            try
+            {
+                var dbExistedCusts = _tWInitialSmartService.AddCustTWInitialSmartsBySport(custInfos);
+
+                if (dbExistedCusts != null && dbExistedCusts.Any())
+                {
+                    var logMessage = new LogMessage($"CTS API - TW AddCustomerInitialSmartsBySport cust have existed")
+                                      .AddMessage($"Custs existed in DB: {JsonConvert.SerializeObject(dbExistedCusts)}")
+                                      .AddMessage($"Data {JsonConvert.SerializeObject(custInfos)} - DateTime {DateTime.UtcNow} UTC").ToString();
+
+                    LogExtension.LogError(logMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                var logMessage = new LogMessage($"CTS API - TW AddCustomerInitialSmartsBySport exception")
+                                       .AddMessage(ex.Message)
+                                       .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
+                                       .AddMessage($"Data {JsonConvert.SerializeObject(custInfos)} - DateTime {DateTime.UtcNow} UTC").ToString();
+
+                LogExtension.LogError(logMessage);
+
+                return BadRequest($"Add Customers Initial Smart By Sport failed.");
+            }
+
+            return Ok("Success");
+        }
     }
 }

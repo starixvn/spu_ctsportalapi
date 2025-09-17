@@ -6,5 +6,7 @@
     public interface ITWInitialSmartService
     {
         IEnumerable<long> AddCustTWInitialSmarts(IEnumerable<InitialSmartCustInfoModel> initialSmartCustInfos);
+
+        IEnumerable<IntialSmartCustInfoBySportEntity> AddCustTWInitialSmartsBySport(IEnumerable<InitialSmartCustInfoBySportModel> initialSmartCustInfos);
     }
 }

@@ -487,6 +487,7 @@
             GetCustomerClassCategoryByCustID = 245,
             GetRobotAILPDetail = 246,
             ForceLicSubCC = 247,
+            AddCustomerInitialSmartsBySport = 248,
         };
 
         public enum SystemId

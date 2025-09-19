@@ -22,7 +22,19 @@
         [HttpPost]
         public IActionResult DetectAssociationByUserNames([FromBody] DetectAssociationByUserNamesViewModel model)
         {
-            var result = DetectAssociation(model);
+            var result = new DetectAssociationViewModel();
+
+            try
+            {
+                result = DetectAssociation(model);
+            }
+            catch (Exception ex)
+            {
+                result.ErrorCode = 1;
+                result.ErrorMessage = ex.Message;
+
+                ex.LogError();
+            }
 
             return Ok(result);
         }
@@ -32,21 +44,28 @@
         {
             var result = new DetectAssociationViewModel();
 
-            if (!string.IsNullOrWhiteSpace(model.UserNames))
+            try
             {
-                var orgUserList = _associationDetectionService.ValidateUserName(model.UserNames);
+                if (!string.IsNullOrWhiteSpace(model.UserNames))
+                {
+                    var orgUserList = _associationDetectionService.ValidateUserName(model.UserNames);
 
-                var assMergeGroup = _associationDetectionService.DetectAssociation(model, orgUserList, true);
+                    var assMergeGroup = _associationDetectionService.DetectAssociation(model, orgUserList, true);
 
-                var assRearrangeGroup = RearrangeAssGroup(assMergeGroup);
+                    var assRearrangeGroup = RearrangeAssGroup(assMergeGroup);
 
-                var custIDs = string.Join(",", orgUserList.Select(x => x.CustID).Distinct());
+                    var custIDs = string.Join(",", orgUserList.Select(x => x.CustID).Distinct());
 
-                var custStatisticsList = _associationDetectionService.GetCustStatisticsInfoRealtime(custIDs);
+                    var custStatisticsList = _associationDetectionService.GetCustStatisticsInfoRealtime(custIDs);
 
-                result.ExportItemList = GetExportItem(orgUserList, assRearrangeGroup, custStatisticsList);
+                    result.ExportItemList = GetExportItem(orgUserList, assRearrangeGroup, custStatisticsList);
+                }
             }
-           
+            catch (Exception ex)
+            {
+                ex.LogError();
+            }
+
             return Ok(result);
         }
 

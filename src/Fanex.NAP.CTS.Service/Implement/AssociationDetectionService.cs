@@ -1,8 +1,11 @@
 ﻿namespace Fanex.NAP.CTS.Service.Implement
 {
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
     using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Helpers;
     using Fanex.NAP.CTS.Core.Service;
+    using Fanex.NAP.CTS.Core.Utilities;
     using Fanex.NAP.CTS.Criteria.AssociationDetection;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Model.AssociationDetection;
@@ -84,22 +87,32 @@
             }, () =>
             {
 
-                mergeGroupInfo.AssociationByDeviceJson = model.IsDevice ? GetAssociationCustByPrimary(new DetectAssociationByPrimaryFilterModel(ctsCustIDs, AssociationDetectionType.Device)) : "[]";
+                mergeGroupInfo.AssociationByDeviceJson = model.IsDevice
+                ? GetAssociationCustByPrimary(new DetectAssociationByPrimaryFilterModel(ctsCustIDs, AssociationDetectionType.Device))
+                : "[]";
             }, () =>
             {
 
-                mergeGroupInfo.AssociationByAIJson = model.IsBP ? GetAssociationCustByPrimary(new DetectAssociationByPrimaryFilterModel(ctsCustIDs, AssociationDetectionType.AI)) : "[]";
+                mergeGroupInfo.AssociationByAIJson = model.IsBP
+                ? GetAssociationCustByPrimary(new DetectAssociationByPrimaryFilterModel(ctsCustIDs, AssociationDetectionType.AI))
+                : "[]";
             }, () =>
             {
 
-                mergeGroupInfo.AssociationByIPJson = model.IsIP ? GetAssociationCustByPrimary(new DetectAssociationByPrimaryFilterModel(ctsCustIDs, AssociationDetectionType.IP)) : "[]";
+                mergeGroupInfo.AssociationByIPJson = model.IsIP
+                ? GetAssociationCustByPrimary(new DetectAssociationByPrimaryFilterModel(ctsCustIDs, AssociationDetectionType.IP))
+                : "[]";
             }, () =>
             {
 
                 mergeGroupInfo.AssociationByAgentJson = model.IsAgent ? GetAssociationCustByAgent(ctsCustIDs) : "[]";
             });
 
+            LogExtension.LogInfo($"DetectGroupDetectAssociation before ");
+
             var assMergeGroup = DetectGroupDetectAssociation(mergeGroupInfo);
+
+            LogExtension.LogInfo($"DetectGroupDetectAssociation after ");
 
             return assMergeGroup;
         }
@@ -129,19 +142,32 @@
 
         public IEnumerable<DetectAssociationMergeGroupModel> DetectGroupDetectAssociation(MergeGroupInfoModel model)
         {
-            var criteria = new DetectAssociationMergeGroupCriteria
+            try
             {
-                CTSCustIDs = model.CTSCustIDs,
-                DeviceJson = model.AssociationByDeviceJson,
-                AIJson = model.AssociationByAIJson,
-                IPJson = model.AssociationByIPJson,
-                AgentJson = model.AssociationByAgentJson,
-                SharedIPJson = model.AssociationBySharedIPJson,
-                SharedMatchesJson = model.AssociationBySharedMatchesJson,
-                IsGetLogTransInfo = model.IsGetLogTransInfo
-            };
+                var criteria = new DetectAssociationMergeGroupCriteria
+                {
+                    CTSCustIDs = model.CTSCustIDs,
+                    DeviceJson = model.AssociationByDeviceJson,
+                    AIJson = model.AssociationByAIJson,
+                    IPJson = model.AssociationByIPJson,
+                    AgentJson = model.AssociationByAgentJson,
+                    SharedIPJson = model.AssociationBySharedIPJson,
+                    SharedMatchesJson = model.AssociationBySharedMatchesJson,
+                    IsGetLogTransInfo = model.IsGetLogTransInfo
+                };
+               
+                return _repository.Fetch<DetectAssociationMergeGroupModel>(criteria);
+            }
+            catch (Exception ex)
+            {               
+                var logMessage = new LogMessage(ConfigSettings.EnvironmentName + " " + ex.Message)                                
+                .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
+                .AddMessage($"{DateTimeOffset.Now}").ToString();
 
-            return _repository.Fetch<DetectAssociationMergeGroupModel>(criteria);
+                LogService.Error(logMessage);
+
+                throw;
+            }           
         }
 
         public IEnumerable<DetectAssociationBySharedIPMatchesModel> DetectAssociationBySharedMatches(string custIDList)
@@ -156,9 +182,9 @@
         }
 
         public IEnumerable<SharedIPInfoModel> DetectAssociationByIP(Dictionary<int, ValidateUserNameModel> validateUsernames, string custIds)
-        {
+        {            
             var detectAssByIP = DetectAssociationByIP(custIds);
-
+            
             var mergeIP_DetectAssByIP = detectAssByIP.GroupBy(x => new { x.CustID1, x.CustID2 })
                 .Select(g => new DetectAssociationBySharedIPModel
                 {
@@ -166,8 +192,12 @@
                     CustID2 = g.Key.CustID2,
                     IP = g.Select(x => x.IP.Trim()).Join()
                 });
+            
+            var groupIPs = DetectAssByIPMappingToSharedIPInfo(mergeIP_DetectAssByIP, validateUsernames);
 
-            return DetectAssByIPMappingToSharedIPInfo(mergeIP_DetectAssByIP, validateUsernames);
+            LogExtension.LogInfo($"groupIPs {groupIPs.Count()}");
+
+            return groupIPs;
         }
 
         public IEnumerable<GetCustStatisticsInfoRealtimeModel> GetCustStatisticsInfoRealtime(string custIDList)
@@ -216,14 +246,9 @@
         private string GetAssociationCustByIP(IEnumerable<SharedIPInfoModel> ass)
         {
             var assCustBySharedIP = ass.Select(x => new AssociationCustByIPViewModel
-            {
-                F1 = x.FromCustID,
-                O = x.FromCTSCustID,
-                X = x.FromUserName,
-                T1 = x.ToCustID,
-                D = x.ToCTSCustID,
-                Y = x.ToUserName,
-                IP = x.IP
+            {               
+                O = x.FromCTSCustID,               
+                D = x.ToCTSCustID              
             });
 
             return ObjectHelper.SerializeObj(assCustBySharedIP);
@@ -253,13 +278,9 @@
         private string GetAssociationCustByMatch(IEnumerable<SharedIPMatchesInfoModel> ass)
         {
             var assCustBySharedIP = ass.Select(x => new AssociationCustModel
-            {
-                FromCustID = x.FromCustID,
-                FromCTSCustID = x.FromCTSCustID,
-                FromUserName = x.FromUserName,
-                ToCustID = x.ToCustID,
-                ToCTSCustID = x.ToCTSCustID,
-                ToUserName = x.ToUserName
+            {              
+                FromCTSCustID = x.FromCTSCustID,            
+                ToCTSCustID = x.ToCTSCustID             
             });
 
             return JsonConvert.SerializeObject(assCustBySharedIP);

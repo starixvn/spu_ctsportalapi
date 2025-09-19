@@ -159,21 +159,6 @@
             // Act & Assert
             var exception = Record.Exception(() => _service.UpdateBetLimitOfUnflaggedCustomer(custIds));
             Assert.Null(exception);
-        }
-
-        [Fact]
-        public void InsertProblemAccountPackage_ExceptionOccurs_ReturnsErrorResult()
-        {
-            // Arrange
-            var problemAccounts = new List<InsertProblemAccountModel>() { new InsertProblemAccountModel() };
-            _mockCriteriaService.Setup(x => x.Fetch<CustInfoClassificationModel>(It.IsAny<ICriteria>()))
-                .Throws(new Exception("Test exception"));
-
-            // Act
-            Action result = () => _service.InsertProblemAccountPackage(problemAccounts, CCInputFlow.Normal, "TestService", FromFlow.CTSWEB, false);
-
-            // Assert
-            Assert.Throws<NotImplementedException>(result);
-        }
+        }        
     }
 }

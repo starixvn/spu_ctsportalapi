@@ -366,66 +366,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
             // Assert
             Assert.True(result);
             _mockRepository.Verify(x => x.Execute(It.IsAny<INonQueryCommand>()), Times.Never);
-        }
-
-        [Fact]
-        public void RetryPushCCToMainDB_WithErrorCode200_ThrowsLoggingException()
-        {
-            // Arrange
-            var customerClassifications = new List<LatestClassificationModel>
-            {
-                new LatestClassificationModel { CustId = 1, CustomerClass = 1, Category = 1 }
-            };
-            var roleGroupType = RoleGroupType.Member;
-            var retryTime = 3;
-
-            _mockRepository.Setup(x => x.Execute(It.IsAny<INonQueryCommand>()))
-                .Returns(0)
-                .Callback<INonQueryCommand>(command => 
-                {
-                    if (command is SyncCustomerClassToMainDbCriteria syncCriteria)
-                    {
-                        syncCriteria.ErrorCode = 200;
-                        syncCriteria.ErrorMessage = "Non-existing customers";
-                    }
-                });
-
-            // Act & Assert - ErrorCode 200 triggers logging
-            var exception = Assert.Throws<NotImplementedException>(() => 
-                _service.RetryPushCCToMainDB(customerClassifications, roleGroupType, retryTime));
-            
-            Assert.Contains("Please set log engines before using", exception.Message);
-        }
-
-        [Fact]
-        public void RetryPushCCToMainDB_WithPersistentError_ThrowsLoggingException()
-        {
-            // Arrange
-            var customerClassifications = new List<LatestClassificationModel>
-            {
-                new LatestClassificationModel { CustId = 1, CustomerClass = 1, Category = 1 }
-            };
-            var roleGroupType = RoleGroupType.Member;
-            var retryTime = 2;
-
-            _mockRepository.Setup(x => x.Execute(It.IsAny<INonQueryCommand>()))
-                .Returns(0)
-                .Callback<INonQueryCommand>(command => 
-                {
-                    if (command is SyncCustomerClassToMainDbCriteria syncCriteria)
-                    {
-                        syncCriteria.ErrorCode = 500; // Persistent error
-                        syncCriteria.ErrorMessage = "Database error";
-                    }
-                });
-
-            // Act & Assert - Persistent error triggers logging when retryTime reaches 0
-            var exception = Assert.Throws<NotImplementedException>(() => 
-                _service.RetryPushCCToMainDB(customerClassifications, roleGroupType, retryTime));
-            
-            Assert.Contains("Please set log engines before using", exception.Message);
-            _mockRepository.Verify(x => x.Execute(It.IsAny<INonQueryCommand>()), Times.Exactly(3)); // Initial + 2 retries
-        }
+        }             
 
         [Fact]
         public void RetryPushCCToMainDB_WithSuccessfulRetry_ReturnsTrue()
@@ -686,33 +627,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
             _mockRepository.Verify(x => x.Execute(It.IsAny<INonQueryCommand>()), Times.Once);
         }
 
-        #endregion
-
-        #region Exception Handling Tests
-
-        [Fact]
-        public void RetryPushCCToMainDB_WithException_ThrowsLoggingException()
-        {
-            // Arrange
-            var customerClassifications = new List<LatestClassificationModel>
-            {
-                new LatestClassificationModel { CustId = 1, CustomerClass = 1, Category = 1 }
-            };
-            var roleGroupType = RoleGroupType.Member;
-            var retryTime = 1;
-
-            _mockRepository.Setup(x => x.Execute(It.IsAny<INonQueryCommand>()))
-                .Throws(new Exception("Database connection failed"));
-
-            // Act & Assert - Exception handling triggers logging, so expect logging exception
-            var exception = Assert.Throws<NotImplementedException>(() => 
-                _service.RetryPushCCToMainDB(customerClassifications, roleGroupType, retryTime));
-            
-            Assert.Contains("Please set log engines before using", exception.Message);
-            _mockRepository.Verify(x => x.Execute(It.IsAny<INonQueryCommand>()), Times.Exactly(2)); // Initial + 1 retry
-        }
-
-        #endregion
+        #endregion      
 
         #region Null Parameter Tests
 

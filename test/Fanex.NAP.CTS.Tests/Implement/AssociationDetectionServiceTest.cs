@@ -1,8 +1,7 @@
 ﻿namespace Fanex.NAP.CTS.Tests.Implement
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Fanex.Logging;
+    using Fanex.Logging.Sentry.RavenClient;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.AssociationDetection;
     using Fanex.NAP.CTS.Model;
@@ -10,6 +9,10 @@
     using Fanex.NAP.CTS.Service.Implement;
     using Fanex.NAP.CTS.ViewModel.AssociationDetection;
     using Moq;
+    using SharpRaven;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Xunit;
 
     public class AssociationDetectionServiceTest
@@ -23,6 +26,13 @@
             _mockRepository = new Mock<ICriteriaService>();
             _mockCommonService = new Mock<ICommonService>();
             _service = new AssociationDetectionService(_mockRepository.Object, _mockCommonService.Object);
+            LogManager.SetDefaultLogCategory("Test").Use(new List<ILogEngine>
+            {
+                new SentryLogging(new SentryEngineOptions
+                {
+                    Dsn = new Dsn("https://35d303e9d197420c8c25f7218a63fe19@sentry.nexdev.net/116")
+                })
+            });
         }
 
         #region ValidateUserName Tests

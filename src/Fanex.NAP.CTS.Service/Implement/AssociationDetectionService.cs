@@ -107,14 +107,8 @@
 
                 mergeGroupInfo.AssociationByAgentJson = model.IsAgent ? GetAssociationCustByAgent(ctsCustIDs) : "[]";
             });
-
-            LogExtension.LogInfo($"DetectGroupDetectAssociation before ");
-
-            var assMergeGroup = DetectGroupDetectAssociation(mergeGroupInfo);
-
-            LogExtension.LogInfo($"DetectGroupDetectAssociation after ");
-
-            return assMergeGroup;
+            
+            return DetectGroupDetectAssociation(mergeGroupInfo);
         }
 
         public IEnumerable<DetectAssociationByPrimaryModel> DetectAssociationByPrimary(DetectAssociationByPrimaryFilterModel filter)
@@ -193,11 +187,7 @@
                     IP = g.Select(x => x.IP.Trim()).Join()
                 });
             
-            var groupIPs = DetectAssByIPMappingToSharedIPInfo(mergeIP_DetectAssByIP, validateUsernames);
-
-            LogExtension.LogInfo($"groupIPs {groupIPs.Count()}");
-
-            return groupIPs;
+            return DetectAssByIPMappingToSharedIPInfo(mergeIP_DetectAssByIP, validateUsernames);
         }
 
         public IEnumerable<GetCustStatisticsInfoRealtimeModel> GetCustStatisticsInfoRealtime(string custIDList)

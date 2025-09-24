@@ -132,4 +132,13 @@
 		<Setting Key="CTS_MatchMonitor_FraudTicketsSummary" SpName="CTS_MatchMonitor_FraudTicketsSummary" DbName="DBCTS.WASAVerse.wsv_cts" />
 		<Setting Key="CTS_MatchMonitorParlay_FraudTicketSummary" SpName="CTS_MatchMonitorParlay_FraudTicketSummary" DbName="DBCTS.WASAVerse.wsv_cts" TimeOut="600" />
 	</Function>
+
+  <Function name="Common">
+    <Setting Key="CTS_DC_Common_ValidateUsername" SpName="CTS_DC_Common_ValidateUsername" DbName="CTSMain.CTS_DataCenter.ctsWeb" />
+    <Setting Key="CTS_DC_Association_Agent_GetCustEdge" SpName="CTS_DC_Association_Agent_GetCustEdge" DbName="CTSMain.CTS_DataCenter.ctsWeb" Timeout="300" />
+    <Setting Key="CTS_DC_Association_DetectGroup" SpName="CTS_DC_Association_DetectGroup" DbName="CTSMain.CTS_DataCenter.ctsWeb" Timeout="300" />
+    <Setting Key="CTS_Association_IpSharedLast3Days" SpName="CTS_Association_IpSharedLast3Days" DbName="DBCTS.bodb02.wsv_cts" />
+    <Setting Key="CTS_Association_GetBySharedMatches" SpName="CTS_Association_GetBySharedMatches" DbName="DBCTS.bodb02.wsv_cts" TimeOut="300" />
+    <Setting Key="Acc_Rpt_CTS_GetCustStatisticsInfo" SpName="Acc_Rpt_CTS_GetCustStatisticsInfo" DbName="DBVR2.bodb_dwrs.wsv_cts" />
+  </Function>
 </Functions>

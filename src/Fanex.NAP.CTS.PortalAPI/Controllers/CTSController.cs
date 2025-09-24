@@ -10,6 +10,7 @@
     using Fanex.NAP.CTS.Model.Subscriber;
     using Fanex.NAP.CTS.Portal.API.ActionFilter;
     using Fanex.NAP.CTS.Service;
+    using Fanex.NAP.CTS.Service.Implement;
     using Fanex.NAP.CTS.Service.Interface;
     using Fanex.NAP.CTS.Service.Interface.Api;
     using Fanex.NAP.CTS.ViewModel.API.CustomerClassCategory;

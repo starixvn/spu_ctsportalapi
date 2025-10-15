@@ -55,17 +55,12 @@
 		<Setting Key="CTS_DC_CustInfo_GetCustIDsRole" SpName="CTS_DC_CustInfo_GetCustIDsRole" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
 	</Function>
 
-	<Function name ="RobotUser">		
-		<Setting Key="CTS_Customer_RobotListSelByDate" SpName="CTS_Customer_RobotListSelByDate" DbName="DBONUSER.ON_USER.wsv_cts"/>
-	</Function>
-
 	<Function name="MemberCheckList">
 		<Setting Key="CTS_DC_Common_GetStaticList" SpName="CTS_DC_Common_GetStaticList" DbName="CTSMain.CTS_DataCenter.ctsAPI" />
 	</Function>
 	
   <Function name="TWProblemAccountDetection">
-    <Setting Key="CTS_CustomerClassification_GetPerformance" SpName="CTS_CustomerClassification_GetPerformance" DbName="DBVR2.bodb_VR2Model.wsv_cts" />
-    <Setting Key="Nap_ProblemAccount_AutoInsertCustomer" SpName="Nap_ProblemAccount_AutoInsertCustomer" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="CTS_CustomerClassification_GetPerformance" SpName="CTS_CustomerClassification_GetPerformance" DbName="DBVR2.bodb_VR2Model.wsv_cts" />    
   </Function>
 
 	<Function name="MonitorCTSFunction">

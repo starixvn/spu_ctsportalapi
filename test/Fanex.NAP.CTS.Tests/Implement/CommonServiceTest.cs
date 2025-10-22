@@ -1,14 +1,15 @@
 ﻿namespace Fanex.NAP.CTS.Tests.Implement
 {
+    using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Extentions;
+    using Fanex.NAP.CTS.Core.Service;
+    using Fanex.NAP.CTS.Criteria.AssociationDetection;
+    using Fanex.NAP.CTS.Model.AssociationDetection;
+    using Fanex.NAP.CTS.Service.Implement;
+    using Moq;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Data.Repository;
-    using Fanex.NAP.CTS.Core.Service;
-    using Fanex.NAP.CTS.Service.Implement;
-    using Fanex.NAP.CTS.Model.AssociationDetection;
-    using Fanex.NAP.CTS.Criteria.AssociationDetection;
-    using Moq;
     using Xunit;
 
     public class CommonServiceTest
@@ -20,6 +21,8 @@
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new CommonService(_mockRepository.Object);
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region CheckConnection Tests

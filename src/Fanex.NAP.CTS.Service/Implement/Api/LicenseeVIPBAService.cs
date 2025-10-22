@@ -152,11 +152,11 @@
                 var custIds = parameter.CustIDs.Split(',')?.Select(c => Convert.ToInt64(c))?.Distinct();
 
                 if (custIds != null && custIds.Any())
-                {
+                {   
                     var listCust = custIds.Select(c => new LicenseeVIPBAModel
                     {
                         CustID = c,
-                        CreatedBy = parameter.CreatedBy ?? Convert.ToInt32(ConfigurationManager.AppSettings("StarixITUserId")) //Lic UserID is not in CTS system, so default StarixIT
+                        CreatedBy = parameter.CreatedBy ?? Convert.ToInt32(ConfigSettings.GetConfigStringByName("StarixITUserId")) //Lic UserID is not in CTS system, so default StarixIT
                     });
 
                     return listCust.Distinct().Chunk(ConfigSettings.InternalChunkSize);

@@ -47,6 +47,10 @@
 		<DependentUpon>appsettings.json</DependentUpon>
 		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+	<Content Update="appsettings.LOCAL_1.json">
+		<DependentUpon>appsettings.json</DependentUpon>
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
     <Content Update="appsettings.PRO.json">
 		<DependentUpon>appsettings.json</DependentUpon>
 		<CopyToOutputDirectory>Always</CopyToOutputDirectory>

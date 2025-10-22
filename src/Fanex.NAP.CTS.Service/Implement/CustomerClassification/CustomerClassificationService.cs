@@ -18,12 +18,10 @@
     public class CustomerClassificationService : ICustomerClassificationService
     {
         private readonly ICriteriaService _repository;
-        private readonly IAntiFraudCenterService _antiFraudCenterService;
 
-        public CustomerClassificationService(ICriteriaService repository, IAntiFraudCenterService antiFraudCenterService)
+        public CustomerClassificationService(ICriteriaService repository)
         {
             _repository = repository;
-            _antiFraudCenterService = antiFraudCenterService;
         }
 
         public bool PushDataToExternalPackge(IEnumerable<long> custIds, PushDataToExternalModel paras, FromFlow fromFlow)
@@ -35,8 +33,6 @@
                 custIds = custIds.Distinct();
 
                 isSuccess = PushDataToExternal(custIds, paras);
-
-                _antiFraudCenterService.InsertAFCAccounts(custIds, fromFlow, paras.IsSyncAFC);
             }
 
             return isSuccess;

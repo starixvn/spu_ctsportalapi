@@ -1,13 +1,14 @@
 ﻿namespace Fanex.NAP.CTS.Tests.Implement
 {
+    using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Model.MatchMonitor;
     using Fanex.NAP.CTS.Service.Implement;
-    using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.ViewModel.MatchMonitor;
     using Moq;
     using System.Collections.Generic;
     using Xunit;
-    using Fanex.NAP.CTS.ViewModel.MatchMonitor;
 
     public class MatchMonitorServiceTest
     {
@@ -18,6 +19,8 @@
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new MatchMonitorService(_mockRepository.Object);
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         [Fact]

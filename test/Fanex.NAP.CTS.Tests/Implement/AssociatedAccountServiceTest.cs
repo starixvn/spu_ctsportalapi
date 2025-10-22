@@ -1,14 +1,15 @@
 ﻿namespace Fanex.NAP.CTS.Tests.Implement
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.Api;
     using Fanex.NAP.CTS.Model.Account;
     using Fanex.NAP.CTS.Model.DTO;
     using Fanex.NAP.CTS.Service.Implement;
     using Moq;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Xunit;
 
     public class AssociatedAccountServiceTest
@@ -20,6 +21,8 @@
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new AssociatedAccountService(_mockRepository.Object);
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region GetFlaggedEvidenceByDirectAssForAPI Tests

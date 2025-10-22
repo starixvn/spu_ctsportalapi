@@ -11,7 +11,6 @@
     using Fanex.NAP.CTS.User.Helper;
     using Fanex.Data.MySql;
     using Fanex.NAP.CTS.Portal.API.ActionFilter;
-    using Fanex.RemotingRef;
     using HealthChecks.UI.Client;
 
     public class Startup
@@ -58,14 +57,9 @@
             });
 
             ConfigSettings.Setup(Configuration);
-            ConfigurationManager.Setup(Configuration);
             services.AddFanexLogSentry(Configuration);
             UMHelper.Setup(services, Configuration);
             services.AddScoped<ApiKeyAuthFilterAttribute>();
-
-            RefDataTypeContainer
-                .ConnectTo(new Uri(ConfigurationManager.AppSettings("Fanex.RemotingRef.Service.Url")))
-                .FromApplication("CTS Portal API");
 
             DbSettingProviderManager
               .StartNewSession()

@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.CTS.Tests.Implement
 {
     using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.MonitorFunction;
     using Fanex.NAP.CTS.Service.Implement;
@@ -18,6 +19,8 @@
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new MonitorCtsFunctionService(_mockRepository.Object);
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region StatsAccessmentInsert Tests

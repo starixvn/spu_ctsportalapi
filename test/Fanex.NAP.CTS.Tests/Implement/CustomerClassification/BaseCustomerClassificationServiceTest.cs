@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
 {
     using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.CustomerClassification.BaseCustomerClassification;
     using Fanex.NAP.CTS.Model;
@@ -21,6 +22,8 @@
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new BaseCustomerClassificationService(_mockRepository.Object);
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region GetRescanCustomerClassification Tests

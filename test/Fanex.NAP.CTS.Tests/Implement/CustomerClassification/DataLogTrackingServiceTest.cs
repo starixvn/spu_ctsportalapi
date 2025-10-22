@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
 {
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.CustomerClassification;
     using Fanex.NAP.CTS.Model.CustomerClassification;
@@ -15,6 +16,8 @@
         {
             _mockCriteriaService = new Mock<ICriteriaService>();
             _service = new DataLogTrackingService(_mockCriteriaService.Object);
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         [Fact]

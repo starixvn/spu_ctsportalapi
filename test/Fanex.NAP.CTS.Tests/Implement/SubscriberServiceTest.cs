@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Tests.Implement
 {
-    using System;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.Api;
     using Fanex.NAP.CTS.Criteria.Api.FPS.Subscriber;
@@ -9,6 +9,7 @@
     using Fanex.NAP.CTS.Service.Implement;
     using Fanex.NAP.CTS.Service.Interface;
     using Moq;
+    using System;
     using Xunit;
     public class SubscriberServiceTest
     {
@@ -19,6 +20,8 @@
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new SubscriberService(_mockRepository.Object);
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region GetSubscriberBySubscriberName Tests

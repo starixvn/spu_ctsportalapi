@@ -2,6 +2,7 @@
 {
     using Fanex.Logging;
     using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.AssociationDetection;
     using Fanex.NAP.CTS.Model;
@@ -33,6 +34,8 @@
                     Dsn = new Dsn("https://35d303e9d197420c8c25f7218a63fe19@sentry.nexdev.net/116")
                 })
             });
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region ValidateUserName Tests

@@ -1,9 +1,7 @@
 ﻿namespace Fanex.NAP.CTS.Tests.Implement
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.Category;
     using Fanex.NAP.CTS.Model.Account;
@@ -12,6 +10,9 @@
     using Fanex.NAP.CTS.Model.CustomerClassification;
     using Fanex.NAP.CTS.Service.Implement;
     using Moq;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Xunit;
     using static Fanex.NAP.CTS.Resource.Consts.Consts;
 
@@ -24,6 +25,8 @@
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new CustomerCategoryService(_mockRepository.Object);
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region GetCustomerClassCategory Tests

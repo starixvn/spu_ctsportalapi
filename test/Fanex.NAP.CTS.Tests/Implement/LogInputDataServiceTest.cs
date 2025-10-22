@@ -1,11 +1,12 @@
 ﻿namespace Fanex.NAP.CTS.Tests.Implement
 {
-    using System.Collections.Generic;
-    using System.Linq;
+    using Fanex.NAP.CTS.Core.Extentions;
+    using Fanex.NAP.CTS.Model.API;
     using Fanex.NAP.CTS.Model.CustomerClassification;
     using Fanex.NAP.CTS.Model.LogInputData;
-    using Fanex.NAP.CTS.Model.API;
     using Fanex.NAP.CTS.Service;
+    using System.Collections.Generic;
+    using System.Linq;
     using Xunit;
     using static Fanex.NAP.CTS.Resource.Consts.Consts;
 
@@ -16,6 +17,8 @@
         public LogInputDataServiceTest()
         {
             _service = new LogInputDataService();
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region LogInputData(LogInputViewModel, FunctionId) Tests

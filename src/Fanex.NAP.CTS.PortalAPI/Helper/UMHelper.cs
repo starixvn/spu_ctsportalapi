@@ -6,7 +6,6 @@
     using ONEbook.UM.Helpers;
     using ONEbook.UM.Services;
     using ONEbook.UM.Transport;
-    using System.ComponentModel;
 
     public static class UMHelper
     {
@@ -43,24 +42,6 @@
             }
 
             return false;
-        }
-
-        private static T GetValue<T>(string key, T defaultValue)
-        {
-            string value = Core.Utilities.ConfigurationManager.AppSettings(key);
-            if (string.IsNullOrEmpty(value))
-            {
-                return defaultValue;
-            }
-
-            return GetValue<T>(key);
-        }
-
-        private static T GetValue<T>(string key)
-        {
-            string text = Core.Utilities.ConfigurationManager.AppSettings(key);
-            TypeConverter converter = TypeDescriptor.GetConverter(typeof(T));
-            return (T)converter.ConvertFromString(text);
         }
     }
 }

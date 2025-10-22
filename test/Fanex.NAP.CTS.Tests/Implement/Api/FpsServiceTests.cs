@@ -1,6 +1,7 @@
 namespace Fanex.NAP.CTS.Tests.Implement.Api
 {
     using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.Api.FPS.Account;
     using Fanex.NAP.CTS.Criteria.Api.FPS.Device;
@@ -28,6 +29,8 @@ namespace Fanex.NAP.CTS.Tests.Implement.Api
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new FpsService(_mockRepository.Object);
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region DCS Center Tests

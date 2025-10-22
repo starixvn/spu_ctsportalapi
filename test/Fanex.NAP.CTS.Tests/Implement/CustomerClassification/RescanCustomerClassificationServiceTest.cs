@@ -1,15 +1,16 @@
 ﻿namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
 {
+    using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
+    using Fanex.NAP.CTS.Criteria.CustomerClassification;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Model.CustomerClassification;
     using Fanex.NAP.CTS.Model.RescanCustClassificationModel;
     using Fanex.NAP.CTS.Model.SyncCustomerToMainDb;
     using Fanex.NAP.CTS.Service;
-    using Fanex.Data.Repository;
-    using Fanex.NAP.CTS.Criteria.CustomerClassification;
-    using Moq;
     using Fanex.NAP.CTS.Service.Implement.CustomerClassification;
+    using Moq;
     using static Fanex.NAP.CTS.Resource.Consts.Consts;
 
     public class RescanCustomerClassificationServiceTest
@@ -29,6 +30,8 @@
                 _mockCriteriaService.Object,
                 _mockCustomerClassificationService.Object,
                 _mockDataLogTrackingService.Object);
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         [Fact]

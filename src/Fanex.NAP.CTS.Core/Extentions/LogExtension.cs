@@ -8,26 +8,45 @@
 
     public static class LogExtension
     {
+        private static bool IsLogSentry = true;
+
+        public static void ConfigByPassForUnitTest()
+        {
+            IsLogSentry = false;
+        }
+
         public static void LogInfo(this string message)
         {
-            LogService.Info(ConfigSettings.EnvironmentName + " " + message);
+            if (IsLogSentry)
+            {
+                LogService.Info(message);
+            }
         }
 
         public static void LogError(this Exception ex, string message = null)
         {
-            var logMessage = ex.CreateLogMessage(message);
+            if (IsLogSentry)
+            {
+                var logMessage = ex.CreateLogMessage(message);
 
-            LogService.Error(logMessage);
+                LogService.Error(logMessage);
+            }
         }
 
         public static void LogError(this string message, Exception ex)
         {
-            LogService.Error(ConfigSettings.EnvironmentName + " " + message, ex);
+            if (IsLogSentry)
+            {
+                LogService.Error(message, ex);
+            }
         }
 
         public static void LogError(this string message)
         {
-            LogService.Error(ConfigSettings.EnvironmentName + " " + message);
+            if (IsLogSentry)
+            {
+                LogService.Error(message);
+            }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S6566:Use DateTimeOffset instead of DateTime", Justification = "Legacy code or specific reason")]

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.Data.Repository;
-using Fanex.NAP.CTS.Core;
+﻿using Fanex.Data.Repository;
+using Fanex.NAP.CTS.Core.Extentions;
 using Fanex.NAP.CTS.Core.Service;
 using Fanex.NAP.CTS.Criteria.CustomerClassification;
 using Fanex.NAP.CTS.Criteria.SyncCustomerToMainDb;
@@ -12,7 +7,6 @@ using Fanex.NAP.CTS.Model.CustomerClassification;
 using Fanex.NAP.CTS.Model.SyncCustomerToMainDb;
 using Fanex.NAP.CTS.Service;
 using Moq;
-using Xunit;
 using static Fanex.NAP.CTS.Resource.Consts.Consts;
 
 namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
@@ -20,14 +14,14 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
     public class CustomerClassificationServiceTest
     {
         private readonly Mock<ICriteriaService> _mockRepository;
-        private readonly Mock<IAntiFraudCenterService> _mockAntiFraudCenterService;
         private readonly CustomerClassificationService _service;
 
         public CustomerClassificationServiceTest()
         {
             _mockRepository = new Mock<ICriteriaService>();
-            _mockAntiFraudCenterService = new Mock<IAntiFraudCenterService>();
-            _service = new CustomerClassificationService(_mockRepository.Object, _mockAntiFraudCenterService.Object);
+            _service = new CustomerClassificationService(_mockRepository.Object);
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region PushDataToExternalPackge Tests
@@ -70,7 +64,6 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
                     }
                 });
 
-            _mockAntiFraudCenterService.Setup(x => x.InsertAFCAccounts(It.IsAny<IEnumerable<long>>(), It.IsAny<FromFlow>(), It.IsAny<bool>()));
 
             // Act
             var result = _service.PushDataToExternalPackge(custIds, paras, fromFlow);
@@ -79,7 +72,6 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
             Assert.True(result);
             _mockRepository.Verify(x => x.Fetch<LatestCCDangerLevelModel>(It.IsAny<GetLastestCCDangerLevelCriteria>()), Times.Once);
             _mockRepository.Verify(x => x.Execute(It.IsAny<INonQueryCommand>()), Times.Once);
-            _mockAntiFraudCenterService.Verify(x => x.InsertAFCAccounts(It.IsAny<IEnumerable<long>>(), fromFlow, paras.IsSyncAFC), Times.Once);
         }
 
         [Fact]
@@ -96,7 +88,6 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
             // Assert
             Assert.True(result);
             _mockRepository.Verify(x => x.Fetch<LatestCCDangerLevelModel>(It.IsAny<GetLastestCCDangerLevelCriteria>()), Times.Never);
-            _mockAntiFraudCenterService.Verify(x => x.InsertAFCAccounts(It.IsAny<IEnumerable<long>>(), It.IsAny<FromFlow>(), It.IsAny<bool>()), Times.Never);
         }
 
         [Fact]
@@ -113,7 +104,6 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
             // Assert
             Assert.True(result);
             _mockRepository.Verify(x => x.Fetch<LatestCCDangerLevelModel>(It.IsAny<GetLastestCCDangerLevelCriteria>()), Times.Never);
-            _mockAntiFraudCenterService.Verify(x => x.InsertAFCAccounts(It.IsAny<IEnumerable<long>>(), It.IsAny<FromFlow>(), It.IsAny<bool>()), Times.Never);
         }
 
         [Fact]
@@ -158,8 +148,6 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
                     }
                 });
 
-            _mockAntiFraudCenterService.Setup(x => x.InsertAFCAccounts(It.IsAny<IEnumerable<long>>(), It.IsAny<FromFlow>(), It.IsAny<bool>()));
-
             // Act
             var result = _service.PushDataToExternalPackge(custIds, paras, fromFlow);
 
@@ -167,7 +155,6 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
             Assert.True(result);
             _mockRepository.Verify(x => x.Fetch<LatestCCDangerLevelModel>(It.IsAny<GetLastestCCDangerLevelCriteria>()), Times.Once);
             _mockRepository.Verify(x => x.Execute(It.IsAny<INonQueryCommand>()), Times.Exactly(2)); // Once for sync, once for danger level
-            _mockAntiFraudCenterService.Verify(x => x.InsertAFCAccounts(It.IsAny<IEnumerable<long>>(), fromFlow, paras.IsSyncAFC), Times.Once);
         }
 
         #endregion

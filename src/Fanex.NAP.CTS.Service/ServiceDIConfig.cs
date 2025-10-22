@@ -57,7 +57,6 @@
         public static void RegisterServiceOther(this IServiceCollection services)
         {
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IAntiFraudCenterService, AntiFraudCenterService>();
             services.AddScoped<IAssociatedAccountService, AssociatedAccountService>();
             services.AddScoped<IAssociatedAccountService, AssociatedAccountService>();
             services.AddScoped<ICommonService, CommonService>();

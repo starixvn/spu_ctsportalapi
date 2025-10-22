@@ -1,17 +1,18 @@
 ﻿namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
 {
+    using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Model.CustomerClassification;
     using Fanex.NAP.CTS.Model.CustomerClassification.ProblemAccount;
+    using Fanex.NAP.CTS.Service;
     using Fanex.NAP.CTS.Service.Implement;
-    using Fanex.Data.Repository;
     using Moq;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Xunit;
-    using Fanex.NAP.CTS.Service;
     using static Fanex.NAP.CTS.Resource.Consts.Consts;
 
     public class ProblemAccountClassificationServiceTest
@@ -30,6 +31,8 @@
                 _mockCriteriaService.Object,
                 _mockCustomerClassificationService.Object,
                 _mockDataLogTrackingService.Object);
+
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         [Fact]

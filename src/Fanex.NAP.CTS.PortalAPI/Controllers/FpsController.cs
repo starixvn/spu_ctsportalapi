@@ -7,12 +7,14 @@
     using Fanex.NAP.CTS.Model.API.FPS.SearchAccount;
     using Fanex.NAP.CTS.Model.API.FPS.Subscriber;
     using Fanex.NAP.CTS.Model.API.FPS.Transaction;
+    using Fanex.NAP.CTS.Portal.API.ActionFilter;
     using Fanex.NAP.CTS.Service.Interface;
     using Fanex.NAP.CTS.Service.Interface.Api;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using static Fanex.NAP.CTS.Resource.Consts.Consts;
 
     [ApiController]
     [Route("api/[controller]/[action]")]
@@ -29,6 +31,7 @@
 
         #region dcs center
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.SearchAccountDCSCenter)]
         public IActionResult SearchAccountDCSCenter(SearchAccountParamModel param)
         {
             try
@@ -46,6 +49,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssAccountInfoByCustSubscriberDCSCenter)]
         public IActionResult GetAssAccountInfoByCustSubscriberDCSCenter(GetAssAccountInfoByCustSubscriberParamModel param)
         {
             try
@@ -63,6 +67,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssAccountsByCustSubscriberDCSCenter)]
         public IActionResult GetAssAccountsByCustSubscriberDCSCenter(GetAssAccountsByCustSubscriberParamModel param)
         {
             try
@@ -80,6 +85,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssDevicesByCustSubscriberDCSCenter)]
         public IActionResult GetAssDevicesByCustSubscriberDCSCenter(GetAssDevicesByCustSubscriberParamModel param)
         {
             try
@@ -96,6 +102,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssMatrixAccountByCustSubscriberDCSCenter)]
         public IActionResult GetAssMatrixAccountByCustSubscriberDCSCenter(GetAssMatrixAccountByCustSubscriberParamModel param)
         {
             try
@@ -112,6 +119,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetTransactionHistoryDCSCenter)]
         public IActionResult GetTransactionHistoryDCSCenter(TransactionParamModel param)
         {
             try
@@ -134,6 +142,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetLastestTransactionBySubscriberDCSCenter)]
         public IActionResult GetLastestTransactionBySubscriberDCSCenter(LatestTransactionParamModel param)
         {
             try
@@ -150,6 +159,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetDevicesPerAccountDCSCenter)]
         public IActionResult GetDevicesPerAccountDCSCenter(GetDevicesPerAccountParamModel param)
         {
             try
@@ -166,6 +176,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAccountsPerDeviceDCSCenter)]
         public IActionResult GetAccountsPerDeviceDCSCenter(GetAccountPerDeviceParamModel param)
         {
             try
@@ -182,6 +193,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.SearchDeviceDCSCenter)]
         public IActionResult SearchDeviceDCSCenter(SearchDeviceParamModel param)
         {
             try
@@ -199,6 +211,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssDeviceInfoByIdSubscriberDCSCenter)]
         public IActionResult GetAssDeviceInfoByIdSubscriberDCSCenter(GetAssDeviceInfoByIDSubscriberParamModel param)
         {
             try
@@ -216,6 +229,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssAccountsByDeviceSubscriberDCSCenter)]
         public IActionResult GetAssAccountsByDeviceSubscriberDCSCenter(GetAssAccByDevSubscriberParamModel param)
         {
             try
@@ -232,6 +246,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssDevByDeviceSubscriberDCSCenter)]
         public IActionResult GetAssDevByDeviceSubscriberDCSCenter(GetAssDevByDevSubscriberParamModel param)
         {
             try
@@ -249,6 +264,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssMatrixByDeviceSubscriberDCSCenter)]
         public IActionResult GetAssMatrixByDeviceSubscriberDCSCenter(GetAssMatrixByDeviceSubscriberParamModel param)
         {
             try
@@ -266,6 +282,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetTransactionHistoryByDeviceDCSCenter)]
         public IActionResult GetTransactionHistoryByDeviceDCSCenter(TransactionHistoryByDeviceParamModel param)
         {
             try
@@ -293,6 +310,7 @@
 
         #region get sub
         [HttpGet]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetSubscriberInfoDCSExtra)]
         public IActionResult GetSubscriberInfoDCSExtra(string subscriberName)
         {
             try
@@ -319,6 +337,7 @@
 
         #region search
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.SearchAccountDCSExtra)]
         public IActionResult SearchAccountDCSExtra(SearchAccountParamModel param)
         {
             try
@@ -336,6 +355,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.SearchDeviceDCSExtra)]
         public IActionResult SearchDeviceDCSExtra(SearchDeviceParamModel param)
         {
             try
@@ -355,6 +375,7 @@
 
         #region account
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssAccountInfoByCustSubscriberDCSExtra)]
         public IActionResult GetAssAccountInfoByCustSubscriberDCSExtra(GetAssAccountInfoByCustSubscriberParamModel param)
         {
             try
@@ -372,6 +393,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssAccountsByCustSubscriberDCSExtra)]
         public IActionResult GetAssAccountsByCustSubscriberDCSExtra(GetAssAccountsByCustSubscriberParamModel param)
         {
             try
@@ -389,6 +411,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssDevicesByCustSubscriberDCSExtra)]
         public IActionResult GetAssDevicesByCustSubscriberDCSExtra(GetAssDevicesByCustSubscriberParamModel param)
         {
             try
@@ -405,6 +428,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssMatrixAccountByCustSubscriberDCSExtra)]
         public IActionResult GetAssMatrixAccountByCustSubscriberDCSExtra(GetAssMatrixAccountByCustSubscriberParamModel param)
         {
             try
@@ -423,6 +447,7 @@
 
         #region device
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssDeviceInfoByIdSubscriberDCSExtra)]
         public IActionResult GetAssDeviceInfoByIdSubscriberDCSExtra(GetAssDeviceInfoByIDSubscriberParamModel param)
         {
             try
@@ -440,6 +465,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssAccountsByDeviceSubscriberDCSExtra)]
         public IActionResult GetAssAccountsByDeviceSubscriberDCSExtra(GetAssAccByDevSubscriberParamModel param)
         {
             try
@@ -457,6 +483,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssDevByDeviceSubscriberDCSExtra)]
         public IActionResult GetAssDevByDeviceSubscriberDCSExtra(GetAssDevByDevSubscriberParamModel param)
         {
             try
@@ -474,6 +501,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetAssMatrixByDeviceSubscriberDCSExtra)]
         public IActionResult GetAssMatrixByDeviceSubscriberDCSExtra(GetAssMatrixByDeviceSubscriberParamModel param)
         {
             try
@@ -493,6 +521,7 @@
 
         #region report
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetTransactionHistoryByDeviceDCSExtra)]
         public IActionResult GetTransactionHistoryByDeviceDCSExtra(TransactionHistoryByDeviceParamModel param)
         {
             try
@@ -515,6 +544,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetTransactionHistoryByAccountDCSExtra)]
         public IActionResult GetTransactionHistoryByAccountDCSExtra(TransactionHistoryByAccountParamModel param)
         {
             try
@@ -537,6 +567,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetTransactionHistoryDCSExtra)]
         public IActionResult GetTransactionHistoryDCSExtra(TransactionParamModel param)
         {
             try
@@ -559,6 +590,7 @@
         }
 
         [HttpPost]
+        [TrackingFunctionUsageFilter(SystemId.CTSAPI, TrackingCtsFunctionId.GetLastestTransactionBySubscriberDCSExtra)]
         public IActionResult GetLastestTransactionBySubscriberDCSExtra(LatestTransactionParamModel param)
         {
             try

@@ -1,11 +1,13 @@
 ﻿namespace Fanex.NAP.CTS.PortalAPI.Controllers
 {
     using Fanex.NAP.CTS.Core.Extentions;
+    using Fanex.NAP.CTS.Criteria.AssociationDetection;
     using Fanex.NAP.CTS.Model.AssociationDetection;
     using Fanex.NAP.CTS.Portal.API.ActionFilter;
     using Fanex.NAP.CTS.Service.Implement;
     using Fanex.NAP.CTS.ViewModel.AssociationDetection;
     using Microsoft.AspNetCore.Mvc;
+    using Newtonsoft.Json;
 
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -67,6 +69,30 @@
             }
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        public IActionResult DetectAssociationCustByUserRoot([FromBody] DetectAssociationByUserRootFilterModel assFilter)
+        {            
+            try
+            {
+                var assWithRootCust = _associationDetectionService.GetAssociationCustByUserRoot(assFilter);
+
+                var result = JsonConvert.SerializeObject(assWithRootCust);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {               
+                ex.LogError();
+
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    success = false,
+                    message = "Failed to detect association",
+                    error = ex.Message
+                });
+            }            
         }
 
         private IEnumerable<ExportAssociationDetectModel> GetExportItem(IEnumerable<ValidateUserNameModel> orgUserList

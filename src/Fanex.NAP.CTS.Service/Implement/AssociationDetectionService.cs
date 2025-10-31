@@ -30,6 +30,8 @@
 
         IEnumerable<GetCustStatisticsInfoRealtimeModel> GetCustStatisticsInfoRealtime(string custIDList);
 
+        IEnumerable<DetectAssociationByUserRootModel> GetAssociationCustByUserRoot(DetectAssociationByUserRootFilterModel assFilter);
+
     }
 
     public class AssociationDetectionService : IAssociationDetectionService
@@ -201,6 +203,18 @@
             return _repository.Fetch<GetCustStatisticsInfoRealtimeModel>(criteria);
         }
 
+        public IEnumerable<DetectAssociationByUserRootModel> GetAssociationCustByUserRoot(DetectAssociationByUserRootFilterModel assFilter)
+        {
+            var criteria = new DetectAssociationByUserRootCriteria
+            {
+                UserNames = assFilter.UserNames,
+                IsAI = assFilter.IsAI,
+                IsDevice = assFilter.IsDevice,
+                IsIP = assFilter.IsIP
+            };
+
+            return _repository.Fetch<DetectAssociationByUserRootModel>(criteria);
+        }
 
         #region Private Methods
         private IEnumerable<DetectAssociationBySharedIPModel> DetectAssociationByIP(string custIDList)

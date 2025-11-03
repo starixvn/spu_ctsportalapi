@@ -141,6 +141,6 @@
     <Setting Key="CTS_Association_IpSharedLast3Days" SpName="CTS_Association_IpSharedLast3Days" DbName="DBCTS.bodb02.wsv_cts" />
     <Setting Key="CTS_Association_GetBySharedMatches" SpName="CTS_Association_GetBySharedMatches" DbName="DBCTS.bodb02.wsv_cts" />
     <Setting Key="Acc_Rpt_CTS_GetCustStatisticsInfo" SpName="Acc_Rpt_CTS_GetCustStatisticsInfo" DbName="DBVR2.bodb_dwrs.wsv_cts" />
-    <Setting Key="CTS_DC_Association_GetByUserNameList" SpName="CTS_DC_Association_GetByUserNameList" DbName="CTSMain_DEV.CTS_DataCenter.ctsWeb" Timeout="300" />
+    <Setting Key="CTS_DC_Association_GetByUserNameList" SpName="CTS_DC_Association_GetByUserNameList_xpre" DbName="CTSMain_DEV.CTS_DataCenter.ctsWeb" Timeout="300" />
   </Function>
 </Functions>

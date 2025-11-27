@@ -1,7 +1,7 @@
 ﻿namespace Fanex.NAP.CTS.Criteria.AssociationDetection
 {
     using Fanex.Data;
-    using Fanex.Data.Repository; 
+    using Fanex.Data.Repository;
 
     public class DetectAssociationByUserRootCriteria : CriteriaBase
     {
@@ -16,6 +16,9 @@
 
         [SpParam(SqlParamName = "ip_HasIP")]
         public bool IsIP { get; set; }
+
+        [SpParam(SqlParamName = "ip_HasAgent")]
+        public bool IsAgent { get; set; }
 
         public override string GetSettingKey()
         {

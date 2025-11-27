@@ -30,7 +30,7 @@
 
         IEnumerable<GetCustStatisticsInfoRealtimeModel> GetCustStatisticsInfoRealtime(string custIDList);
 
-        IEnumerable<DetectAssociationByUserRootModel> GetAssociationCustByUserRoot(DetectAssociationByUserRootFilterModel assFilter);
+        Tuple<IEnumerable<DetectAssociationByUserRootModel>, IEnumerable<DetectAssociationAgentByUserRootModel>> GetAssociationCustByUserRoot(DetectAssociationByUserRootFilterModel assFilter);
 
     }
 
@@ -109,7 +109,7 @@
 
                 mergeGroupInfo.AssociationByAgentJson = model.IsAgent ? GetAssociationCustByAgent(ctsCustIDs) : "[]";
             });
-            
+
             return DetectGroupDetectAssociation(mergeGroupInfo);
         }
 
@@ -151,19 +151,19 @@
                     SharedMatchesJson = model.AssociationBySharedMatchesJson,
                     IsGetLogTransInfo = model.IsGetLogTransInfo
                 };
-               
+
                 return _repository.Fetch<DetectAssociationMergeGroupModel>(criteria);
             }
             catch (Exception ex)
-            {               
-                var logMessage = new LogMessage(ConfigSettings.EnvironmentName + " " + ex.Message)                                
+            {
+                var logMessage = new LogMessage(ConfigSettings.EnvironmentName + " " + ex.Message)
                 .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
                 .AddMessage($"{DateTimeOffset.Now}").ToString();
 
                 LogService.Error(logMessage);
 
                 throw;
-            }           
+            }
         }
 
         public IEnumerable<DetectAssociationBySharedIPMatchesModel> DetectAssociationBySharedMatches(string custIDList)
@@ -178,9 +178,9 @@
         }
 
         public IEnumerable<SharedIPInfoModel> DetectAssociationByIP(Dictionary<int, ValidateUserNameModel> validateUsernames, string custIds)
-        {            
+        {
             var detectAssByIP = DetectAssociationByIP(custIds);
-            
+
             var mergeIP_DetectAssByIP = detectAssByIP.GroupBy(x => new { x.CustID1, x.CustID2 })
                 .Select(g => new DetectAssociationBySharedIPModel
                 {
@@ -188,7 +188,7 @@
                     CustID2 = g.Key.CustID2,
                     IP = g.Select(x => x.IP.Trim()).Join()
                 });
-            
+
             return DetectAssByIPMappingToSharedIPInfo(mergeIP_DetectAssByIP, validateUsernames);
         }
 
@@ -203,17 +203,20 @@
             return _repository.Fetch<GetCustStatisticsInfoRealtimeModel>(criteria);
         }
 
-        public IEnumerable<DetectAssociationByUserRootModel> GetAssociationCustByUserRoot(DetectAssociationByUserRootFilterModel assFilter)
+        public Tuple<IEnumerable<DetectAssociationByUserRootModel>, IEnumerable<DetectAssociationAgentByUserRootModel>> GetAssociationCustByUserRoot(DetectAssociationByUserRootFilterModel assFilter)
         {
             var criteria = new DetectAssociationByUserRootCriteria
             {
                 UserNames = assFilter.UserNames,
                 IsAI = assFilter.IsAI,
                 IsDevice = assFilter.IsDevice,
-                IsIP = assFilter.IsIP
+                IsIP = assFilter.IsIP,
+                IsAgent = assFilter.IsAgent,
             };
 
-            return _repository.Fetch<DetectAssociationByUserRootModel>(criteria);
+            var result = _repository.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(criteria);
+
+            return result.ToTuple();
         }
 
         #region Private Methods
@@ -250,9 +253,9 @@
         private string GetAssociationCustByIP(IEnumerable<SharedIPInfoModel> ass)
         {
             var assCustBySharedIP = ass.Select(x => new AssociationCustByIPViewModel
-            {               
-                O = x.FromCTSCustID,               
-                D = x.ToCTSCustID              
+            {
+                O = x.FromCTSCustID,
+                D = x.ToCTSCustID
             });
 
             return ObjectHelper.SerializeObj(assCustBySharedIP);
@@ -282,9 +285,9 @@
         private string GetAssociationCustByMatch(IEnumerable<SharedIPMatchesInfoModel> ass)
         {
             var assCustBySharedIP = ass.Select(x => new AssociationCustModel
-            {              
-                FromCTSCustID = x.FromCTSCustID,            
-                ToCTSCustID = x.ToCTSCustID             
+            {
+                FromCTSCustID = x.FromCTSCustID,
+                ToCTSCustID = x.ToCTSCustID
             });
 
             return JsonConvert.SerializeObject(assCustBySharedIP);

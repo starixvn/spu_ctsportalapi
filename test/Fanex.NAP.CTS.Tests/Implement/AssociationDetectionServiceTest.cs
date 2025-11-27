@@ -1591,18 +1591,10 @@
                 }
             };
 
-            var expectedAgents = new List<DetectAssociationAgentByUserRootModel>
-            {
-                new DetectAssociationAgentByUserRootModel
-                {
-                    RootCustID = 1001,
-                    AssAgentCustID = "5001,5002",
-                    RoleID = 1
-                }
-            };
+            var expectedJsonString = "[{\"RootCustID\":1001,\"AssAgentCustID\":\"5001,5002\",\"RoleID\":1}]";
 
-            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
-                .Returns((expectedAssociations, expectedAgents));
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, string>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Returns((expectedAssociations, new List<string> { expectedJsonString }));
 
             // Act
             var result = _service.GetAssociationCustByUserRoot(filter);
@@ -1612,15 +1604,11 @@
             Assert.NotNull(result.Item1);
             Assert.NotNull(result.Item2);
             Assert.Equal(2, result.Item1.Count());
-            Assert.Single(result.Item2);
+            Assert.Equal(expectedJsonString, result.Item2);
             Assert.Equal(expectedAssociations, result.Item1);
-            Assert.Equal(expectedAgents, result.Item2);
             Assert.Equal(1001, result.Item1.First().RootCustID);
             Assert.Equal("1002,1003,1004", result.Item1.First().AssCustIDList);
-            Assert.Equal(1001, result.Item2.First().RootCustID);
-            Assert.Equal("5001,5002", result.Item2.First().AssAgentCustID);
-            Assert.Equal(1, result.Item2.First().RoleID);
-            _mockRepository.Verify(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.Is<DetectAssociationByUserRootCriteria>(c =>
+            _mockRepository.Verify(x => x.Fetch<DetectAssociationByUserRootModel, string>(It.Is<DetectAssociationByUserRootCriteria>(c =>
                 c.UserNames == filter.UserNames &&
                 c.IsAI == filter.IsAI &&
                 c.IsDevice == filter.IsDevice &&
@@ -1655,18 +1643,10 @@
                 }
             };
 
-            var expectedAgents = new List<DetectAssociationAgentByUserRootModel>
-            {
-                new DetectAssociationAgentByUserRootModel
-                {
-                    RootCustID = 1001,
-                    AssAgentCustID = "5001",
-                    RoleID = 2
-                }
-            };
+            var expectedJsonString = "[{\"RootCustID\":1001,\"AssAgentCustID\":\"5001\",\"RoleID\":2}]";
 
-            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
-                .Returns((expectedAssociations, expectedAgents));
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, string>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Returns((expectedAssociations, new List<string> { expectedJsonString }));
 
             // Act
             var result = _service.GetAssociationCustByUserRoot(filter);
@@ -1674,8 +1654,8 @@
             // Assert
             Assert.NotNull(result);
             Assert.Equal(2, result.Item1.Count());
-            Assert.Single(result.Item2);
-            _mockRepository.Verify(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.Is<DetectAssociationByUserRootCriteria>(c =>
+            Assert.Equal(expectedJsonString, result.Item2);
+            _mockRepository.Verify(x => x.Fetch<DetectAssociationByUserRootModel, string>(It.Is<DetectAssociationByUserRootCriteria>(c =>
                 c.IsAI == true &&
                 c.IsDevice == true &&
                 c.IsIP == true &&
@@ -1696,10 +1676,10 @@
             };
 
             var expectedAssociations = new List<DetectAssociationByUserRootModel>();
-            var expectedAgents = new List<DetectAssociationAgentByUserRootModel>();
+            var expectedJsonString = "[]";
 
-            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
-                .Returns((expectedAssociations, expectedAgents));
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, string>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Returns((expectedAssociations, new List<string> { expectedJsonString }));
 
             // Act
             var result = _service.GetAssociationCustByUserRoot(filter);
@@ -1707,7 +1687,7 @@
             // Assert
             Assert.NotNull(result);
             Assert.Empty(result.Item1);
-            Assert.Empty(result.Item2);
+            Assert.Equal("[]", result.Item2);
         }
 
         [Fact]
@@ -1724,10 +1704,10 @@
             };
 
             var expectedAssociations = new List<DetectAssociationByUserRootModel>();
-            var expectedAgents = new List<DetectAssociationAgentByUserRootModel>();
+            var expectedJsonString = "[]";
 
-            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
-                .Returns((expectedAssociations, expectedAgents));
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, string>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Returns((expectedAssociations, new List<string> { expectedJsonString }));
 
             // Act
             var result = _service.GetAssociationCustByUserRoot(filter);
@@ -1735,7 +1715,7 @@
             // Assert
             Assert.NotNull(result);
             Assert.Empty(result.Item1);
-            Assert.Empty(result.Item2);
+            Assert.Equal("[]", result.Item2);
         }
 
         [Fact]
@@ -1760,10 +1740,10 @@
                 }
             };
 
-            var expectedAgents = new List<DetectAssociationAgentByUserRootModel>();
+            var expectedJsonString = "[]";
 
-            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
-                .Returns((expectedAssociations, expectedAgents));
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, string>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Returns((expectedAssociations, new List<string> { expectedJsonString }));
 
             // Act
             var result = _service.GetAssociationCustByUserRoot(filter);
@@ -1773,8 +1753,8 @@
             Assert.Single(result.Item1);
             Assert.Equal(1001, result.Item1.First().RootCustID);
             Assert.Equal("1002,1003,1004", result.Item1.First().AssCustIDList);
-            Assert.Empty(result.Item2);
-            _mockRepository.Verify(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.Is<DetectAssociationByUserRootCriteria>(c =>
+            Assert.Equal("[]", result.Item2);
+            _mockRepository.Verify(x => x.Fetch<DetectAssociationByUserRootModel, string>(It.Is<DetectAssociationByUserRootCriteria>(c =>
                 c.IsDevice == true &&
                 c.IsAI == false &&
                 c.IsIP == false &&
@@ -1803,10 +1783,10 @@
                 }
             };
 
-            var expectedAgents = new List<DetectAssociationAgentByUserRootModel>();
+            var expectedJsonString = "[]";
 
-            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
-                .Returns((expectedAssociations, expectedAgents));
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, string>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Returns((expectedAssociations, new List<string> { expectedJsonString }));
 
             // Act
             var result = _service.GetAssociationCustByUserRoot(filter);
@@ -1816,6 +1796,41 @@
             Assert.Single(result.Item1);
             Assert.Equal(1001, result.Item1.First().RootCustID);
             Assert.Null(result.Item1.First().AssCustIDList);
+            Assert.Equal("[]", result.Item2);
+        }
+
+        [Fact]
+        public void GetAssociationCustByUserRoot_WithNullJsonString_ReturnsEmptyJsonArray()
+        {
+            // Arrange
+            var filter = new DetectAssociationByUserRootFilterModel
+            {
+                UserNames = "user1",
+                IsAI = true,
+                IsDevice = false,
+                IsIP = false,
+                IsAgent = false
+            };
+
+            var expectedAssociations = new List<DetectAssociationByUserRootModel>
+            {
+                new DetectAssociationByUserRootModel
+                {
+                    RootCustID = 1001,
+                    AssCustIDList = "1002,1003"
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, string>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Returns((expectedAssociations, new List<string> { null! }));
+
+            // Act
+            var result = _service.GetAssociationCustByUserRoot(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Single(result.Item1);
+            Assert.Equal("[]", result.Item2); // Should default to "[]" when null
         }
 
         [Fact]
@@ -1831,7 +1846,7 @@
                 IsAgent = false
             };
 
-            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, string>(It.IsAny<DetectAssociationByUserRootCriteria>()))
                 .Throws(new InvalidOperationException("Database connection failed"));
 
             // Act & Assert

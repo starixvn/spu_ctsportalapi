@@ -30,7 +30,7 @@
 
         IEnumerable<GetCustStatisticsInfoRealtimeModel> GetCustStatisticsInfoRealtime(string custIDList);
 
-        Tuple<IEnumerable<DetectAssociationByUserRootModel>, IEnumerable<DetectAssociationAgentByUserRootModel>> GetAssociationCustByUserRoot(DetectAssociationByUserRootFilterModel assFilter);
+        Tuple<IEnumerable<DetectAssociationByUserRootModel>, string> GetAssociationCustByUserRoot(DetectAssociationByUserRootFilterModel assFilter);
 
     }
 
@@ -203,7 +203,7 @@
             return _repository.Fetch<GetCustStatisticsInfoRealtimeModel>(criteria);
         }
 
-        public Tuple<IEnumerable<DetectAssociationByUserRootModel>, IEnumerable<DetectAssociationAgentByUserRootModel>> GetAssociationCustByUserRoot(DetectAssociationByUserRootFilterModel assFilter)
+        public Tuple<IEnumerable<DetectAssociationByUserRootModel>, string> GetAssociationCustByUserRoot(DetectAssociationByUserRootFilterModel assFilter)
         {
             var criteria = new DetectAssociationByUserRootCriteria
             {
@@ -214,9 +214,14 @@
                 IsAgent = assFilter.IsAgent,
             };
 
-            var result = _repository.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(criteria);
+            var result = _repository.Fetch<DetectAssociationByUserRootModel, string>(criteria);
 
-            return result.ToTuple();
+
+
+            return Tuple.Create(
+                        result.firstResultSet,
+                        result.secondResultSet.FirstOrDefault() ?? "[]"
+                    );
         }
 
         #region Private Methods

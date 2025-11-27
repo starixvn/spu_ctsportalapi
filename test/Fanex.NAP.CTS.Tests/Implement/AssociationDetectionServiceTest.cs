@@ -1353,5 +1353,494 @@
         }
 
         #endregion
+
+        #region GetCustStatisticsInfoRealtime Tests
+
+        [Fact]
+        public void GetCustStatisticsInfoRealtime_WithValidCustIDList_ReturnsStatistics()
+        {
+            // Arrange
+            var custIDList = "1,2,3";
+            var expectedResult = new List<GetCustStatisticsInfoRealtimeModel>
+            {
+                new GetCustStatisticsInfoRealtimeModel
+                {
+                    CustID = 1,
+                    TotalSettledTickets = 100,
+                    TotalWinlossRM = 10000.50m,
+                    WinlossRM_Last3Days = 5000.25m,
+                    WinlossRM_Last7Days = 7500.75m,
+                    TotalSabaTurnoverRM = 50000.00m,
+                    SabaTurnoverRM_Last3Days = 25000.00m,
+                    SabaTurnoverRM_Last7Days = 35000.00m,
+                    TotalTurnoverRM = 100000.00m,
+                    TurnoverRM_Last3Days = 50000.00m,
+                    TurnoverRM_Last7Days = 75000.00m
+                },
+                new GetCustStatisticsInfoRealtimeModel
+                {
+                    CustID = 2,
+                    TotalSettledTickets = 200,
+                    TotalWinlossRM = 20000.75m,
+                    WinlossRM_Last3Days = 10000.50m,
+                    WinlossRM_Last7Days = 15000.25m,
+                    TotalSabaTurnoverRM = 100000.00m,
+                    SabaTurnoverRM_Last3Days = 50000.00m,
+                    SabaTurnoverRM_Last7Days = 70000.00m,
+                    TotalTurnoverRM = 200000.00m,
+                    TurnoverRM_Last3Days = 100000.00m,
+                    TurnoverRM_Last7Days = 150000.00m
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<GetCustStatisticsInfoRealtimeModel>(It.IsAny<GetMainCustStatisticsInfoCriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetCustStatisticsInfoRealtime(custIDList);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count());
+            Assert.Equal(expectedResult, result);
+            _mockRepository.Verify(x => x.Fetch<GetCustStatisticsInfoRealtimeModel>(It.Is<GetMainCustStatisticsInfoCriteria>(c =>
+                c.CustIDList == custIDList &&
+                c.IsResetBalance == true)), Times.Once);
+        }
+
+        [Fact]
+        public void GetCustStatisticsInfoRealtime_WithEmptyCustIDList_ReturnsEmptyList()
+        {
+            // Arrange
+            var custIDList = "";
+            var expectedResult = new List<GetCustStatisticsInfoRealtimeModel>();
+
+            _mockRepository.Setup(x => x.Fetch<GetCustStatisticsInfoRealtimeModel>(It.IsAny<GetMainCustStatisticsInfoCriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetCustStatisticsInfoRealtime(custIDList);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+            _mockRepository.Verify(x => x.Fetch<GetCustStatisticsInfoRealtimeModel>(It.Is<GetMainCustStatisticsInfoCriteria>(c =>
+                c.CustIDList == custIDList &&
+                c.IsResetBalance == true)), Times.Once);
+        }
+
+        [Fact]
+        public void GetCustStatisticsInfoRealtime_WithNullCustIDList_ReturnsEmptyList()
+        {
+            // Arrange
+            string custIDList = null!;
+            var expectedResult = new List<GetCustStatisticsInfoRealtimeModel>();
+
+            _mockRepository.Setup(x => x.Fetch<GetCustStatisticsInfoRealtimeModel>(It.IsAny<GetMainCustStatisticsInfoCriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetCustStatisticsInfoRealtime(custIDList);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void GetCustStatisticsInfoRealtime_WithSingleCustID_ReturnsSingleResult()
+        {
+            // Arrange
+            var custIDList = "12345";
+            var expectedResult = new List<GetCustStatisticsInfoRealtimeModel>
+            {
+                new GetCustStatisticsInfoRealtimeModel
+                {
+                    CustID = 12345,
+                    TotalSettledTickets = 500,
+                    TotalWinlossRM = 50000.00m,
+                    WinlossRM_Last3Days = 25000.00m,
+                    WinlossRM_Last7Days = 37500.00m,
+                    TotalSabaTurnoverRM = 250000.00m,
+                    SabaTurnoverRM_Last3Days = 125000.00m,
+                    SabaTurnoverRM_Last7Days = 175000.00m,
+                    TotalTurnoverRM = 500000.00m,
+                    TurnoverRM_Last3Days = 250000.00m,
+                    TurnoverRM_Last7Days = 375000.00m
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<GetCustStatisticsInfoRealtimeModel>(It.IsAny<GetMainCustStatisticsInfoCriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetCustStatisticsInfoRealtime(custIDList);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Single(result);
+            Assert.Equal(expectedResult.First(), result.First());
+            Assert.Equal(12345, result.First().CustID);
+            Assert.Equal(500, result.First().TotalSettledTickets);
+            _mockRepository.Verify(x => x.Fetch<GetCustStatisticsInfoRealtimeModel>(It.Is<GetMainCustStatisticsInfoCriteria>(c =>
+                c.CustIDList == custIDList &&
+                c.IsResetBalance == true)), Times.Once);
+        }
+
+        [Fact]
+        public void GetCustStatisticsInfoRealtime_WithNullValues_HandlesCorrectly()
+        {
+            // Arrange
+            var custIDList = "1,2";
+            var expectedResult = new List<GetCustStatisticsInfoRealtimeModel>
+            {
+                new GetCustStatisticsInfoRealtimeModel
+                {
+                    CustID = 1,
+                    TotalSettledTickets = null,
+                    TotalWinlossRM = null,
+                    WinlossRM_Last3Days = null,
+                    WinlossRM_Last7Days = null,
+                    TotalSabaTurnoverRM = null,
+                    SabaTurnoverRM_Last3Days = null,
+                    SabaTurnoverRM_Last7Days = null,
+                    TotalTurnoverRM = null,
+                    TurnoverRM_Last3Days = null,
+                    TurnoverRM_Last7Days = null
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<GetCustStatisticsInfoRealtimeModel>(It.IsAny<GetMainCustStatisticsInfoCriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetCustStatisticsInfoRealtime(custIDList);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Single(result);
+            Assert.Null(result.First().TotalSettledTickets);
+            Assert.Null(result.First().TotalWinlossRM);
+        }
+
+        [Fact]
+        public void GetCustStatisticsInfoRealtime_WithLargeCustIDList_HandlesCorrectly()
+        {
+            // Arrange
+            var custIDList = string.Join(",", Enumerable.Range(1, 100));
+            var expectedResult = new List<GetCustStatisticsInfoRealtimeModel>();
+
+            _mockRepository.Setup(x => x.Fetch<GetCustStatisticsInfoRealtimeModel>(It.IsAny<GetMainCustStatisticsInfoCriteria>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _service.GetCustStatisticsInfoRealtime(custIDList);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+            _mockRepository.Verify(x => x.Fetch<GetCustStatisticsInfoRealtimeModel>(It.Is<GetMainCustStatisticsInfoCriteria>(c =>
+                c.CustIDList == custIDList &&
+                c.IsResetBalance == true)), Times.Once);
+        }
+
+        [Fact]
+        public void GetCustStatisticsInfoRealtime_RepositoryThrowsException_PropagatesException()
+        {
+            // Arrange
+            var custIDList = "1,2,3";
+
+            _mockRepository.Setup(x => x.Fetch<GetCustStatisticsInfoRealtimeModel>(It.IsAny<GetMainCustStatisticsInfoCriteria>()))
+                .Throws(new InvalidOperationException("Database connection failed"));
+
+            // Act & Assert
+            var exception = Assert.Throws<InvalidOperationException>(() =>
+                _service.GetCustStatisticsInfoRealtime(custIDList));
+
+            Assert.Equal("Database connection failed", exception.Message);
+        }
+
+        #endregion
+
+        #region GetAssociationCustByUserRoot Tests
+
+        [Fact]
+        public void GetAssociationCustByUserRoot_WithValidFilter_ReturnsTuple()
+        {
+            // Arrange
+            var filter = new DetectAssociationByUserRootFilterModel
+            {
+                UserNames = "user1,user2",
+                IsAI = true,
+                IsDevice = false,
+                IsIP = false,
+                IsAgent = false
+            };
+
+            var expectedAssociations = new List<DetectAssociationByUserRootModel>
+            {
+                new DetectAssociationByUserRootModel
+                {
+                    RootCustID = 1001,
+                    AssCustIDList = "1002,1003,1004"
+                },
+                new DetectAssociationByUserRootModel
+                {
+                    RootCustID = 2001,
+                    AssCustIDList = "2002,2003"
+                }
+            };
+
+            var expectedAgents = new List<DetectAssociationAgentByUserRootModel>
+            {
+                new DetectAssociationAgentByUserRootModel
+                {
+                    RootCustID = 1001,
+                    AssAgentCustID = "5001,5002",
+                    RoleID = 1
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Returns((expectedAssociations, expectedAgents));
+
+            // Act
+            var result = _service.GetAssociationCustByUserRoot(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotNull(result.Item1);
+            Assert.NotNull(result.Item2);
+            Assert.Equal(2, result.Item1.Count());
+            Assert.Single(result.Item2);
+            Assert.Equal(expectedAssociations, result.Item1);
+            Assert.Equal(expectedAgents, result.Item2);
+            Assert.Equal(1001, result.Item1.First().RootCustID);
+            Assert.Equal("1002,1003,1004", result.Item1.First().AssCustIDList);
+            Assert.Equal(1001, result.Item2.First().RootCustID);
+            Assert.Equal("5001,5002", result.Item2.First().AssAgentCustID);
+            Assert.Equal(1, result.Item2.First().RoleID);
+            _mockRepository.Verify(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.Is<DetectAssociationByUserRootCriteria>(c =>
+                c.UserNames == filter.UserNames &&
+                c.IsAI == filter.IsAI &&
+                c.IsDevice == filter.IsDevice &&
+                c.IsIP == filter.IsIP &&
+                c.IsAgent == filter.IsAgent)), Times.Once);
+        }
+
+        [Fact]
+        public void GetAssociationCustByUserRoot_WithAllFlagsEnabled_ReturnsResults()
+        {
+            // Arrange
+            var filter = new DetectAssociationByUserRootFilterModel
+            {
+                UserNames = "user1,user2,user3",
+                IsAI = true,
+                IsDevice = true,
+                IsIP = true,
+                IsAgent = true
+            };
+
+            var expectedAssociations = new List<DetectAssociationByUserRootModel>
+            {
+                new DetectAssociationByUserRootModel
+                {
+                    RootCustID = 1001,
+                    AssCustIDList = "1002,1003"
+                },
+                new DetectAssociationByUserRootModel
+                {
+                    RootCustID = 2001,
+                    AssCustIDList = "2002"
+                }
+            };
+
+            var expectedAgents = new List<DetectAssociationAgentByUserRootModel>
+            {
+                new DetectAssociationAgentByUserRootModel
+                {
+                    RootCustID = 1001,
+                    AssAgentCustID = "5001",
+                    RoleID = 2
+                }
+            };
+
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Returns((expectedAssociations, expectedAgents));
+
+            // Act
+            var result = _service.GetAssociationCustByUserRoot(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Item1.Count());
+            Assert.Single(result.Item2);
+            _mockRepository.Verify(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.Is<DetectAssociationByUserRootCriteria>(c =>
+                c.IsAI == true &&
+                c.IsDevice == true &&
+                c.IsIP == true &&
+                c.IsAgent == true)), Times.Once);
+        }
+
+        [Fact]
+        public void GetAssociationCustByUserRoot_WithEmptyUserNames_ReturnsEmptyResults()
+        {
+            // Arrange
+            var filter = new DetectAssociationByUserRootFilterModel
+            {
+                UserNames = "",
+                IsAI = false,
+                IsDevice = false,
+                IsIP = false,
+                IsAgent = false
+            };
+
+            var expectedAssociations = new List<DetectAssociationByUserRootModel>();
+            var expectedAgents = new List<DetectAssociationAgentByUserRootModel>();
+
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Returns((expectedAssociations, expectedAgents));
+
+            // Act
+            var result = _service.GetAssociationCustByUserRoot(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result.Item1);
+            Assert.Empty(result.Item2);
+        }
+
+        [Fact]
+        public void GetAssociationCustByUserRoot_WithNullUserNames_HandlesCorrectly()
+        {
+            // Arrange
+            var filter = new DetectAssociationByUserRootFilterModel
+            {
+                UserNames = null!,
+                IsAI = false,
+                IsDevice = false,
+                IsIP = false,
+                IsAgent = false
+            };
+
+            var expectedAssociations = new List<DetectAssociationByUserRootModel>();
+            var expectedAgents = new List<DetectAssociationAgentByUserRootModel>();
+
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Returns((expectedAssociations, expectedAgents));
+
+            // Act
+            var result = _service.GetAssociationCustByUserRoot(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result.Item1);
+            Assert.Empty(result.Item2);
+        }
+
+        [Fact]
+        public void GetAssociationCustByUserRoot_WithDeviceOnly_ReturnsDeviceAssociations()
+        {
+            // Arrange
+            var filter = new DetectAssociationByUserRootFilterModel
+            {
+                UserNames = "user1",
+                IsAI = false,
+                IsDevice = true,
+                IsIP = false,
+                IsAgent = false
+            };
+
+            var expectedAssociations = new List<DetectAssociationByUserRootModel>
+            {
+                new DetectAssociationByUserRootModel
+                {
+                    RootCustID = 1001,
+                    AssCustIDList = "1002,1003,1004"
+                }
+            };
+
+            var expectedAgents = new List<DetectAssociationAgentByUserRootModel>();
+
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Returns((expectedAssociations, expectedAgents));
+
+            // Act
+            var result = _service.GetAssociationCustByUserRoot(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Single(result.Item1);
+            Assert.Equal(1001, result.Item1.First().RootCustID);
+            Assert.Equal("1002,1003,1004", result.Item1.First().AssCustIDList);
+            Assert.Empty(result.Item2);
+            _mockRepository.Verify(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.Is<DetectAssociationByUserRootCriteria>(c =>
+                c.IsDevice == true &&
+                c.IsAI == false &&
+                c.IsIP == false &&
+                c.IsAgent == false)), Times.Once);
+        }
+
+        [Fact]
+        public void GetAssociationCustByUserRoot_WithEmptyAssCustIDList_HandlesCorrectly()
+        {
+            // Arrange
+            var filter = new DetectAssociationByUserRootFilterModel
+            {
+                UserNames = "user1",
+                IsAI = true,
+                IsDevice = false,
+                IsIP = false,
+                IsAgent = false
+            };
+
+            var expectedAssociations = new List<DetectAssociationByUserRootModel>
+            {
+                new DetectAssociationByUserRootModel
+                {
+                    RootCustID = 1001,
+                    AssCustIDList = null!
+                }
+            };
+
+            var expectedAgents = new List<DetectAssociationAgentByUserRootModel>();
+
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Returns((expectedAssociations, expectedAgents));
+
+            // Act
+            var result = _service.GetAssociationCustByUserRoot(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Single(result.Item1);
+            Assert.Equal(1001, result.Item1.First().RootCustID);
+            Assert.Null(result.Item1.First().AssCustIDList);
+        }
+
+        [Fact]
+        public void GetAssociationCustByUserRoot_RepositoryThrowsException_PropagatesException()
+        {
+            // Arrange
+            var filter = new DetectAssociationByUserRootFilterModel
+            {
+                UserNames = "user1",
+                IsAI = false,
+                IsDevice = false,
+                IsIP = false,
+                IsAgent = false
+            };
+
+            _mockRepository.Setup(x => x.Fetch<DetectAssociationByUserRootModel, DetectAssociationAgentByUserRootModel>(It.IsAny<DetectAssociationByUserRootCriteria>()))
+                .Throws(new InvalidOperationException("Database connection failed"));
+
+            // Act & Assert
+            var exception = Assert.Throws<InvalidOperationException>(() =>
+                _service.GetAssociationCustByUserRoot(filter));
+
+            Assert.Equal("Database connection failed", exception.Message);
+        }
+
+        #endregion
     }
 }

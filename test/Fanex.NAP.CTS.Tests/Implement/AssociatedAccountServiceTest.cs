@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.Api;
     using Fanex.NAP.CTS.Model.Account;
@@ -20,6 +21,7 @@
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new AssociatedAccountService(_mockRepository.Object);
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region GetFlaggedEvidenceByDirectAssForAPI Tests

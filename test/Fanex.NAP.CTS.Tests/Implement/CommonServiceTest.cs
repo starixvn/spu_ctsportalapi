@@ -10,6 +10,7 @@
     using Fanex.NAP.CTS.Criteria.AssociationDetection;
     using Moq;
     using Xunit;
+    using Fanex.NAP.CTS.Core.Extentions;
 
     public class CommonServiceTest
     {
@@ -20,6 +21,7 @@
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new CommonService(_mockRepository.Object);
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region CheckConnection Tests

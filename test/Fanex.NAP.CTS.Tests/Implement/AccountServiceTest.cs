@@ -3,6 +3,7 @@ namespace Fanex.NAP.CTS.Tests.Implement
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.Account;
     using Fanex.NAP.CTS.Criteria.Account.CustomerCategory;
@@ -24,6 +25,7 @@ namespace Fanex.NAP.CTS.Tests.Implement
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new AccountService(_mockRepository.Object);
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region GetCustInfoByCustID Tests

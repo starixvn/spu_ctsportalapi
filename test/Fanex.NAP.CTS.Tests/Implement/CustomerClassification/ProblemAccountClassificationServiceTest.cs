@@ -13,6 +13,7 @@
     using Xunit;
     using Fanex.NAP.CTS.Service;
     using static Fanex.NAP.CTS.Resource.Consts.Consts;
+    using Fanex.NAP.CTS.Core.Extentions;
 
     public class ProblemAccountClassificationServiceTest
     {
@@ -30,6 +31,7 @@
                 _mockCriteriaService.Object,
                 _mockCustomerClassificationService.Object,
                 _mockDataLogTrackingService.Object);
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         [Fact]

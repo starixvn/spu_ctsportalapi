@@ -1,6 +1,7 @@
 namespace Fanex.NAP.CTS.Tests.Implement.Api
 {
     using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.CustomerClassification.BaseCustomerClassification;
     using Fanex.NAP.CTS.Model.API;
@@ -32,6 +33,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.Api
                 _mockRepository.Object,
                 _mockCustClassificationService.Object,
                 _mockRescanCustomerClassificationService.Object);
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         [Fact]

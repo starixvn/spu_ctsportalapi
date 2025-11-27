@@ -1,5 +1,6 @@
 namespace Fanex.NAP.CTS.Tests.Implement.Api
 {
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.Api.CtsAssociationAPI;
     using Fanex.NAP.CTS.Model.API;
@@ -15,6 +16,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.Api
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new CtsAssociationApiService(_mockRepository.Object);
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         [Fact]

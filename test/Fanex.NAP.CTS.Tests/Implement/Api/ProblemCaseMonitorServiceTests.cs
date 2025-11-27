@@ -1,6 +1,7 @@
 namespace Fanex.NAP.CTS.Tests.Implement.Api
 {
     using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Model.API.ProblemCaseMonitor;
     using Fanex.NAP.CTS.Service.Implement.Api;
@@ -17,6 +18,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.Api
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new ProblemCaseMonitorService(_mockRepository.Object);
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         [Fact]

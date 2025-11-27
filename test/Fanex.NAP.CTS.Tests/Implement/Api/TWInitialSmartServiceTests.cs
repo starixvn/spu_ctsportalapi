@@ -1,6 +1,7 @@
 namespace Fanex.NAP.CTS.Tests.Implement.Api
 {
     using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Core.Extentions;
     using Fanex.NAP.CTS.Core.Service;
     using Fanex.NAP.CTS.Criteria.Api.TW;
     using Fanex.NAP.CTS.Model.API.TWInitialSmart;
@@ -20,6 +21,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.Api
         {
             _mockRepository = new Mock<ICriteriaService>();
             _service = new TWInitialSmartService(_mockRepository.Object);
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         [Fact]

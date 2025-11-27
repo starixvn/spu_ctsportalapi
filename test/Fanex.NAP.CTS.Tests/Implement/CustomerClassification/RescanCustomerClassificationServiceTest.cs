@@ -11,6 +11,7 @@
     using Moq;
     using Fanex.NAP.CTS.Service.Implement.CustomerClassification;
     using static Fanex.NAP.CTS.Resource.Consts.Consts;
+    using Fanex.NAP.CTS.Core.Extentions;
 
     public class RescanCustomerClassificationServiceTest
     {
@@ -29,6 +30,7 @@
                 _mockCriteriaService.Object,
                 _mockCustomerClassificationService.Object,
                 _mockDataLogTrackingService.Object);
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         [Fact]

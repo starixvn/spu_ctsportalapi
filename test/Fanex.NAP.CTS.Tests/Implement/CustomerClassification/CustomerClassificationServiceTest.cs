@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Fanex.Data.Repository;
 using Fanex.NAP.CTS.Core;
+using Fanex.NAP.CTS.Core.Extentions;
 using Fanex.NAP.CTS.Core.Service;
 using Fanex.NAP.CTS.Criteria.CustomerClassification;
 using Fanex.NAP.CTS.Criteria.SyncCustomerToMainDb;
@@ -28,6 +29,7 @@ namespace Fanex.NAP.CTS.Tests.Implement.CustomerClassification
             _mockRepository = new Mock<ICriteriaService>();
             _mockAntiFraudCenterService = new Mock<IAntiFraudCenterService>();
             _service = new CustomerClassificationService(_mockRepository.Object, _mockAntiFraudCenterService.Object);
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region PushDataToExternalPackge Tests

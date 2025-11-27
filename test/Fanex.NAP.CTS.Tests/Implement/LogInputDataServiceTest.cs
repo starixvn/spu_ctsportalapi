@@ -8,6 +8,7 @@
     using Fanex.NAP.CTS.Service;
     using Xunit;
     using static Fanex.NAP.CTS.Resource.Consts.Consts;
+    using Fanex.NAP.CTS.Core.Extentions;
 
     public class LogInputDataServiceTest
     {
@@ -16,6 +17,7 @@
         public LogInputDataServiceTest()
         {
             _service = new LogInputDataService();
+            LogExtension.ConfigByPassForUnitTest();
         }
 
         #region LogInputData(LogInputViewModel, FunctionId) Tests
